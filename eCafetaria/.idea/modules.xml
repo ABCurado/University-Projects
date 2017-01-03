@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/consoleapp.common/consoleapp.common.iml" filepath="$PROJECT_DIR$/consoleapp.common/consoleapp.common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecafeteria.iml" filepath="$PROJECT_DIR$/ecafeteria.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backoffice.consoleapp/ecafeteria.backoffice.consoleapp.iml" filepath="$PROJECT_DIR$/backoffice.consoleapp/ecafeteria.backoffice.consoleapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecafeteria.bootstrapapp/ecafeteria.bootstrapapp.iml" filepath="$PROJECT_DIR$/ecafeteria.bootstrapapp/ecafeteria.bootstrapapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ecafeteria.core/ecafeteria.core.iml" filepath="$PROJECT_DIR$/ecafeteria.core/ecafeteria.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utente.consoleapp/ecafeteria.utente.consoleapp.iml" filepath="$PROJECT_DIR$/utente.consoleapp/ecafeteria.utente.consoleapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework/framework.iml" filepath="$PROJECT_DIR$/framework/framework.iml" />
+      <module fileurl="file://$PROJECT_DIR$/util/util.iml" filepath="$PROJECT_DIR$/util/util.iml" />
+    </modules>
+  </component>
+</project>
