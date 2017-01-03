@@ -1,0 +1,84 @@
+@startuml doc-files/lang04_03_design.png
+actor User
+
+  participant "WizardAction" as WizardAction 
+  participant "frame : WizardFrame" as WizardFrame 
+  participant "controller : WizardController" as WizardController 
+
+  User -> WizardAction : starts use case
+  create WizardFrame 
+  WizardAction -> WizardFrame : new(UIController) 
+  create WizardController 
+  WizardFrame -> WizardController : new(UIController) 
+  WizardFrame -> WizardController : getFunctions()
+  WizardController -> Language : getInstance()
+  WizardController -> Language : getFunctions()
+
+  loop
+  WizardFrame -> WizardFrame : displayInformation()
+  end
+
+  loop the User can keep selecting functions and setting parameters to build a formula
+  User -> WizardFrame : Selects Function
+  WizardFrame -> WizardController : getExpression(function)
+  WizardFrame -> User : shows editable expression to user
+  User -> WizardFrame : Sets parameters
+  activate WizardFrame
+  note right of WizardFrame : WizardFrame is listening to the formula text area\n(where the user builds the formula)\nand dynamically shows the result of the inserted formula
+  WizardFrame -> WizardFrame : updateResultTextBox() 
+  WizardFrame -> WizardController : String result = executeFormula(String expression)
+  deactivate WizardFrame
+  activate WizardController
+  WizardController -> FormulaCompiler : getInstance()
+  WizardController -> FormulaCompiler : Formula formula = compile()
+  WizardController -> Formula : Value result = evaluate()
+  deactivate WizardController
+  WizardFrame -> User : shows the formula's result
+  User -> WizardFrame : Show Tree
+  WizardFrame -> WizardController : buildAST()
+
+  alt if formula.charAt(0) == '='
+  WizardController -> ExcelExpressionCompiler : CommonTree ast = compileTree(formula)
+  create ANTLRStringStream 
+  ExcelExpressionCompiler -> ANTLRStringStream : input = new (formula)
+  create FormulaLexer 
+  ExcelExpressionCompiler -> FormulaLexer : lexer = new (input) 
+  create CommonTokenStream 
+  ExcelExpressionCompiler -> CommonTokenStream : tokens = new (lexer)
+  create FormulaParser
+  ExcelExpressionCompiler -> FormulaParser : parser = new (tokens)
+  ExcelExpressionCompiler -> FormulaParser : expression()
+  FormulaParser -> FormulaParser : getTree()
+  else if formula.charAt(0) == '#'
+  WizardController -> MonetaryExpressionCompiler : CommonTree ast = compileTree(formula)
+  create ANTLRStringStream 
+  MonetaryExpressionCompiler -> ANTLRStringStream : input = new (formula)
+  create MonetaryExpressionLexer 
+  MonetaryExpressionCompiler -> MonetaryExpressionLexer : lexer = new (input) 
+  create CommonTokenStream 
+  MonetaryExpressionCompiler -> CommonTokenStream : tokens = new (lexer)
+  create MonetaryExpressionParser
+  MonetaryExpressionCompiler -> MonetaryExpressionParser : parser = new (tokens)
+  MonetaryExpressionCompiler -> MonetaryExpressionParser : expression()
+  MonetaryExpressionParser -> MonetaryExpressionParser : getTree()
+  end
+
+  create WizardTreeFrame
+  WizardController -> WizardTreeFrame : new(formula, wizardFrame)
+  WizardTreeFrame -> WizardTreeFrame : fillTree(ast)
+  WizardTreeFrame -> User : shows the structure of the formula expression like an abstract syntax tree
+  alt if the user selects an element in the tree
+  User -> WizardTreeFrame : Selects a tree element
+  activate WizardTreeFrame
+  WizardTreeFrame -> WizardTreeFrame : wizardTreeValueChanged(evt)
+  WizardTreeFrame -> WizardFrame : selectElement(element)
+  deactivate WizardTreeFrame
+  note right of WizardFrame : The window highlights the selected element in the formula text area 
+  end
+  end
+
+  User -> WizardFrame : Confirms the formula
+  WizardFrame -> WizardController : setCellsFormula(String formula)
+  WizardController -> UIController : Cell cell = getActiveCell()
+  WizardController -> Cell : setContent(formula)
+@enduml

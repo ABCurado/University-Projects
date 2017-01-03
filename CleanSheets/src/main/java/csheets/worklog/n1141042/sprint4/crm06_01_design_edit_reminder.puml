@@ -1,0 +1,20 @@
+@startuml doc-files/crm06_01_design_edit_reminder.png
+User -> EditReminderUI : edit reminder
+EditReminderUI --> User : disply data of the selected reminder (name, description, tStep)
+User -> EditReminderUI : inserts new data
+EditReminderUI -> EditReminderController : editReminder(Reminder : selectedReminder) : Reminder
+EditReminderController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> EditReminderController : RepositoryFactory
+EditReminderController -> RepositoryFactory : reminderRepository()
+RepositoryFactory -> reminderRepository : create()
+RepositoryFactory --> EditReminderController : ReminderRepository
+EditReminderController -> ReminderRepository : editReminder(Reminder : reminder) : Reminder
+ReminderRepository --> EditReminderController : Reminder
+EditReminderController --> EditReminderUI : Reminder
+EditReminderUI --> User : display reminder information
+@enduml

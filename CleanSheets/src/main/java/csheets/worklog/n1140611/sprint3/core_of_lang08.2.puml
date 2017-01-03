@@ -1,0 +1,29 @@
+@startuml doc-files/core_of_lang08.2.png
+
+class ImportXMLController{
+
+    }
+class UIController {
+
+    }
+class ImportXML {
+
+    }
+class Workbook{
+
+    }
+class SpreadSheet{
+
+    }
+class Cell{
+
+    }
+
+UIController <-- ImportXMLController
+ImportXML <-- ImportXMLController
+Workbook <-- ImportXML
+SpreadSheet <-- Workbook
+SpreadSheet <-- ImportXML
+Cell<--SpreadSheet
+
+@enduml

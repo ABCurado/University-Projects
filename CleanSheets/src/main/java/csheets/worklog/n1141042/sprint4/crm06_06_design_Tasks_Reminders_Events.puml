@@ -1,0 +1,59 @@
+@startuml doc-files/crm06_06_design_Tasks_Reminders_Events.png
+
+User -> CreateContactUI : create contact
+
+CreateContactUI --> User : asks necessary data (fisrt name, last name, photography)
+User -> CreateContactUI : inserts data
+CreateContactUI -> CreateContactController : createContact(firstName, lastName, photography) : Contact
+CreateContactController --> CreateContactUI : Contact
+CreateContactUI --> User : display contact information
+
+
+User -> CreateTaskUI : create Task
+CreateTaskUI->CreateTaskController:creat()
+CreateTaskController->CreateTaskUI:Created()
+CreateTaskUI->User:Successfully
+
+
+User -> CreateCalendarUI : create Calendar
+CreateCalendarUI->CreateCalendarController: create()
+User -> CreateCalendarUI : create Event
+CreateCalendarController->CreateCalendarUI:created()
+CreateCalendarUI->User:Successfully
+
+
+
+
+User -> ReminderUI : create Reminder
+loop
+alt Add_Reminder
+User -> CreateReminderUI : create reminder
+CreateReminderUI --> User : asks necessary data (nameReminder, description, time)
+User -> CreateReminderUI : inserts data
+CreateReminderUI->CasoDeUsoAnterior: ......
+CreateReminderController --> CreateReminderUI : Reminder
+CreateReminderUI --> User : display reminder information
+end
+end
+alt Edit_Reminder
+User -> EditReminderUI : edit reminder
+EditReminderUI --> User : disply data of the selected reminder (name, description, tStep)
+User -> EditReminderUI : inserts new data
+EditReminderUI -> EditReminderController : editReminder(Reminder : selectedReminder) : Reminder
+EditReminderController->CasoDeUsoAnterior: ---------
+ReminderRepository --> EditReminderController : Reminder
+EditReminderController --> EditReminderUI : Reminder
+EditReminderUI --> User : display reminder information
+end
+
+alt Remove_Reminder
+
+User -> RemoveReminderUI : remove event
+RemoveReminderUI -> RemoveReminderController : removeReminder(Reminder : selectedReminder) : void
+RemoveReminderController->CasoDeUsoAnterior:......
+RemoveReminderController -> ReminderRepository : removeReminder(Reminder : reminder) : void
+ReminderRepository --> RemoveReminderController : void
+RemoveReminderController --> RemoveReminderUI : void
+
+end
+@enduml

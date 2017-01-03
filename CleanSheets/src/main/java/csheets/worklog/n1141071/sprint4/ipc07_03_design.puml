@@ -1,0 +1,64 @@
+@startuml doc-files/crm04_02_design.png
+actor Actor
+
+  participant "Spreedsheet" as UI 
+  participant "Controller : Battleship" as controller
+  participant "UIController" as uicontrol
+  participant "Volt : TcpServer" as server
+  participant "Battleship" as game
+  participant "Shipt" as ship
+
+  note right of Actor
+        Extention loading and integration with main UI can be found on IPC07_01 Extention diagrams
+  end note 
+
+  create controller
+  Actor -> controller : create(UIController)
+  create game
+  controller -> game : create(gameType)
+  controller -> uicontrol : addSpreadsheet()
+  create UI
+  uicontrol -> UI : create
+  controller -> UI : showEditBoard()
+  UI -> Actor : Show Board to Edit
+  loop
+    Actor -> UI : Place Ship on Board
+    UI -> controller : addShip(location, ship)
+    create ship
+    controller -> ship : create(UIController)
+    controller -> game : addShip(location, ship)
+    game -> ship : setLocation(location)
+  end loop
+  Actor -> UI : Finish Edit
+  UI -> controller : finishEdit()
+  controller -> server : send(finishEdit)
+  note right of Actor
+    Wait for opponent if needed
+  end note
+  controller -> UI : showPlayBoard()
+  
+  UI -> Actor : Show Play Board
+  loop
+    Actor -> UI : Do Move
+    UI -> controller : shoot(cell)
+    controller -> server : send(cellLocation)
+    controller -> game : shoot(cellLocation)
+    game -> ship : hit(cellLocation)
+    alt if hit is true
+        game -> ship : isDestroyed()
+    end
+    alt if ship is destroyed
+        controller -> game : allShipsDestroyed()
+    end
+    alt if allShipsDestroyed is true
+        note right of controller
+            exit loop
+        end note
+    end
+    UI -> Actor : Show move result message
+    note right of Actor
+        Wait for opponent move
+    end note
+  end loop
+  UI -> Actor : Show win/lose message
+@enduml

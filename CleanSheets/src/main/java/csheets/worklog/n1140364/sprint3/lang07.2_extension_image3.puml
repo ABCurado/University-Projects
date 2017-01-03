@@ -1,0 +1,21 @@
+  @startuml doc-files/lang07.2_extension_image3.png
+  actor User
+  participant MacroBeanShellAction as EA
+  participant ScriptManagerUI as manager
+  participant JOptionPane as JOption
+  participant "controller : MacroBeanShellController" as Control
+  participant "this.uiController : UIController" as UIC
+
+  User -> EA : actionPerformed(ActionEvent event)
+  create manager
+  EA -> manager : new()
+  EA -> manager : run()
+  create Control
+  manager -> Control : new()
+  alt !port >= 0 && !timer >= 0
+	manager -> UIC : addSelectionListener(this)
+	manager -> JOption : result=showMessageDialog(...)
+	manager -> manager : dispose()
+  else
+  end
+  @enduml

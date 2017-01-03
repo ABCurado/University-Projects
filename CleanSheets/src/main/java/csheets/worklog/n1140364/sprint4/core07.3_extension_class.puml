@@ -1,0 +1,14 @@
+  @startuml doc-files/core07.3_extension_class.png
+  class SearchReplaceAction {
+   }
+  class SearchReplaceMenu
+  class SearchExtension {
+    -String NAME;
+  }
+  class UISearch
+  class JMenuItem
+  SearchExtension -> UISearch : getUIExtension(UIController)
+  UISearch -> SearchReplaceMenu : getMenu()
+  SearchReplaceMenu -> JMenuItem : 'items'
+  JMenuItem o-> SearchReplaceAction : action
+  @enduml

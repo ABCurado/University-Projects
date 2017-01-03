@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>csheets</groupId>
+    <artifactId>csheets</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>CleanSheets</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
+
+    <dependencies>
+
+        <!--
+          We need to have the ANTLR runtime jar when running and compiling.
+        -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr-runtime</artifactId>
+            <version>3.4</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.192</version>
+        </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.beanshell/bsh -->
+        <dependency>
+            <groupId>org.beanshell</groupId>
+            <artifactId>bsh</artifactId>
+            <version>2.0b5</version>
+        </dependency>
+       <!-- http://mvnrepository.com/artifact/com.toedter/jcalendar -->
+        <dependency>
+			<groupId>com.toedter</groupId>
+			<artifactId>jcalendar</artifactId>
+			<version>1.4</version>
+		</dependency>
+        <!-- http://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/jfree/jfreechart -->
+		<dependency>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/org.mockito/mockito-all -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/org.jvnet.mock-javamail/mock-javamail -->
+		<dependency>
+			<groupId>org.jvnet.mock-javamail</groupId>
+			<artifactId>mock-javamail</artifactId>
+			<version>1.9</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/com.icegreen/greenmail -->
+		<dependency>
+			<groupId>com.icegreen</groupId>
+			<artifactId>greenmail</artifactId>
+			<version>1.5.0</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.0.6</version>
+		</dependency>
+
+
+    </dependencies>
+
+    <reporting>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.9</version>
+            </plugin>
+
+            <!-- integrate maven-cobertura-plugin to project site -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>cobertura</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.1</version>
+
+                <configuration>
+                    <groups>
+                        <group>
+                            <title>Application Core</title>
+                            <packages>csheets:csheets.core*:csheets.io*</packages>
+                        </group>
+                        <group>
+                            <title>User Interface</title>
+                            <packages>csheets.ui*</packages>
+                        </group>
+                        <group>
+                            <title>Extension Mechanism</title>
+                            <packages>csheets.ext:csheets.ui.ext*</packages>
+                        </group>
+                        <group>
+                            <title>Extensions</title>
+                            <packages>csheets.ext*</packages>
+                        </group>
+                        <group>
+                            <title>Work Log</title>
+                            <packages>csheets.worklog*</packages>
+                        </group>
+                    </groups>
+                </configuration>
+
+                <reportSets>
+                    <reportSet>
+                        <id>default</id>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+
+            </plugin>
+
+        </plugins>
+    </reporting>
+
+    <!--
+
+  Tell Maven which other artifacts we need in order to
+  build with the ANTLR Tool. Here we also make the default
+  goal be install so that you can just type mvn at the command
+  line instead of mvn install. And we add the java compiler plugin
+  for convenience to show how you can use 1.6 source files but
+  generate 1.4 compatible .class files (as few people seem to
+  know about the jsr14 target).
+  -->
+    <build>
+
+        <defaultGoal>install</defaultGoal>
+
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.1</version>
+
+                <configuration>
+                    <groups>
+                        <group>
+                            <title>Application Core</title>
+                            <packages>csheets:csheets.core*:csheets.io*</packages>
+                        </group>
+                        <group>
+                            <title>User Interface</title>
+                            <packages>csheets.ui*</packages>
+                        </group>
+                        <group>
+                            <title>Extension Mechanism</title>
+                            <packages>csheets.ext:csheets.ui.ext*</packages>
+                        </group>
+                        <group>
+                            <title>Extensions</title>
+                            <packages>csheets.ext*</packages>
+                        </group>
+                        <group>
+                            <title>Work Log</title>
+                            <packages>csheets.worklog*</packages>
+                        </group>
+                    </groups>
+                </configuration>
+
+                <executions>
+                    <execution>
+                         <goals>
+                            <goal>javadoc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+
+            <!--
+            Para a cobertura jacoco
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.6.201602180812</version>
+            </plugin>
+            -->
+
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.6.201602180812</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+            Para o plantuml
+            -->
+            <plugin>
+                <groupId>com.github.jeluard</groupId>
+                <artifactId>plantuml-maven-plugin</artifactId>
+                <version>1.2</version>
+                <configuration>
+                    <sourceFiles>
+                        <directory>${basedir}/src/main/java/</directory>
+                        <includes>
+                            <include>**/*.puml</include>
+                        </includes>
+                    </sourceFiles>
+                    <outputDirectory>${basedir}/target/site/apidocs/</outputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>plantuml-javadoc-site</id>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>plantuml-javadoc</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sourceforge.plantuml</groupId>
+                        <artifactId>plantuml</artifactId>
+                        <version>8039</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr3-maven-plugin</artifactId>
+                <version>3.4</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>antlr</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+            <!--
+              Strictly speaking, we did not need to generate this for you from
+              the prototype, but we use it to illustrate how you can get
+              the JDK 6 Java compiler to accept 1.5 or 1.6 targeted source code
+              but produce class files that are compatible with JRE 1.4. As
+              Michael Caine might not say, "Not a lot of people know that!"
+              -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+
+                <!--
+
+                    Build an uber-jar that is packaged with all the other dependencies,
+                    such as the antlr-runtime and so on. This will be useful
+                    for developers, who then do not need to download anything else or
+                    remember that they need antlr.jar in their CLASSPATH and so
+                    on.
+
+                    You can delete this plugin of course and you will then
+                    get a jar file with only the code generated and included
+                    directly in this project. With this plugin though you will
+                    find that when you build with:
+
+                       mvn install
+
+                    There will be an executable jar generated. You can run this
+                    as:
+
+                      java -jar csheets-1.0-jar-with-dependencies.jar demosource.dmo
+
+                    assuming you have a file called demosource.dmo to attempt a parse.
+
+                  -->
+                <artifactId>maven-assembly-plugin</artifactId>
+
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <!--
+
+					  Specify that we want the resulting jar to be executable
+					  via java -jar, which we do by modifying the manifest
+					  of course.
+					-->
+					<archive>
+
+						<manifest>
+							<mainClass>csheets.CleanSheets</mainClass>
+						</manifest>
+					</archive>
+
+				</configuration>
+
+				<!--
+				  We don't want to have to specifically ask for the uber jar, so we attach the
+				  running of this plugin to the execution of the package life-cycle
+				  phase.
+				-->
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,9 @@
+@startuml doc-files/EnabledesableLink_analysis.png
+
+actor User
+
+User->System: Starts the process.
+System->User: Asks to add the file path, and choose whether or not to link the file
+User->System: Chooses an option.
+System->User: enable or disable the link successfully.
+@enduml

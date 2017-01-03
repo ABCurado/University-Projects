@@ -1,0 +1,33 @@
+csheets.ext.deptree.DependencyTreeExtension;1.0;Tree_Dependency
+csheets.ext.simple.ExtensionExample;1.0;Just_an_Example
+csheets.ext.comments.CommentsExtension;1.0;Enables_cell_comments
+csheets.ext.contacts.ContactsExtension;2.0;Enables_contacts v2
+csheets.ext.contacts.ContactsExtension;1.0;Enables_contacts v1
+csheets.ext.events.EventsExtension;1.0;Setup_an_event
+csheets.ext.cellsSharing.ShareExtension;1.0;Share_data_to_others
+csheets.ext.distributedWorkbookSearch.NetworkWorkbookSearchExtension;1.2;Allow_workbook_search_on_all_found_instances
+csheets.ext.wizard.WizardExtension;1.0;Wizard
+csheets.ext.importExportData.ImportExportDataExtension;1.0;Enables_data_import_and_export
+csheets.ext.sort.SortExtension;1.0;Enables_cell_sorting
+csheets.ext.search.SearchExtension;1.0;Allows_expression_searching
+csheets.ext.chatApp.ChatAppExtension;1.0;Chat_room
+csheets.ext.game.GameExtension;1.0;Gaming_on_Cleansheets
+csheets.ext.calendar.CalendarExtension;1.0;Calendar
+csheets.ext.reminder.ReminderExtension;1.0;Allows_to_set_up_a_reminder
+csheets.ext.conditionalFormatting.ConditionalFormattingExtension;1.0;Text_formatting
+csheets.ext.FindWorkbook.FindWorkbookExtension;1.0;Find_workbook
+csheets.ext.macro_beanshell.MacroBeanShellExtension;1.0;Shell_on_Cleansheet
+csheets.ext.notes_and_lists.NotesListsExtension;2.0;Create_contacts_notes_and_lists
+csheets.ext.secureCommunications.SecureCommunicationsExtension;1.0;Allow_to_setup_a_secure_communication_and_Display_a_real_time_chart
+csheets.ext.style.StyleExtension;1.0;Enables_font_style
+csheets.ext.agenda.AgendaExtension;1.0;Wizard
+csheets.ext.email.EmailExtension;1.0;Email
+csheets.ext.tags.TagsExtension;1.0;Enables_contacts_tags v1
+csheets.ext.advancedWorkbookSearch.AdvancedWorkbookSearchExtension;2.0;Search
+csheets.ext.task.TaskExtension;1.0;Task
+csheets.ext.findNotesLists.FindNotesListsExtension;1.0;Find
+csheets.ext.networkExplorer.NetworkExplorerExtension;1.0;NetworkExplorer
+csheets.ext.shareFiles.ShareFilesExtension;1.0;ShareFiles
+csheets.ext.workbookGlobalVariable.WorkbookGlobalVariableExtension;1.0;Find
+csheets.ext.address.AddressExtension;1.0;Address
+csheets.ext.tableFilters.TableFiltersExtension;1.0;Tables_and_Filters_support

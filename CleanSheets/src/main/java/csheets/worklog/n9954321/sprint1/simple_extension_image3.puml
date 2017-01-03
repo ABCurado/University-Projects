@@ -1,0 +1,15 @@
+  @startuml doc-files/simple_extension_image3.png
+  participant UIController as UIC
+  participant ExtensionManager as ExtM
+  participant "extension : ExtensionExample" as EExample
+  participant "uiExtension : UIExtensionExample" as UIExt
+  UIC -> ExtM : extensions=getExtensions();
+  loop for Extension ext : extensions
+  	UIC -> EExample : uiExtension=getUIExtension(this);
+  	activate EExample
+  	create UIExt
+  	EExample -> UIExt : new
+  	deactivate EExample
+  	UIC -> UIC : uiExtensions.add(uiExtension);
+  end
+  @enduml

@@ -1,0 +1,17 @@
+@startumldoc-files/networkExplorer_receive.png
+NetworkExplorerPanel->NetworkExplorerController: new ()
+
+activate NetworkExplorerController
+NetworkExplorerController->Volt.UdpClient: new ()
+NetworkExplorerController->Volt.UdpServer: new ()
+deactivate NetworkExplorerController
+
+NetworkExplorerPanel->NetworkExplorerController:  List<AppInfo> app = receiveCells()
+
+activate NetworkExplorerController
+NetworkExplorerController->Volt.UdpClient: expect (":broadcast")
+NetworkExplorerController->Volt.UdpServer: send (":ip|:port")
+
+NetworkExplorerController->Volt.UdpServer: expect (":address|:value")
+deactivate NetworkExplorerController
+@enduml

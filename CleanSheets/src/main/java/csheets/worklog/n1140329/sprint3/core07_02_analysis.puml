@@ -1,0 +1,37 @@
+@startuml doc-files/core07_02_analysis.png
+  actor User
+  participant "<<Analysis>>\nUI" as SP
+  participant "<<Analysis>>\nController" as SC
+  participant "<<Analysis>>\nuiController" as UIC
+  participant "<<Analysis>>\nworkBookSearch" as wbs
+
+  activate SP
+  User -> SP : String pattern, List<Type> valueTypes, boolean comments
+  SP -> SP : performSearch()
+  activate UIC
+  SP -> UIC : List<Workbook> wb = workbooks()
+  deactivate UIC
+
+  activate SC
+  loop for each Workbook in wb
+  SP -> SC : res=searchWorkBook(Workbook wb,\nString pattern, List<Type> valueTypes, boolean formulas, boolean comments)
+  activate wbs
+  SC -> wbs : new(Workbook wb)
+  SC -> wbs : getMatches(String pattern,\nList<Type> valueTypes, boolean formulas, boolean comments)
+  end loop
+  deactivate SC
+
+  wbs -> wbs : compile(pattern)
+  loop for each Spreadsheet in the workbook
+  	wbs -> wbs : addAll(\ngetMatches(String pattern, List<Type> valueTypes, boolean formulas,\nboolean comments, Spreadsheet ss))
+  end
+  deactivate wbs
+  loop for each Search Result
+  	SP -> SP : resultsModel.addElement(r)
+  end
+
+  User -> SP : selects one the results
+  SP -> SP : focusOnCell()
+
+  deactivate SP
+@enduml

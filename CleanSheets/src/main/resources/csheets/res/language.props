@@ -1,0 +1,104 @@
+# Unary operators
+Negator
+Percent
+
+# Binary arithmetic operators
+Adder
+Subtracter
+Multiplier
+Divider
+Exponentiator
+
+# Binary relational operators
+Equal
+NotEqual
+LessThan
+LessThanOrEqual
+GreaterThan
+GreaterThanOrEqual
+
+# Miscellaneous binary operators
+Assign
+Concatenator
+RangeReference
+InstructionBlock
+
+# Monetary operators
+monetary.Pound
+monetary.PoundOperator
+monetary.Dollar
+monetary.DollarOperator
+monetary.Euro
+monetary.EuroOperator
+monetary.MonetaryAdder
+monetary.MonetarySubtracter
+monetary.MonetaryMultiplier
+monetary.MonetaryDivider
+
+# Pseudo-statements
+If
+Do
+
+# Logic functions
+True
+False
+And
+Or
+Not
+
+# Mathematic functions
+Count
+Sum
+Average
+Factorial
+
+# Loop functions
+For
+DoWhile
+WhileDo
+
+# Others functions
+Form
+Eval
+Script
+
+# # # Numeric functions reflected from java.lang.Math
+#
+# # Trigonometry
+# Sin
+# Sinh
+# Asin
+# Cos
+# Cosh
+# Acos
+# Tan
+# Tanh
+# Atan
+# Atan2
+# Hypot
+#
+# # Powers
+# Pow
+# Sqrt
+# Cbrt
+# Exp
+# Expm1
+# Log
+# Log10
+# Log1p
+#
+# # Rounding
+# Abs
+# Ceil
+# Floor
+# Rint
+# Ieeeremainder
+# Ulp
+#
+# Miscellaneous Mathematic
+# Min
+# Max
+# Signum
+# Random
+# ToDegrees
+# ToDadians

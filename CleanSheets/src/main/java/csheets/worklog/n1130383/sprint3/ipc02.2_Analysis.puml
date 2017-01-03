@@ -1,0 +1,25 @@
+  @startuml doc-files/ipc02.2_analysis.png
+
+  class AWSExtension {
+	+NAME: String
+   }
+
+
+  class AWSUI {
+
+  }
+
+  class AWSPanel
+
+  class AWSController
+
+  class WorkbookPreview
+
+note "AWS:Advanced Workbook Search" as N1
+
+  AWSExtension -> AWSUI : getUIExtension(UIController)
+  AWSUI -> AWSPanel : getSideBar():JComponent
+  AWSPanel-> AWSController
+  AWSController->WorkbookPreview: new(Workbook)
+
+  @enduml

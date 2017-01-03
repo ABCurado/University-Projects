@@ -1,0 +1,17 @@
+@startuml doc-files/email_configuration_extension_class_diagram.png
+
+class Email {
+  +Session session
+  +void connect()
+  +void sendMessage(String to, String subject, String body)
+}
+
+class Session{
+    +Properties props;
+	+Authenticator authenticator;
+	+Properties getProperties()
+}
+
+Email "1" *-up- "1" Session
+
+@enduml

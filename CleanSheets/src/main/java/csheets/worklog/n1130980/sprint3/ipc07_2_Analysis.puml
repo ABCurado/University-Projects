@@ -1,0 +1,38 @@
+@startuml doc-files/IPC07_2_Analysis.png
+User_1 -> System: In the sidebar right choose Profile User
+User_2 -> System: In the sidebar right choose Profile User
+User_1 -> System: Choose the sidebar Online
+User_2 -> System: Choose the sidebar Online
+System -> User_1: Shows the list of possible opponents
+System -> User_2: Shows the list of possible opponents
+User_1 -> System: Selects the opponent
+User_2 -> System: Selects the opponent
+User_1 -> System: Choose the sidebar Games
+User_2 -> System: Choose the sidebar Games
+System -> User_1: Shows the list of existing games
+System -> User_2: Shows the list of existing games
+User_1 -> System: Selects de Game
+User_2 -> System: Selects de Game
+User_1 -> System: Choose the sidebar Options
+User_2 -> System: Choose the sidebar Options
+System -> User_1: Show options
+System -> User_2: Show options
+User_1 -> System: Select the Connect option and confirms
+User_2 -> System: Select the Connect option and confirms
+User_1 -> System: Select the Play option
+User_2 -> System: Select the Play option
+System -> User_1: Show the game area
+System -> User_2: Show the game area
+User_1 -> System: Chose your symbol game
+User_2 -> System: Chose your symbol game
+System -> User_1: You can begin the game
+System -> User_2: wait for the opponent's play
+User_1 -> System: Sends the move
+System -> User_2: Sends the move of opponent(User_1)
+User_2 -> System: Plays
+System -> User_1: wait for the opponent's play
+User_2 -> System: Sends the move
+System -> User_1: Sends the move of opponent(User_2)
+System -> User_1: User_1 win
+System -> User_2: User_1 win
+@enduml

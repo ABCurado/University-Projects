@@ -1,0 +1,45 @@
+@startuml doc-files/ipc07_2_Design.png
+Actor User
+participant "GamePanel" as GP
+participant "GameController" as GCtrl
+participant "TCPService" as Tcp
+participant "TictactoeController" as TttCtrl
+participant "Tictactoe" as T
+participant "TCPServer" as TcpS
+participant "Workbook" as Wb
+participant "TictactoeSpreadsheet" as TS
+participant "StylableSpreadsheet" as Sts
+
+User->GP: connect
+GP->GCtrl: setContinuousTarget (target)
+GCtrl->Tcp: setContinuousTarget (target)
+GP->GCtrl: establishConnection (host, message)
+GCtrl->Tcp: client (host, message)
+User->GP: Play
+GP->GCtrl: StartTurn ()
+GP->GCtrl: startGame (selectedValue)
+GCtrl->TttCtrl: new TictactoeController (uiCtrl, turn, tct.getTarget)
+GCtrl->TttCtrl: start ()
+TttCtrl->T: new Tictactoe ()
+TttCtrl->TttCtrl: startServer ()
+TttCtrl->TcpS: NetworkManager.tcp ()
+TttCtrl->TcpS: server.expect (route, action)
+TttCtrl->T: play (col,row,content)
+TttCtrl->TttCtrl: repaintBoard ()
+TttCtrl->T: getValueAt ()
+TS->TttCtrl: contentChange (cell)
+TttCtrl->TS: getCell (col, row).setContent (value)
+TttCtrl->TttCtrl: newSpreadsheet ()
+TttCtrl->Wb: getActiveWorkbook ()
+Wb->TS: addTictactoeSpreadsheet ()
+Wb->Wb: getSpreadsheet (getSpreadsheetCount - 1)
+TttCtrl->TttCtrl: styleTicTacToe (activeBook, col, row, font, bg, fg, border)
+TttCtrl->Sts: getCell (col,row).getExtension (StyleExtension.NAME)
+TttCtrl->TS: getCell (col, row).setContent ("")
+TttCtrl->TttCtrl: addListeners ()
+TttCtrl->TttCtrl: repaintBoard ()
+GP->GCtrl: stopConnection ()
+GCtrl->Tcp: stopContinuousSending ()
+GP->GCtrl: stopCurrentGame ()
+GCtrl->TttCtrl: stopGame ()
+@enduml

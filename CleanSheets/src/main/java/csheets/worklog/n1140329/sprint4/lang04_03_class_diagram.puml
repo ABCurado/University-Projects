@@ -1,0 +1,59 @@
+@startuml doc-files/lang04_03_class_diagram.png
+class antlr.ASTFactory
+class antlr.collections.AST
+class csheets.CleanSheets
+class csheets.core.formula.Expression
+class csheets.core.formula.Formula
+class csheets.core.formula.Function
+class csheets.core.formula.FunctionParameter
+class csheets.core.formula.compiler.ExcelExpressionCompiler
+class csheets.core.formula.compiler.FormulaCompiler
+class csheets.core.formula.compiler.FormulaLexer
+class csheets.core.formula.compiler.FormulaParser
+class csheets.core.formula.lang.Language
+class csheets.ext.wizard.ui.FunctionListModel
+class csheets.ext.wizard.ui.WizardAction
+class csheets.ext.wizard.ui.WizardButton
+class csheets.ext.wizard.ui.WizardController
+class csheets.ext.wizard.ui.WizardFrame
+class csheets.ext.wizard.ui.WizardTreeFrame
+class csheets.ui.ctrl.BaseAction
+class csheets.ui.ctrl.UIController
+class javax.swing.text.DefaultHighlighter
+class javax.swing.text.Highlighter
+class javax.swing.tree.DefaultMutableTreeNode
+class org.antlr.runtime.ANTLRStringStream
+class org.antlr.runtime.CommonTokenStream
+class org.antlr.runtime.tree.CommonTree
+class org.antlr.runtime.tree.Tree
+class org.antlr.runtime.tree.TreeIterator
+csheets.ext.wizard.ui.FunctionListModel ..> csheets.core.formula.Function
+csheets.ext.wizard.ui.UIExtensionWizard ..> csheets.ui.ctrl.UIController
+csheets.ext.wizard.ui.WizardAction ..> csheets.CleanSheets
+csheets.ext.wizard.ui.WizardAction ..> csheets.ui.ctrl.UIController
+csheets.ext.wizard.ui.WizardAction ..> java.awt.event.ActionEvent
+csheets.ext.wizard.ui.WizardButton ..> csheets.CleanSheets
+csheets.ext.wizard.ui.WizardButton ..> csheets.ui.ctrl.UIController
+csheets.ext.wizard.ui.WizardController ..> antlr.ASTFactory
+csheets.ext.wizard.ui.WizardController ..> antlr.collections.AST
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.Expression
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.Formula
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.Function
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.FunctionParameter
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.compiler.ExcelExpressionCompiler
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.compiler.FormulaCompiler
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.compiler.FormulaLexer
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.compiler.FormulaParser
+csheets.ext.wizard.ui.WizardController ..> csheets.core.formula.lang.Language
+csheets.ext.wizard.ui.WizardController ..> csheets.ui.ctrl.UIController
+csheets.ext.wizard.ui.WizardController ..> org.antlr.runtime.ANTLRStringStream
+csheets.ext.wizard.ui.WizardController ..> org.antlr.runtime.CommonTokenStream
+csheets.ext.wizard.ui.WizardController ..> org.antlr.runtime.tree.CommonTree
+csheets.ext.wizard.ui.WizardFrame ..> csheets.ui.ctrl.UIController
+csheets.ext.wizard.ui.WizardFrame ..> javax.swing.text.DefaultHighlighter
+csheets.ext.wizard.ui.WizardFrame ..> javax.swing.text.Highlighter
+csheets.ext.wizard.ui.WizardTreeFrame ..> javax.swing.tree.DefaultMutableTreeNode
+csheets.ext.wizard.ui.WizardTreeFrame ..> org.antlr.runtime.tree.CommonTree
+csheets.ext.wizard.ui.WizardTreeFrame ..> org.antlr.runtime.tree.Tree
+csheets.ext.wizard.ui.WizardTreeFrame ..> org.antlr.runtime.tree.TreeIterator
+@enduml

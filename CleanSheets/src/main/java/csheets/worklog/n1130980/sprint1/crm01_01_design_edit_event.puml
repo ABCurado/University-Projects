@@ -1,0 +1,20 @@
+@startuml doc-files/crm01_01_design_edit_event.png
+User -> EditEventUI : edit event
+EditEventUI --> User : disply data of the user (fisrt name, last name, photography)
+User -> EditEventUI : inserts new data
+EditEventUI -> EditEventController : editEvent(Event : selectedEvent) : Event
+EditEventController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> EditEventController : RepositoryFactory
+EditEventController -> RepositoryFactory : eventsRepository()
+RepositoryFactory -> EventsRepository : create()
+RepositoryFactory --> EditEventController : EventsRepository
+EditEventController -> EventsRepository : editEvent(Event : event) : Event
+EventsRepository --> EditEventController : Event
+EditEventController --> EditEventUI : Event
+EditEventUI --> User : display event information
+@enduml

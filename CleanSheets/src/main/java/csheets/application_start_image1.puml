@@ -1,0 +1,54 @@
+ @startuml doc-files/application_start_image1.png
+participant CleanSheets as CS
+participant "app : CleanSheets" as aCS
+participant "FormulaCompiler" as FC
+participant Language as L
+participant ExtensionManager as EM
+participant "extProps : Properties" as extProps
+participant Class as Class
+participant "aClass : Class" as aClass
+participant "extension : Extension" as aExt
+
+[-> CS: main
+
+activate CS 
+
+create aCS
+CS -> aCS : app = new
+
+activate aCS
+aCS -> FC : getInstance
+aCS -> L : getInstance
+aCS -> EM : getInstance
+
+activate EM
+EM -> EM : instance=new ExtensionManager();
+EM -> extProps : load ("res/extensions.props")
+note right: load the extensions of the application
+EM -> extProps : load ("extensions.props")
+note right: load the extensions of the user
+
+loop for entry : extProps
+    EM -> Class : aClass = forName(entry.getKey())
+    activate Class
+    create aClass
+ 	Class -> aClass : new
+	deactivate Class
+    EM -> aClass : extension = (Extension)newInstance();
+	activate aClass
+    create aExt
+    aClass -> aExt : new
+    deactivate aClass
+    
+    EM -> aExt : name = getName
+    activate aExt
+    deactivate aExt
+    EM -> EM : extensionMap.put(name, extension)
+end
+        
+deactivate EM
+
+deactivate aCS
+
+deactivate CS
+@enduml

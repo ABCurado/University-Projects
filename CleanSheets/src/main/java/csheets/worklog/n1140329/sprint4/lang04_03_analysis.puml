@@ -1,0 +1,49 @@
+@startuml doc-files/lang04_03_analysis.png
+actor User
+
+  participant "<<Analyis>>\nAction" as Action 
+  participant "<<Analysis>>\nUI" as UI 
+  participant "<<Analysis>>\nController" as Controller 
+  participant "<<Analysis>>\nLanguage" as Language 
+  participant "<<Analysis>>\nFormulaCompiler" as FormulaCompiler 
+  participant "<<Analysis>>\nFormula" as Formula 
+  participant "<<Analysis>>\nUIController" as UIController 
+  participant "<<Analysis>>\nCell" as Cell 
+
+
+  User -> Action : starts use case
+  create UI 
+  Action -> UI : new(UIController) 
+  create Controller 
+  UI -> Controller : new(UIController) 
+  UI -> Controller : getFunctions()
+  Controller -> Language : getFunctions()
+
+  loop
+  UI -> UI : displayInformation()
+  end
+
+  loop the User can keep selecting functions and setting parameters to build a formula
+  User -> UI : Selects Function
+  UI -> Controller : getExpression(function)
+  UI -> User : shows editable expression to user
+  User -> UI : Sets parameters
+  activate UI
+  note right of UI : UI is listening to the edit box\n(where the user builds the formula)\nand dynamically shows the result of the inserted formula
+  UI -> UI : updateResult() 
+  UI -> Controller : String result = executeFormula(expression)
+  deactivate UI
+  activate Controller
+  Controller -> FormulaCompiler : Formula formula = compile()
+  Controller -> Formula : Value result = evaluate()
+  deactivate Controller
+  UI -> User : shows the formula's result
+  User -> UI : show syntax tree of the formula expression
+  UI -> Controller : buildAST()
+  end
+
+  User -> UI : Confirms the formula
+  UI -> Controller : setCellsFormula(String formula)
+  Controller -> UIController : Cell cell = getActiveCell()
+  Controller -> Cell : setContent(formula)
+@enduml

@@ -1,0 +1,52 @@
+@startuml doc-files/api_class_diagram.png
+
+class CleansheetsAPI {
+    -UIController uiController
+    +workbooks() : Stack<Workbook>
+    +workbook() : Workbook
+    +addSpreadsheet() : void
+    +addSpreadsheet(String[][] content) : void
+    +getSpreadsheet(int index) : Spreadsheet
+    +getSpreadsheetCount() : int
+    +removeSpreadsheet(Spreadsheet spreadsheet) : void
+    +spreadsheets() : Iterator<Spreadsheet>
+    +addScript(Code code) : void
+    +getScripts() : List<Code>
+    +getScript(String name) : Code
+    +clearScripts() : void
+    +addVariable(VariableArray variable) : void
+    +getAllVariables() : List<VariableArray>
+    +getVariable(String name) : VariableArray
+    +getVariableValue(String name, int position) : Value
+    +updateValue(String variable, Value value, int position) : void
+    +clearVariables() : void
+    +getParentFileName() : String
+    +setParentFileName(String name) : void
+    +getForm(String name) : FormE
+    +clearForms() : void
+    +getCell(Address address) : Cell
+    +getCell(int column, int row) : Cell
+    +getCells(Address ad1, Address ad2) : SortedSet<Cell>
+    +getCells() : SortedSet<Cell>
+    +getColumn(int index) : Cell[]
+    +getColumnCount() : int
+    +getRow(int index) : Cell[]
+    +getRowCount() : int
+    +getTitle() : String
+    +setTitle(String title) : void
+    +clearSelectedCells() : void
+    +getSelectedCell() : Cell
+    +getSelectedCells() : Cell[][]
+    +getSelectedColumn() : int
+    +getSelectedColumnCount() : int
+    +getSelectedColumns() : int[]
+    +getSelectedRow() : int
+    +getSelectedRowCount() : int 
+    +getSelectedRows() : int[]
+    +getMacros() : List<Code>
+    +getBeanShellScripts() : List<Code>
+    +getMacro(String name) : Code
+    +getBeanShellScript(String name) : Code
+}
+
+@enduml

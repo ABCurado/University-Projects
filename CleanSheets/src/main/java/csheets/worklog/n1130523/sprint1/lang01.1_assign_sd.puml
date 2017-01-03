@@ -1,0 +1,13 @@
+@startuml doc-files/lang01.1_design_assign_operator.png
+
+Util -> BinaryOperation : Value value = new BinaryOperation
+note left of BinaryOperation: Create the BinaryOperation object
+
+BinaryOperation -> ExcelExpressionCompiler : convert the cell and the operator
+BinaryOperation -> BinaryOperation : value.evaluate()
+
+Util -> CellReference : new
+CellReference -> Converter : Get the active spreadsheet and the left child.text()
+note right of CellReference: In the end - get the reference.getCell() and set the content with the value.toString()
+
+@enduml

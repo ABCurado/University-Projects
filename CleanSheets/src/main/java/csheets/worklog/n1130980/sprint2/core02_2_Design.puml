@@ -1,0 +1,40 @@
+@startuml doc-files/core02_2_Design.png
+actor User
+participant "CommentsPanel" as UIPanel
+participant "CommentPanel" as CmtPanel
+participant "JTextArea" as text
+participant "ApplyAction" as Action
+participant "CommentController" as Ctrl
+participant "CommentableCell" as Cell
+participant "Comment" as Cmt
+participant "CellRenderer" as CRenderer
+participant "UIController" as UICtrl
+
+UIPanel -> text : create()
+User -> UIPanel : commentChanged(cell)
+UIPanel -> Cell : hasComment()
+UIPanel -> UIPanel : paintCommentPanels()
+UIPanel -> UIPanel : cleanCommentsPanel();
+UIPanel -> Ctrl : getCommentList(this.cell)
+UIPanel -> CmtPanel : new CommentPanel(cmt.getUserName(), cmt.getText())
+CmtPanel -> Cmt : getUserName()
+CmtPanel -> Cmt : getText()
+UIPanel -> UIPanel : add(CmtPanel)
+UIPanel -> text : setText("")
+UIPanel -> CmtPanel : setVisible(true)
+UIPanel -> UIPanel : refreshUI()
+UIPanel -> UIPanel : revalidate();
+UIPanel -> UIPanel : repaint()
+UIPanel -> Action : create()
+User -> UIPanel : selectionChanged(event)
+UIPanel -> Action : focusLost(focusEvent)
+Action -> UIPanel : newComment()
+UIPanel -> Ctrl : addComment(cell,textField.getText())
+Ctrl -> Ctrl : System.getProperty("user.name")
+Ctrl -> Cell : addComment(userName, comment)
+Cell -> Cell : list.add(newComent)
+Cell -> Cell : fireCommentsChanged()
+Ctrl -> UICtrl : setWorkbookModified(workbook)
+UICtrl -> UICtrl : changeLog.put(workbook,true)
+UICtrl -> UICtrl : fireWorkbookModified(workbook)
+@enduml

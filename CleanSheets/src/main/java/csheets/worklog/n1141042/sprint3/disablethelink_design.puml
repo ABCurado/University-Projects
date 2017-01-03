@@ -1,0 +1,38 @@
+@startuml doc-files/Link_desableLink_analysis_design.png
+
+actor User
+participant "<<analysis>>\nDisabletheLinkUI" as DisabletheLinkUI
+participant "<<analysis>>\nImportTextFileController" as ImportTextFileController
+
+User->DisabletheLinkUI: choose the option
+DisabletheLinkUI->ImportTextFileController: new()
+
+activate ImportTextFileController
+alt Linking
+DisabletheLinkUI->ImportTextFileController: linked(filePath,separator,spreadsheet)
+ImportTextFileController->FileTask: new(this, filePath, separator, spreadsheet)
+FileTask->SpreadsheetImpl:new()
+FileTask->SpreadsheetImpl:setFileTask(fileTask)
+
+ImportTextFileController->Notification: new()
+ImportTextFileController->Notification: linkFileInfomer()
+Notification->Notifier:notifyChange(spreadsheet)
+ImportTextFileController->DisabletheLinkUI: successfully
+end
+
+
+alt Unlinking
+DisabletheLinkUI->ImportTextFileController: unlinked(spreadsheet)
+ImportTextFileController-> SpreadsheetImpl: destroyFileTask()
+ImportTextFileController->Notification: new()
+ImportTextFileController->Notification: linkFileInfomer()
+Notification->Notifier:notifyChange(spreadsheet)
+
+ImportTextFileController->DisabletheLinkUI: successfully
+end
+
+
+deactivate ImportTextFileController
+
+
+@enduml

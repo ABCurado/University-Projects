@@ -1,0 +1,43 @@
+  @startuml doc-files/lang02.3_sequence_diagram.png
+
+  actor user
+
+  participant WGVExtension as ex
+  participant WGVUI as ui
+  participant WGVPanel as panel
+  participant  WGVController as cont
+  participant  WGVAddDialog as a
+  participant  WGVEditDialog as e
+  participant UIController as uicont
+  participant Workbook as wb
+
+
+ex-> ui : new(UIController uiController);
+ui -> panel : new(UIController uiController);
+user -> panel : enables feature.
+user <-panel : show sidebar.
+user ->panel : add new variable
+panel -> a : new();
+user <- a : show add dialog.
+user -> a : insert variable name, value and position.
+panel -> a : retrieveValues();
+panel <-- a : name, value, position;
+panel -> cont : parseValue(value);
+panel -> uicont : getActiveWorkbook();
+panel <--uicont : workbook;
+panel -> wb : addVariable(name,value,position);
+user <- panel : show new Variable.
+
+group two-click-mouse - Edit Variable
+user->panel : two-click over any value from list.
+panel -> e : new();
+panel -> e : retrieveValues();
+panel <-- e : newValue;
+panel -> cont : parseValue(newValue);
+panel -> uicont : getActiveWorkbook();
+panel <--uicont : workbook;
+panel -> wb : updateVariable(newValue);
+end
+
+
+  @enduml

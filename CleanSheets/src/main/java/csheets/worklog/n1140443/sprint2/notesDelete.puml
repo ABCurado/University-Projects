@@ -1,0 +1,18 @@
+@startuml doc-files/notesDelete.png
+
+User->NotesUI : starts delete note process.
+NotesUI->NotesController:create()
+NotesUI->NotesController:showContacts()
+NotesController->Persistence:repositoryFactory()
+Persistence->AppSettings:instance()
+Persistence->AppSettings:getRepositoryFactory()
+AppSettings->RepositoryFactory:create()
+AppSettings->Persistence:RepositoryFactory
+Persistence->NotesController:RepositoryFactory
+NotesController->NotesUI:contactsList
+NotesUI->User:Systems shows contacts list
+User->NotesUI:The User selects a contact and a note
+NotesUI->NotesController:deleteNote(String noteText,Note note)
+NotesController->NoteFactory:deleteNote(String noteText,Note note)
+NotesController->NoteRepository:delete(Note note)
+@enduml

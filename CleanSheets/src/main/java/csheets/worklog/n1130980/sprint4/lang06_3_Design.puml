@@ -1,0 +1,48 @@
+@startuml doc-files/LANG06_3_Design.png
+Actor User
+participant Form as F
+participant FormE as FE
+participant UIController as UICtrl
+participant Workbook as Wb
+participant FormEditor as FEd
+participant FormEditorController as Ctrl
+participant Value as V
+participant Notification as N
+participant Notifier as Nr
+
+User->F: start process
+F->UICtrl: getActiveWorkbook()
+UICtrl->Wb: getForm(name)
+alt if(FormE == null)
+F->FE: new(name)
+F->UICtrl: getActiveWorkbook()
+UICtrl->Wb: addFormE(name, FormE)
+F->FE: setEditable(true)
+end
+F->FEd: new(FormE.name(), modal)
+FEd->FEd: initComponents()
+FEd->FEd: setModal(boolean)
+FEd->Ctrl: new(FormE.cell)
+FEd->FEd: checkBox.setSelected(FormE.isEditable)
+FEd->FE: isEditable()
+alt if(checkBox.isSelected())
+FEd->FE: setEditable(true)
+FEd->FEd: updateButton.setVisible(true)
+FEd->FEd: this.setEnable(true)
+end
+alt else
+FEd->FE: setEditable(true)
+FEd->FEd: updateButton.setVisible(true)
+FEd->FEd: this.setEnable(true)
+end
+FEd->N: formInformer()
+N->Nr: addObserver(this)
+alt for(Widget widget: FormE.lstWidgets)
+FEd->FEd: createPanel(widget, widget.content())
+FEd->FEd: addPanel(new Widget(content))
+end
+FEd->FEd: refreshUI()
+FEd->FEd: setVisible(true)
+F->V: new()
+
+@enduml

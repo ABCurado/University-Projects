@@ -1,0 +1,12 @@
+@startuml doc-files/analysis.png
+
+participant "User" as User
+participant "System" as System
+participant "BeanShell" as BeanShell
+
+User->System : Executes a BeanShell script, in which has invoked one or more API calls.
+System->BeanShell: Add the API object to the interpreter.
+System->BeanShell: Execute the script.
+System->User: Returns the output.
+
+@enduml

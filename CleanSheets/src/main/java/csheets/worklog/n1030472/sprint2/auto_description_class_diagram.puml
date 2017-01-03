@@ -1,0 +1,20 @@
+ @startuml doc-files/sort_class_diagram.png
+
+class ExtensionManager {
+	-instance : ExtensionManager
+	-extensionMap : SortedMap<String,Extension>
+	-ExtensionManagerFrame frame;
+	-ExtensionManager()
+	+load(Extension _class)
+}
+
+
+class ExtensionManagerFrame{
+	-List<String> extensionList
+	-CountDownLatch s
+}
+
+
+ExtensionManager <|-- ExtensionManagerFrame
+
+  @enduml

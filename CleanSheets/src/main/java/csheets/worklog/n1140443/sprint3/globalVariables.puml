@@ -1,0 +1,39 @@
+
+@startuml doc-files/globalVariables.png
+
+ExcellExpressionCompiler -> Language : language lang = getInstance()
+ExcellExpressionCompiler -> lang : BinaryOperator operator = getBinaryOperator(node)
+
+alt operator instanceof Assign
+ExcellExpressionCompiler -> ExcellExpressionCompiler : Expression left = convert(cell, node.child(0))
+ExcellExpressionCompiler -> ExcellExpressionCompiler : Expression right = convert(cell, node.child(1))
+
+create BinaryOperation
+ExcellExpressionCompiler -> BinaryOperation : BinaryOperation ope = new BinaryOperation(left, operator, right)
+ExcellExpressionCompiler -> BinaryOperation : Value value = ope.evaluate()
+
+alt rightOperand instanceof VariableGlobalReference
+create VariableGlobalReference
+Assign -> VariableGlobalReference : var = (VariableGlobalReference) rightOperand
+Assign -> VariableGlobalReference : var.evaluate()
+else else
+Assign -> Expression : rightOperand.evaluate()
+end
+
+alt leftOperand instanceof VariableGlobalReference
+create VariableGlobalReference
+Assign -> VariableGlobalReference : var = (VariableGlobalReference) leftOperand
+Assign -> VariableGlobalReference : CellImpl cell = (CellImpl)var.getCell
+Assign -> CellImpl : addVariables(var.getVariable(), value)
+end
+
+alt leftOperand instanceof CellReference
+Assign -> Expression : CellReference cell = (CellReference) leftOperand.getCell()
+Assign -> CellRefence : setContent(value)
+end
+
+create Literal
+ExcellExpressionCompiler -> Literal : Literal literal = new Literal(value)
+end
+
+@enduml

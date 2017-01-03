@@ -1,0 +1,28 @@
+@startuml doc-files/crm_contacts_with_tags_design_sd_2.png
+
+
+User -> TagUI : write tag to search a contact
+TagUI -> TagController: allContactsTag()
+TagController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create "<interface>\nRepositoryFactory"
+AppSettings -> "<interface>\nRepositoryFactory" : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> TagController : RepositoryFactory
+TagController -> "<interface>\nRepositoryFactory" : contactsRepository()
+"<interface>\nRepositoryFactory" -> "<interface>\nContactRepository": contacts()
+"<interface>\nContactRepository" -> "<interface>\nContactRepository": getContactByTag(String tag)
+TagController <-- "<interface>\nContactRepository": contact
+TagUI<--TagController: contact
+User -> TagUI : edit contact
+TagUI --> User : display data of the user (fisrt name, last name, photography)
+User -> TagUI : inserts new data
+TagUI -> TagController : editContact(editContact(theContact) : selectedContact) : Contact
+TagController -> "<interface>\nContactRepository" : contacts()
+"<interface>\nContactRepository" -> "<interface>\nContactRepository": save(theContact)
+"<interface>\nContactRepository" --> TagController : Contact
+TagController --> TagUI : Contact
+TagUI --> User : informs success of operation
+
+@enduml

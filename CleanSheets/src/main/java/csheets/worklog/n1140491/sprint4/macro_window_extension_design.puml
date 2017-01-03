@@ -1,0 +1,44 @@
+@startuml doc-files/macro_window_extension_design.png
+actor Actor
+
+  participant "UI : ScriptUI" as UI
+  participant "Controller : ScriptController" as controller
+  participant "Script : <<Interface>>" as script
+  participant "Script : Macro" as macro
+
+  create UI
+  Actor -> UI : starts use case
+  create controller
+  UI -> controller : create
+  Actor -> UI : selects macro window option
+  UI -> controller : createExampleScript(String codeType)
+  UI --> Actor : Show example script
+  Actor -> UI : Edit the script code
+  UI -> controller : executeCode(String codeType, String scriptCode)
+  controller -> script : run(String code)
+  alt codeType == Macro
+    create macro
+    script -> macro : create
+    script -> macro : run(String code)
+    macro -> macro : separateInstructions(String scriptCode)
+    create MacroExpressionComplier
+    macro -> MacroExpressionComplier: create
+    loop instructions
+      alt instruction.charAt(0) != ';'
+          macro -> MacroExpressionComplier : compile(instruction)
+          create Expression
+          MacroExpressionComplier -> Expression : create
+          macro -> Expression : evaluate()
+
+      end
+    end
+    macro -> macro : executeScript()
+    macro -> controller : return script result
+  else else
+    note right of controller
+        See other scripts diagrams
+    end note
+  end
+  controller -> UI : return result string
+  UI --> Actor : Show script result
+@enduml

@@ -1,0 +1,23 @@
+@startuml doc-files/crm01_01_design_add_contact.png
+User -> CreateContactUI : create contact
+CreateContactUI --> User : asks necessary data (fisrt name, last name, photography)
+User -> CreateContactUI : inserts data
+CreateContactUI -> CreateContactController : createContact(firstName, lastName, photography) : Contact
+CreateContactController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> CreateContactController : RepositoryFactory
+CreateContactController -> RepositoryFactory : contactsRepository()
+create ContactsRepository
+RepositoryFactory -> ContactsRepository : create()
+RepositoryFactory --> CreateContactController : ContactsRepository
+CreateContactController -> ContactsFactory : create(firstName, lastName, photography) : Contact
+ContactsFactory --> CreateContactController : Contact
+CreateContactController -> ContactsRepository : save(Contact : contact)
+ContactsRepository --> CreateContactController : Contact
+CreateContactController --> CreateContactUI : Contact
+CreateContactUI --> User : display contact information
+@enduml

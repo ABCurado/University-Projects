@@ -1,0 +1,22 @@
+  @startuml doc-files/simple_extension_image4.png
+  participant MenuBar as MB
+  participant "extensionsMenu : JMenu" as extensionsMenu
+  participant UIController as UIC
+  participant "extension : UIExtensionExample" as UIE
+  participant "extensionMenu : ExampleMenu" as EM 
+  MB -> MB : extensionsMenu = addMenu("Extensions", KeyEvent.VK_X);
+  activate MB
+    create extensionsMenu
+    MB -> extensionsMenu : new
+  deactivate MB
+  MB -> UIC : extensions=getExtensions();
+  loop for UIExtension extension : extensions
+    MB -> UIE : extensionMenu=extension.getMenu();
+    activate UIE
+  	create EM
+  	UIE -> EM : new
+    deactivate UIE
+    MB -> EM : icon = getIcon();
+    MB -> extensionsMenu : add(extensionMenu); 
+  end
+  @enduml

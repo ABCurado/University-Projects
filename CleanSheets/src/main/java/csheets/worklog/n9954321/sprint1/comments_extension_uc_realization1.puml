@@ -1,0 +1,23 @@
+  @startuml doc-files/comments_extension_uc_realization1.png
+  actor User 
+  participant "<<analysis>>\nCommentUI" as UI
+  participant "<<analysis>>\nCommentCtrl" as ctrl
+  participant "<<analysis>>\nSpreadsheet" as sheet
+  participant "<<analysis>>\nCell" as cell
+  User -> UI : selectCell()
+  activate UI
+  UI -> ctrl : getCellComment()
+  activate ctrl
+  ctrl -> sheet : getCell()
+  ctrl -> cell : getComment()
+  deactivate ctrl
+  UI -> UI : displayComment()
+  deactivate UI
+  User -> UI : enterCommentText()
+  activate UI
+  UI -> ctrl : setCellComment()
+  activate ctrl
+  ctrl -> cell : setComment()
+  deactivate ctrl
+  deactivate UI
+  @enduml

@@ -1,0 +1,12 @@
+@startuml doc-files/api_beanshell_connection.png
+
+participant "BeanShell" as BeanShell
+participant "Interpreter" as itp
+participant "api : CleanSheetsAPI" as API
+
+BeanShell->API: create(uiController)
+note right of BeanShell: BeanShell has an instance of the UIController that it shares with the API.
+BeanShell->itp: set("api", api)
+note right of BeanShell: After setting up the API instance, the BeanShell does the exact same process as developed in the previous feature increments.
+
+@enduml

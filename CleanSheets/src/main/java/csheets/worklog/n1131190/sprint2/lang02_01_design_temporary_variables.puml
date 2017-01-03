@@ -1,0 +1,39 @@
+@startuml doc-files/lang02_01_design_temporary_variables.png
+
+ExcellExpressionCompiler -> Language : language lang = getInstance()
+ExcellExpressionCompiler -> lang : BinaryOperator operator = getBinaryOperator(node)
+
+alt operator instanceof Assign
+ExcellExpressionCompiler -> ExcellExpressionCompiler : Expression left = convert(cell, node.child(0))
+ExcellExpressionCompiler -> ExcellExpressionCompiler : Expression right = convert(cell, node.child(1))
+
+create BinaryOperation
+ExcellExpressionCompiler -> BinaryOperation : BinaryOperation ope = new BinaryOperation(left, operator, right)
+ExcellExpressionCompiler -> BinaryOperation : Value value = ope.evaluate()
+
+alt rightOperand instanceof VariableLocalReference
+create VariableLocalReference
+Assign -> VariableLocalReference : var = (VariableLocalReference) rightOperand
+Assign -> VariableLocalReference : var.evaluate()
+else else
+Assign -> Expression : rightOperand.evaluate()
+end
+
+alt leftOperand instanceof VariableLocalReference
+create VariableLocalReference
+Assign -> VariableLocalReference : var = (VariableLocalReference) leftOperand
+Assign -> VariableLocalReference : CellImpl cell = (CellImpl)var.getCell
+Assign -> CellImpl : addVariables(var.getVariable(), value)
+end
+
+alt leftOperand instanceof CellReference
+Assign -> Expression : CellReference cell = (CellReference) leftOperand.getCell()
+Assign -> CellRefence : setContent(value)
+end
+
+create Literal
+ExcellExpressionCompiler -> Literal : Literal literal = new Literal(value)
+
+end
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml doc-files/crm01_01_design_edit_contact.png
+User -> EditContactUI : edit contact
+EditContactUI --> User : disply data of the user (fisrt name, last name, photography)
+User -> EditContactUI : inserts new data
+EditContactUI -> EditContactController : editContact(Contact : selectedContact) : Contact
+EditContactController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> EditContactController : RepositoryFactory
+EditContactController -> RepositoryFactory : contactsRepository()
+RepositoryFactory -> ContactsRepository : create()
+RepositoryFactory --> EditContactController : ContactsRepository
+EditContactController -> ContactsRepository : editContact(Contact : contact) : Contact
+ContactsRepository --> EditContactController : Contact
+EditContactController --> EditContactUI : Contact
+EditContactUI --> User : display contact information
+@enduml

@@ -1,0 +1,47 @@
+@startuml doc-files/final_design.png
+
+participant "User" as User
+participant "SecureCommunicationsPanel" as UI
+participant "SecureCommunicationsController" as Controller
+participant "NetworkManager" as Network
+participant "received : MessageReceivedChannel" as MessageReceivedChannel
+participant "UdpServer" as UdpServer
+participant "TcpServer" as TcpServer
+participant "UdpClient" as UdpClient
+participant "encryption : MessageEncryptionChannel" as MessageEncryptionChannel
+participant "sent : MessageSentChannel" as MessageSentChannel
+
+User->UI: Starts the secure communication process.
+UI->Controller: startServices(ui)
+Controller->Network: udp()
+note right of Network: Gets the UDP service from Volt.
+Controller->MessageReceivedChannel: create(ui)
+Controller->UdpServer: channel(received)
+note left of Controller: It should expect for the necessary routes.
+
+Controller->Network: tcp()
+note right of Network: Gets the TCP service from Volt.
+Controller->MessageReceivedChannel: create(ui)
+Controller->TcpServer: channel(received)
+note left of Controller: It should expect for the necessary routes.
+
+UI->User: Asks for a message and if it should be sent securely or not.
+User->UI: Inserts a message and the secure option.
+UI->Controller: send(ui, message, secure)
+
+Controller->UdpClient: create(0)
+
+alt secure == true
+    Controller->MessageEncryptionChannel: create(ui)
+    Controller->UdpClient: channel(encryption)
+else
+end
+
+Controller->MessageSentChannel: create()
+Controller->UdpClient: channel(sent)
+Controller->UdpClient: send(":secure-communications", "all", message)
+
+UI->User: Dispaly chart
+note left of UI: This chart is created in real time and the data used for that comes from the messages size.
+
+@enduml

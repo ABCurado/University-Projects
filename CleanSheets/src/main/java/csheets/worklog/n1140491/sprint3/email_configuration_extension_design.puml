@@ -1,0 +1,34 @@
+  @startuml doc-files/email_configuration_extension_design.png
+  actor User
+  participant "ConfigureEmailUI" as UI
+  participant "ConfigureEmailCtrl" as ctrl
+  participant "Spreadsheet" as sheet
+  participant "Cell" as cell
+  participant "Session" as session
+  participant "Email" as email
+  User -> UI : selects option to configure email
+  UI -> User : asks for data
+  User -> UI : inserts data
+  activate UI
+  UI -> ctrl : configureMail(email, password, server)
+  activate ctrl
+  ctrl -> session : creates session with properties
+  ctrl -> email : create(Session)
+  ctrl -> email : connect(server, email, password)
+  ctrl -> ctrl : updateProperties(session, email, password)
+
+
+  User-> UI : chooses the option to send a test email
+  loop for destination, subject and body
+    UI -> sheet : getCell()
+    UI -> cell : getContent()
+  end
+  UI -> ctrl : sendTestEmail(email, to, subject, body)
+  ctrl -> email : sendMessage(to, subject, body)
+
+
+
+  deactivate ctrl
+  UI -> UI : displayEmail()
+  deactivate UI
+  @enduml

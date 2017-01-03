@@ -1,0 +1,13 @@
+@startuml doc-files/general_design_client.png
+
+participant "Controller" as Controller
+participant "<UDP or TCP>Service" as Service
+participant "Volt.<Udp or Tcp>Client" as Volt
+
+Controller->Service: server()
+Service->AppSettings: getApplicationKey()
+Service->MessageEncryptionChannel: create(applicationKey)
+Service->Volt: channel(route, encryptionChannel)
+Service->Volt: Expect for routes and stream the service ...
+
+@enduml

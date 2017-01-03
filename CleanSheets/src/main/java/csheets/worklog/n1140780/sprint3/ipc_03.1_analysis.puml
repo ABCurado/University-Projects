@@ -1,0 +1,38 @@
+@startuml doc-files/ipc_03.1_analysis.png
+
+actor User
+participant "<<analysis>>\nSearchInstanceWorkbookUI" as UI
+participant "<<analysis>>\nSearchInstanceWorkbookController" as Control
+participant "<<analysis>>\nVolt.UdpClient" as Volt.UdpClient
+participant "<<analysis>>\nVolt.UdpServer" as Volt.UdpServer
+participant "<<analysis>>\nVolt.TCPClient" as TCPClient
+participant "<<analysis>>\nVolt.TCPServer" as TCPServer
+
+User->UI: starts operation
+UI->Control: new ()
+
+activate Control
+Control->Volt.UdpClient: new ()
+Control->Volt.UdpServer: new ()
+deactivate Control
+UI->Control: List<String> lst = getOtherInstances()
+loop
+activate Control
+Control->Volt.UdpClient: send(":broadcast")
+note right of Control: manager.after(1).every(5).fire(broadcast)
+Control->Volt.UdpServer: expect(":ip|:port")
+deactivate Control
+end
+UI->User: Shows other available instances
+User->UI: Selects instance
+note right of UI: String target = instance.ip+":"instance.port
+User->UI: Send Request
+activate UI
+UI->Control: sendRequest(target, message)
+activate Control
+deactivate UI
+Control -> TCPClient : send(":request", target, msg)
+deactivate Control
+UI <- TCPServer: update
+
+@enduml

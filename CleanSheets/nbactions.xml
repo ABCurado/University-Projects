@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-site</actionName>
+            <displayName>site</displayName>
+            <goals>
+                <goal>site</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-cobertura</actionName>
+            <displayName>cobertura</displayName>
+            <goals>
+                <goal>cobertura:cobertura</goal>
+            </goals>
+        </action>
+    </actions>

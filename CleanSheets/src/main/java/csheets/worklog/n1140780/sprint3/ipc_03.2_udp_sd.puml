@@ -1,0 +1,23 @@
+@startuml doc-files/ipc_03.2_udp.png
+
+participant "SearchInstanceWorkbookController" as Control
+participant "UdpService" as udp
+
+Control->udp: server(seconds)
+
+note right of udp: On the client side...
+udp->udp: expect(broadcast)
+note right of udp: On broadcast reception, responds with port...
+udp->udp: send(port)
+udp->udp: expect(port)
+note right of udp: On port reception notifies observer UI to add it...
+udp->udp: notifyChanges(newAddress)
+
+note right of Control: On the requester side...
+Control->udp: client(seconds)
+udp->udp: send(broadcast)
+
+
+
+
+@enduml

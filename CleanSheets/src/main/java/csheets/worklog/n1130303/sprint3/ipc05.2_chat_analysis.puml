@@ -1,0 +1,22 @@
+@startuml doc-files/ipc05.2_chat_analysis.png
+
+participant "UI" as UI
+participant "Controller" as Control
+participant "UDPService" as UDPService
+participant "TCPService" as TCPService
+
+UI -> Control : port, time
+Control -> TCPService : port
+TCPService -> TCPService : expect(":message, Action)
+Control -> UDPService : time
+UDPService -> UDPService : expect("broadcast", Action)
+Control -> UDPService : send (":broadcast", "all:30600", "check")
+note right of Control : taskmanager.after(1).every(time).fire(broadcast)
+note left of UDPService : <<Network>>
+UI <-- UDPService : update
+UI -> Control : sendMessage
+note right of UI : data
+Control -> TCPService : send(":message", "Hello", data)
+UI <-- TCPService: udpate
+
+@enduml

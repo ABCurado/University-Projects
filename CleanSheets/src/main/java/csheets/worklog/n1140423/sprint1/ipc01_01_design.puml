@@ -1,0 +1,50 @@
+@startuml doc-files/ipc01_01_design.png
+
+participant "UIController" as UIController
+participant "SpreadsheetTable" as SpreadsheetTable
+participant "UIShareCellsExtension" as ShareCellsUI
+participant "ShareCellsController" as Controller
+participant "Volt.UdpClient" as UdpClient
+participant "Volt.UdpServer" as UdpServer
+participant "<interface>\nCell" as Cell
+
+UIController->ShareCellsUI: runExtension()
+ShareCellsUI->Controller: new ()
+activate Controller
+Controller->UdpClient: new ()
+Controller->UdpServer: new ()
+deactivate Controller
+
+ShareCellsUI->Controller: List<String> lst = getOtherInstances()
+
+loop
+activate Controller
+Controller->UdpClient: send(":broadcast")
+note right of Controller: manager.after(1).every(5).fire(broadcast)
+Controller->UdpServer: expect(":ip|:port")
+deactivate Controller
+end
+ShareCellsUI->ShareCellsUI: Shows other available instances
+
+
+note left of ShareCellsUI: in a sidebar window
+ShareCellsUI->ShareCellsUI: Selects instance
+note right of ShareCellsUI: String target = instance.ip+":"instance.port
+UIController->ShareCellsUI: selectionEventAction()
+
+activate ShareCellsUI
+ShareCellsUI->SpreadsheetTable: Cell [][] cells = getSelectedCells()
+ShareCellsUI->Controller: sendCells(target, cells)
+activate Controller
+deactivate ShareCellsUI
+loop cells
+Controller->Cell: getAddress()
+Controller->Cell: getValue()
+Controller->Controller:msg=prepareMessage(Address ad,Value val)
+end
+
+Controller->UdpClient: send(":address|:value", target, msg)
+deactivate Controller
+ShareCellsUI->UIController: Sended cells
+
+@enduml

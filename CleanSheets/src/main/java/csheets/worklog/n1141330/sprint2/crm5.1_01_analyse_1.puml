@@ -1,0 +1,6 @@
+@startuml doc-files/crm5.1_01_analyse_1.png
+User -> System : Start the process of create a new calendar.
+System -> User : Ask for a contact color name and description.
+User -> System : Insert the info.
+System -> User : Validates and display the Calendar.
+@enduml

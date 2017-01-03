@@ -1,0 +1,16 @@
+@startuml doc-files/analysis.png
+
+participant "User #1" as U1
+participant "User #2" as U2
+participant "Instance #1" as I1
+participant "Instance #2" as I2
+
+U1 -> I1 : Send a secure message to I2
+I1 -> I1 : encrypt(message)
+note right of I1 : I1 uses its application key to encrypt the message.
+I1 -> I2 : send(encryptedMessage)
+I2 -> I2 : decrypt(encryptedMessage)
+note left of I2 : I2 uses its application key to decrypt the message.
+I2 -> U2 : Shows the original message.
+
+@enduml

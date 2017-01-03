@@ -1,0 +1,24 @@
+@startuml doc-files/ipc_analysis.png
+
+participant "UI" as UI
+participant "Controller" as Control
+participant "UDP" as UDP
+participant "UDPClient" as UDPcli
+participant "TCPClient" as TCPcli
+participant "TCPServer" as TCPserv
+
+UI -> Control : port, time
+Control -> TCPserv : port
+TCPserv -> TCPserv : expect(":cells, Action)
+Control -> UDP : time
+UDP -> UDP : expect("broadcast", Action)
+Control -> UDPcli : send (":broadcast", "all:30600", "check")
+note right of Control : taskmanager.after(1).every(time).fire(broadcast)
+note left of UDP : <<Network>>
+UI <- UDP : update
+UI -> Control : sendCells
+note right of UI : data
+Control -> TCPcli : send(":cells", "A1 (example)", data)
+UI <- TCPserv: udpate
+
+@enduml

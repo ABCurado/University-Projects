@@ -1,0 +1,42 @@
+  @startuml doc-files/core07_02_design_2.png
+  actor User
+  participant SearchPanel as SP
+  participant "this.searchController : SearchController" as SC
+  participant "this.uiController : UIController" as UIC
+  participant "workBookSearch : WorkBookSearch" as wbs
+
+  activate SP
+  User -> SP : jSearchTextField.setText\n(String pattern, Map<String, Type> types\n, boolean formulas, boolean comments)
+  User -> SP : jSearchButton.actionPerformed(ActionEvent evt)
+  SP -> SP : performSearch()
+  activate UIC
+  SP -> UIC : Stack<Workbook> wb = workbooks()
+  deactivate UIC
+
+  activate SC
+  loop for Workbook w : wb
+  SP -> SC : res=searchWorkBook(Workbook wb, String pattern,\nMap<String, Type> types, boolean formulas, boolean comments)
+  activate wbs
+  SC -> wbs : new(Workbook wb)
+  SC -> wbs : getMatches(String pattern, Map<String, Type> types\n, boolean formulas, boolean comments)
+  end loop
+  deactivate SC
+
+  wbs -> wbs : compile(pattern)
+  note right of wbs
+        Throws PatternSyntaxException on invalid input...
+  end note
+  loop for Spreadsheet ss : wb.getSpreadsheets()
+  	wbs -> wbs : addAll(\ngetMatches(String pattern, Map<String, Type> types, boolean formulas,\nboolean comments, Spreadsheet ss))
+  end
+  deactivate wbs
+  loop for SearchResultDTO r : res
+  	SP -> SP : resultsModel.addElement(r)
+  end
+
+  User -> SP : selects one the results
+  SP -> SP : mouseClickedEvent(evt)
+  note left of SP : focuses on the respective cell
+
+  deactivate SP
+  @enduml

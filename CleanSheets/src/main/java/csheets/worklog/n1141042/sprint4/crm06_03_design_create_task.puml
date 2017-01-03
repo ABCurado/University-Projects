@@ -1,0 +1,36 @@
+@startuml doc-files/crm06_03_design_create_task.png
+alt Create
+User -> TaskFrame : create task
+TaskFrame -> TaskController: new()
+TaskController -> ContactRepository: Contact().all()
+TaskFrame -> TaskManager : create()
+TaskManager --> User : asks data (taskName,descriprion,priority,percentage,contact, deadLine)
+User -> TaskManager : inserts data
+TaskManager -> TaskController : createTask(taskName,descriprion,priority,percentage,Contact, deadLine)
+TaskController->TaskFactory:  createTask(taskName,descriprion,priority,percentage,Contact, deadLine)
+TaskFactory->Task:  task(taskName,descriprion,priority,percentage,Contact, deadLine)
+TaskController -> TaskRepository : add(task)
+TaskController -> Notification: taskInformer()
+TaskController-> TaskManager: task
+TaskFrame -> TaskFrame: update()
+TaskFrame -> TaskPanelSingle: new(addTaskPanel(panel))
+TaskFrame -> User : successful
+end
+alt Edit
+TaskManager->TaskController: defineTask(taskName,descriprion,priority,percentage,contact, deadLine)
+TaskManager->editTask:editTask(task)
+TaskController->Repository:save(task)
+TaskController->Notification:taskInformer()
+TaskController-> TaskManager: task
+TaskFrame -> TaskFrame: update()
+TaskFrame -> User : successful
+end
+
+alt remove
+TaskPanelSingle->TaskController: removeTask(task)
+TaskController->Repository:delete(entity)
+TaskController->Notification:taskInformer()
+TaskFrame -> TaskFrame: update()
+TaskFrame -> User : successful
+end
+@enduml

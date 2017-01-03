@@ -1,0 +1,14 @@
+@startuml doc-files/crm02_01_design_create_adress.png
+
+User -> AdressPanel : create task
+AdressPanel -> AdressController: new()
+AdressController -> ContactRepository: Contact().all()
+AdressController -> AdressRepository: AllAdress()
+AdressPanel -> AdressManager : create()
+AdressManager --> User : asks data (contact,country,city,street,postalCode)
+User -> AdressManager : inserts data
+AdressManager -> AdressController : createAdress(contact,country,city,street,postalCode,boolean main)
+AdressController -> AdressRepository : add(adress)
+AdressPanel -> AdressPanel: update()
+AdressPanel -> AdressPanelSingle: new(addAdressPanel(panel))
+@enduml

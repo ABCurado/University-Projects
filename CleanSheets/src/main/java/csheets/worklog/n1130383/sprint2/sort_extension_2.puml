@@ -1,0 +1,22 @@
+  @startuml doc-files/sort_extension_2.png
+title: How SortExtension is loaded through ExtensionManager
+  participant ExtensionManager as ExtM
+  participant Class
+  participant "extensionClass:Class" as aClass
+  participant "extension : SortExtension" as SortExtension
+  ExtM -> Class : aClass = forName("csheets.ext.simple.ExtensionExample");
+  activate Class
+  create aClass
+  Class -> aClass : new
+
+  deactivate Class
+  ExtM -> aClass : extension = (Extension)newInstance();
+  activate aClass
+  create SortExtension
+  aClass -> SortExtension : new
+  deactivate aClass
+  ExtM -> SortExtension : name = getName();
+  activate SortExtension
+  deactivate SortExtension
+  ExtM -> ExtM : extensionMap.put(name, extension)
+  @enduml

@@ -1,0 +1,32 @@
+@startuml doc-files/ipc05.1_design1.png
+
+participant "UIController" as UIController
+participant "ChatUI" as ChatUI
+participant "ChatAppController" as ChatAppController
+participant "Volt.UdpClient" as UdpClient
+participant "Volt.UdpServer" as UdpServer
+
+UIController->ChatUI: activates "Receive Message" option
+ChatUI->ChatAppController: new ()
+
+activate ChatAppController
+ChatAppController->UdpClient: new ()
+ChatAppController->UdpServer: new ()
+deactivate ChatAppController
+
+ChatUI->ChatAppController: message = receiveMessage()
+
+activate ChatAppController
+ChatAppController->UdpClient: expect (":broadcast")
+ChatAppController->UdpServer: send (":ip|:port")
+
+ChatAppController->UdpServer: expect (":chat")
+deactivate ChatAppController
+
+ChatUI->ChatUI:set message tree control
+note right of ChatUI: receive message and update all chat's ui
+
+ChatAppController->UIController: message saved successfully
+
+@enduml
+@enduml

@@ -1,0 +1,15 @@
+@startuml doc-files/ipc_analysis_2_3.png
+
+actor User
+participant "System" as System
+
+User -> System:Select a cell
+System -> User :Show cell comment
+User -> System:Apply format and style to the comment
+System-> User:Display a history of comment changes
+
+
+
+
+@enduml
+

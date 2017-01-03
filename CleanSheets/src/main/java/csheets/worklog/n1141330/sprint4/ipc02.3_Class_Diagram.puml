@@ -1,0 +1,95 @@
+ @startuml doc-files/ipc02.3_class_diagram.png
+
+class UIController {
+	-extensions : uiExtension[]
+	--
+	+UIController(Cleansheet app)
+	+getExtensions() : uiExtension[]
+}
+
+class ExtensionManager {
+	-instance : ExtensionManager
+	-extensionMap : SortedMap<String,Extension>
+	--
+	-ExtensionManager()
+	+load(String ClassName) : Extension.NAME
+	+load(Extension _class)
+}
+
+class Extension{
+}
+
+class AWSExtension{
+	+NAME : string
+	-VERSION : string
+	--
+	+super(String name)
+	+getUIExtension(UIController controller) : UIExtension
+}
+
+class UIExtension{
+}
+
+class AWSUI{
+	+AWSUI(UIController uicontroller);
+	+getSideBar() : JComponent
+}
+
+class JPanel{
+}
+
+class AWSPanel{
+	-awsController : AWSController
+	-uiController : UIController
+	-resultsModel : DefaultListModel
+	-table : DefaultTableModel
+	-file : File
+	-pattern : String
+	-files : List<File>
+	-workbook : Workbook
+	-cont : int
+	--
+	+AWSPanel(UIController uicontroller);
+	-performSearch();
+	-jResultsListMouseClicked(MouseEvent evt);
+	-setUpPreview();
+	-checkDuplicatedFiles();
+	-validatePattern();
+	-validateDirectory(File file);
+}
+
+
+class AWSController{
+	+AWSController();
+	+search(File dir,String pattern) : List<File>
+	+setUpWorkbookPreview(Workbook wb, String[][] previewContent, String[] previewTitles);
+}
+
+class WorkbookPreview{
+	-workbook : Workbook
+	-cell : Cell
+	-spreadsheet : Spreadsheet
+	-preview : Cell[][]
+	--
+	+WorkbookPreview(Workbook workbook);
+	+getPreview() : Cell[][]
+	-preview();
+	-checkColumn() : boolean
+	-setUpPreview();
+}
+
+
+
+
+JPanel <|-- AWSPanel
+Extension <|-- AWSExtension
+UIExtension <|-- AWSUI
+
+UIController --> ExtensionManager : getExtensions();
+ExtensionManager --> AWSExtension : load(Extension extension);
+AWSExtension --> AWSUI : new(UIController controller);
+AWSUI --> AWSPanel : new(UIController controller);
+AWSPanel --> AWSController : new(Workbook wb);
+AWSController --> WorkbookPreview : new(Workbook wb);
+
+  @enduml

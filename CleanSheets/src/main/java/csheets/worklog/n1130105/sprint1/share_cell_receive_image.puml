@@ -1,0 +1,38 @@
+@startuml doc-files/share_cell_receive_image.png
+
+actor User 
+participant "<<analysis>>\nShareCellUI" as ShareCellUI
+participant "<<analysis>>\nShareCellController" as ShareCellController
+participant "<<analysis>>\nVolt.UdpClient" as Volt.UdpClient
+participant "<<analysis>>\nVolt.UdpServer" as Volt.UdpServer
+participant "<<analysis>>\nUI" as UI
+
+User->ShareCellUI: activates "Receive Cells" option
+ShareCellUI->ShareCellController: new ()
+
+activate ShareCellController
+ShareCellController->Volt.UdpClient: new ()
+ShareCellController->Volt.UdpServer: new ()
+deactivate ShareCellController
+
+ShareCellUI->ShareCellController:  List<Cell> cells = receiveCells()
+
+activate ShareCellController
+ShareCellController->Volt.UdpClient: expect (":broadcast")
+ShareCellController->Volt.UdpServer: send (":ip|:port")
+
+ShareCellController->Volt.UdpServer: expect (":address|:value")
+deactivate ShareCellController
+
+ShareCellUI->ShareCellUI: checkCells()
+note left of ShareCellUI: checks if the received cells\nare located on an address that\nalready has existing cells
+
+alt if there are already existing cells
+    ShareCellUI->User: Do you wish to replace the current cells\n   with the received ones?
+    User->ShareCellUI: Yes
+end
+	
+ShareCellUI->UI: setCells(cells)
+ShareCellUI->User: Cells changed successfully
+
+@enduml

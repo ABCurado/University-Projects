@@ -1,0 +1,15 @@
+  @startuml doc-files/ipc_03.2_extension_image1.png
+  class WorkbookSearchAction {
+   }
+  class WorkbookSearchMenu
+  class WorkbookSearchExtension {
+    -String NAME;
+  }
+  class UIExtensionWorkbookSearch
+  class JMenuItem
+
+  WorkbookSearchExtension -> UIExtensionWorkbookSearch : getUIExtension(UIController)
+  UIExtensionWorkbookSearch -> WorkbookSearchMenu : getMenu()
+  WorkbookSearchMenu -> JMenuItem : 'items'
+  JMenuItem o-> WorkbookSearchAction : action
+  @enduml

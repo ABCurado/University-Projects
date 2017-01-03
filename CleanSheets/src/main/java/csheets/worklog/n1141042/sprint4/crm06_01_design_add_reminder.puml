@@ -1,0 +1,23 @@
+@startuml doc-files/crm06_01_design_add_reminder.png
+User -> CreateReminderUI : create reminder
+CreateReminderUI --> User : asks necessary data (nameReminder, description, time)
+User -> CreateReminderUI : inserts data
+CreateReminderUI -> CreateReminderController : createReminder(nameReminder, description, time) : Reminder
+CreateReminderController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> CreateReminderController : RepositoryFactory
+CreateReminderController -> RepositoryFactory : reminderRepository()
+create ReminderRepository
+RepositoryFactory -> ReminderRepository : create()
+RepositoryFactory --> CreateReminderController : ReminderRepository
+CreateReminderController -> ReminderFactory : create(nameReminder, description, time) : Reminder
+ReminderFactory --> CreateReminderController : Reminder
+CreateReminderController -> ReminderRepository : save(Reminder : reminder)
+ReminderRepository --> CreateReminderController : Reminder
+CreateReminderController --> CreateReminderUI : Reminder
+CreateReminderUI --> User : display reminder information
+@enduml

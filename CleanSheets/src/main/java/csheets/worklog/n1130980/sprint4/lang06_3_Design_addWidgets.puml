@@ -1,0 +1,33 @@
+@startuml doc-files/lang06_3_Design_addWidgets.png
+
+actor User
+participant "<<analysis>>\nFormEditorUI" as FormEditorUI
+
+
+
+User->FormEditorUI: initiate process
+FormEditorUI->FormFrame: new()
+FormFrame->Controller: new controller (cell)
+User->FormEditorUI: enter label name
+User->FormEditorUI: enter textfield content
+FormEditorUI->Controller: getWidget from intro label name
+
+alt label widget
+Controller->LabelWidget: get
+LabelWidget->LabelPanel: new
+end
+
+alt textfield widget
+Controller->TextFieldWidget: get
+TextFieldWidget->TextFielPanel: new
+end
+
+alt Button widget
+Controller->ButtonWidget: get
+ButtonWidget->ButtonPanel: new
+end
+
+SingleLine->FormFrame: added()
+FormFrame->FormFrame: refresh()
+
+@enduml

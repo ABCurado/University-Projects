@@ -1,0 +1,25 @@
+  @startuml doc-files/sort_extension_5.png
+title: Sequence Diagram
+  actor User
+  participant SortAction as SA
+  participant JDialog as jd
+  participant "uiController : UIController" as UIC
+  participant  Spreadsheet as SS
+  participant  SortController as SC
+
+  User -> SA : actionPerformed(ActionEvent event)
+	SA-> jd : new(UIController uiController)
+jd -> SC : new(UIController uiController)
+ loop for(i < ColumnCount; i++)
+jd -> UIC :  getActiveSpreadsheet().getColumn();
+end
+User <- jd : show window
+User-> jd : select column_index
+User -> jd : select order
+  jd -> SC : setIndex(column_index)
+  jd -> SC : updateValueList()
+  jd -> SC : order(order)
+  jd -> SC : updateColumn()
+
+  jd -> jd: dispose();
+  @enduml

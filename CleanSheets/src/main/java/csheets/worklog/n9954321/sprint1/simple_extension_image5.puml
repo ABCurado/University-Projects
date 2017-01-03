@@ -1,0 +1,17 @@
+  @startuml doc-files/simple_extension_image5.png
+  actor User
+  participant ExampleAction as EA
+  participant JOptionPane as JOption
+  participant "this.uiController : UIController" as UIC
+  participant "temp1 : Spreadsheet" as ss
+  participant "temp2 : Cell" as cell
+
+  User -> EA : actionPerformed(ActionEvent event)
+  EA -> JOption : result=showConfirmDialog(...)
+  alt result==JOptionPane.YES_OPTION
+    EA -> UIC : temp1=getActiveSpreadsheet();
+	EA -> ss : temp2=getCell(0, 0)
+	EA -> cell : setContent("Changed");
+  else
+  end
+  @enduml

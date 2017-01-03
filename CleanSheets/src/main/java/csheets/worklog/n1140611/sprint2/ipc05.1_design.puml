@@ -1,0 +1,44 @@
+@startuml doc-files/ipc05.1_design.png
+
+participant "UIController" as UIController
+participant "ChatUI" as ChatUI
+participant "ChatAppController" as Controller
+participant "Volt.UdpClient" as UdpClient
+participant "Volt.UdpServer" as UdpServer
+
+UIController->ChatUI: runExtension()
+ChatUI->Controller: new ()
+activate Controller
+Controller->UdpClient: new ()
+Controller->UdpServer: new ()
+deactivate Controller
+
+ChatUI->Controller: List<String> lst = getOtherInstances()
+
+loop
+activate Controller
+Controller->UdpClient: send(":broadcast")
+note right of Controller: manager.after(1).every(5).fire(broadcast)
+Controller->UdpServer: expect(":ip|:port")
+deactivate Controller
+end
+ChatUI->ChatUI: Shows other available instances
+
+
+note left of ChatUI: in a new frame
+ChatUI->ChatUI: Selects instance
+note right of ChatUI: String target = instance.ip+":"instance.port
+UIController->ChatUI: selectionEventAction()
+
+activate ChatUI
+ChatUI->ChatUI: read message
+ChatUI->Controller: sendCells(target, message)
+activate Controller
+deactivate ChatUI
+
+
+Controller->UdpClient: send(":chat", target, msg)
+deactivate Controller
+ChatUI->UIController: Send message
+
+@enduml

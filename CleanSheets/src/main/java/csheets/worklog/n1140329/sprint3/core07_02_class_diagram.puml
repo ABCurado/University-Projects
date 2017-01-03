@@ -1,0 +1,66 @@
+@startuml doc-files/core07_02_class_diagram.png
+
+class UIController {
+	-extensions : uiExtension[]
+	--
+	+UIController(Cleansheet app)
+	+getExtensions() : uiExtension[]
+}
+
+class ExtensionManager {
+	-instance : ExtensionManager
+	-extensionMap : SortedMap<String,Extension>
+	--
+	-ExtensionManager()
+	+load(String ClassName) : SortExtension
+	+load(Extension _class)
+}
+
+class Extension{
+}
+
+class SearchExtension{
+	-NAME : string
+	--
+	+super(String name)
+	+getUIExtension(UIController controller) : UIExtension
+}
+
+class UIExtension{
+}
+
+class UISearch{
+	+UISearch(UIController controller);
+	+getSideBar() : SearchPanel
+}
+
+class SearchPanel{
+	-uiController : UIController
+	-searchController : SearchController
+	--
+	+SearchPanel(UIController controller)
+}
+
+class SearchToolsPanel{
+	-panel : SearchPanel
+	-types : Map<String, Value.Type>
+	-comments : boolean
+	--
+	+SearchToolsPanel(SearchPanel panel)
+}
+class SearchController{
+	--
+	*+searchWorkBook(Stack<Workbook> workBooks, String searchstring, Map<String, Value.Type> types, boolean comments)*
+	+SearchController(UIController controller);
+}
+
+Extension <|-- SearchExtension
+UIExtension <|-- UISearch
+UIController --> ExtensionManager : getExtensions();
+ExtensionManager --> SearchExtension : load(Extension extension);
+SearchExtension --> UISearch : new(UIController controller);
+UISearch --> SearchPanel : new(UIController controller);
+SearchPanel --> SearchController : new(UIController);
+SearchPanel --> SearchToolsPanel : new(SearchPanel);
+
+@enduml

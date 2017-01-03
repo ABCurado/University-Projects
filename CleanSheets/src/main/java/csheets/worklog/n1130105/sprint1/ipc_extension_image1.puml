@@ -1,0 +1,14 @@
+  @startuml doc-files/ipc_extension_image1.png
+  class OptionsAction {
+   }
+  class ShareMenu
+  class ShareExtension {
+    -String NAME;
+  }
+  class UIExtensionShare
+  class JMenuItem
+  ShareExtension -> UIExtensionShare : getUIExtension(UIController)
+  UIExtensionShare -> ShareMenu : getMenu()
+  ShareMenu -> JMenuItem : 'items'
+  JMenuItem o-> OptionsAction : action
+  @enduml

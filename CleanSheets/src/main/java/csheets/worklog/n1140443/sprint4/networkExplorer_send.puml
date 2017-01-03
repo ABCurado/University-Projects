@@ -1,0 +1,20 @@
+@startuml doc-files/networkExplorer_send.png
+
+NetworkExplorerPanel->NetworkExplorerController: new ()
+
+activate NetworkExplorerController
+NetworkExplorerController->Volt.UdpClient: new ()
+NetworkExplorerController->Volt.UdpServer: new ()
+deactivate NetworkExplorerController
+
+NetworkExplorerPanel->NetworkExplorerController: List<AppInfo> appInfoList = appInfo(id,port)
+
+loop
+activate NetworkExplorerController
+NetworkExplorerController->Volt.UdpClient: send(":broadcast")
+note right of NetworkExplorerController: manager.after(1).every(1).fire(broadcast)
+NetworkExplorerController->Volt.UdpServer: expect(":ip|:port")
+deactivate NetworkExplorerController
+end
+
+@enduml

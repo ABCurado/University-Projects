@@ -1,0 +1,35 @@
+@startuml doc-files/lang04_02_design1.png
+actor Actor
+
+  participant "WizardAction" as WizardAction 
+  participant "frame : WizardFrame" as WizardFrame 
+  participant "controller : WizardController" as WizardController 
+
+  note right of Actor
+        Extention loading and integration with main UI can be found on Example Extention diagrams
+  end note 
+
+  Actor -> WizardAction : starts use case
+  create WizardFrame 
+  WizardAction -> WizardFrame : new(UIController) 
+  create WizardController 
+  WizardFrame -> WizardController : new(UIController) 
+  WizardFrame -> WizardController : getFunctions()
+  WizardController -> Language : getInstance()
+  WizardController -> Language : getFunctions()
+  loop
+  WizardFrame -> WizardFrame : displayInformation()
+  end
+  Actor -> WizardFrame : Select Function
+  WizardFrame -> WizardController : getExpression(function)
+  loop
+  WizardFrame -> WizardFrame : loadTextFields()
+  end
+  WizardFrame -> Actor : show the expression to user
+  Actor -> WizardFrame : Sets parameters and selects ok
+  WizardFrame -> WizardController : getResult(String expression)
+  WizardController -> UIController :  cell=getActiveCell()
+  WizardController -> FromulaCompiler : getInstance()
+  WizardController -> FromulaCompiler : compile(cell,expression)
+  WizardController -> WizardFrame : return result
+@enduml

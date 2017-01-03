@@ -1,0 +1,14 @@
+@startuml doc-files/autodescription_version_1.png
+title: How the UIController retrieves the UIExtension associated with the Extension
+participant User as Us
+participant ExtensionManager as ExtM
+participant ExtensionManagerFrame as ExtMF
+ExtM -> ExtMF : loadFile()
+ExtMF -> Us : show()
+Us -> ExtMF : choose extension
+ExtMF -> ExtM: List<String> extensionList
+ExtM -> ExtM: load()
+deactivate ExtM
+deactivate ExtMF
+deactivate Us
+@enduml

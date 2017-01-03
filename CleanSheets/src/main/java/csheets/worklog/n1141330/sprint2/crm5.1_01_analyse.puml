@@ -1,0 +1,29 @@
+@startuml doc-files/crm5.1_01_analyse.png
+User -> CreateCalendarGUI : Start's the process of a create a calendar.
+CreateCalendarGUI -> CreateCalendarController : getAllContacts()
+CreateCalendarController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+AppSettings -> RepositoryFactory : create()
+AppSettings -> Persistence : getRepositoryFactory()
+Persistence -> CreateCalendarController : getRepositoryFactory()
+Persistence -> RepositoryFactory: create()
+RepositoryFactory -> ContactsRepository : create()
+RepositoryFactory -> CreateCalendarController : ContactsRepository()
+CreateCalendarController -> ContactsRepository : all():void
+ContactsRepository -> CreateCalendarController : void
+CreateCalendarController -> CreateCalendarGUI : display all Contats
+CreateCalendarGUI -> User : Display
+User -> CreateCalendarGUI : Choose the contact
+CreateCalendarGUI -> User : Ask's for Information
+User -> CreateCalendarGUI : createCalendar(String nome,String description,String color)
+CreateCalendarGUI -> CreateCalendarController : createCalendar(String nome,String description,String color)
+CreateCalendarController -> RepositoryFactory : calendar()
+RepositoryFactory -> CalendarRepository : create()
+RepositoryFactory -> CreateCalendarController : CalendarRepository
+CreateCalendarController -> CalendarRepository : createCalendar(String nome,String description,String color)
+CreateCalendarController -> CalendarRepository : save()
+CalendarRepository -> CreateCalendarController : Calendar
+CreateCalendarController -> CreateCalendarGUI : Calendar
+CreateCalendarGUI -> User : display Calendar
+@enduml

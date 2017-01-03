@@ -1,0 +1,13 @@
+@startuml doc-files/lang08.3_Import_analysis.png
+
+actor User
+participant "<<analysis>>\nSystem" as System
+
+
+User -> System: begins the process
+User <-- System: show options
+User -> System: selects the option import XML and select the file
+User <-- System: validates XML tags and import the file to the workbook
+
+
+@enduml

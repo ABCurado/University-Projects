@@ -1,0 +1,15 @@
+  @startuml doc-files/sort_extension_1.png
+title: Class Diagram <<Analysis>>
+  class SortAction {
+   }
+  class SortMenu
+  class SortExtension {
+    -String NAME;
+  }
+  class SortUI
+  class JMenuItem
+  SortExtension -> SortUI : getUIExtension(UIController)
+  SortUI -> SortMenu : getMenu()
+  SortMenu -> JMenuItem : 'items'
+  JMenuItem o-> SortAction : action
+  @enduml

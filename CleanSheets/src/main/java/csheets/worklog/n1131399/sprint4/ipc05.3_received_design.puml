@@ -1,0 +1,33 @@
+@startuml doc-files/ipc05.2_received_design.png
+
+participant "ChatUI" as ChatUI
+participant "ChatAppController" as ChatAppController
+participant "TcpService" as TcpService
+participant "Volt.TcpServer" as TcpServer
+
+ChatUI->ChatAppController: new ()
+
+activate ChatAppController
+
+ChatAppController->TcpService: new ()
+activate TcpService
+TcpService->TcpServer: new ()
+
+
+
+
+TcpServer-->TcpService: expect (":chat-message")
+TcpService-->ChatAppController: notifyChanges()
+
+ChatAppController-->ChatUI:notifyChanges()
+note right of ChatUI : updates current chat history
+ChatAppController->ChatAppController: addMessage(from, message)
+note right of ChatAppController : persists new message in persistence
+deactivate ChatAppController
+deactivate TcpService
+
+
+
+
+@enduml
+@enduml

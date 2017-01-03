@@ -1,0 +1,6 @@
+@startuml doc-files/core02_2_Analysis.png
+User -> System: Makes a comment in a cell.
+System -> User: Saves the user name and the comment.
+User -> System: Place the mouse pointer over an commented cell.
+System -> User: Shows who commented and its review of the cell.
+@enduml

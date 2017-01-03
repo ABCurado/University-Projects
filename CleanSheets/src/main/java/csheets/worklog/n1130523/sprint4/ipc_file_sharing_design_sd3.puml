@@ -1,0 +1,61 @@
+  @startuml doc-files/ipc_file_sharing_design_sd3.png
+actor User
+participant "ShareFilesUI" as ShareFilesUI
+participant "ShareFilesController" as ShareFilesController
+participant "Volt.UdpClient" as UdpClient
+participant "Volt.UdpServer" as UdpServer
+participant "<interface>\nFile" as File
+participant "AppSettings" as AppSettings
+participant "<interface>\nServer" as Server
+
+participant "LinkedHashMap" as LinkedHashMap
+participant "<interface>\nMap" as Map
+
+
+User->ShareFilesUI: selects "Share Files" option
+ShareFilesUI->ShareFilesController: new ()
+
+activate ShareFilesController
+ShareFilesController->UdpClient: new ()
+ShareFilesController->UdpServer: new ()
+deactivate ShareFilesController
+
+loop
+
+ShareFilesController->UdpServer: send (":broadcast")
+note right of ShareFilesController:  manager.after(1).every(seconds).fire(broadcast)
+ShareFilesController->UdpServer: expect (":ip|:port")
+
+end
+
+
+ShareFilesController -> Server: destination= target()
+Server -> Request: ip= from()
+
+
+
+ShareFilesUI -> ShareFilesController: Selects path to share files
+ShareFilesController -> File: folder= new File()
+File -> AppSettings: get(String key)
+ShareFilesController -> File: listOfFiles = listfiles()
+ShareFilesController -> File: message= getName(); lenght();
+ShareFilesUI <-- ShareFilesController: files list of specific path
+User <-- ShareFilesUI: files list of specific path
+note left of ShareFilesUI: in a sidebar window
+
+
+User->ShareFilesUI: Send Files
+
+loop
+ShareFilesController -> UdpServer: send(":shereFiles-port|:shereFiles-files", destination, message)
+ShareFilesController -> UdpServer: expect(":shereFiles-port|:shereFiles-files")
+ShareFilesController->LinkedHashMap: hostInformations = new LinkedHashMap<>();
+LinkedHashMap -> Map: put("reference", "files");
+LinkedHashMap -> Map: put("ip", from());
+LinkedHashMap -> Map: put("hostname", hostname());
+LinkedHashMap -> Map: put("port", get("shereFiles-port")
+LinkedHashMap -> Map: put("files", get("shereFiles-files"))
+end
+ShareFilesUI <-- ShareFilesController: returns all files with all data of the file, port and ip that i send
+User <-- ShareFilesUI: returns all files with all data of the file, port and ip that i send
+@enduml

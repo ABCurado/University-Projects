@@ -1,0 +1,30 @@
+  @startuml doc-files/lang07.2_manager_edit.png
+  participant User as us
+  participant EditCreateScriptUI as ui
+  participant MacroBeanShellController as controller
+  participant Code as code
+  participant UIController as uicontrol
+  participant Workbook as work
+
+  activate ui
+	us -> ui : selects edit script
+	create controller
+	ui -> controller : new()
+	us <-- ui : asks info
+    us -> ui : introduces
+  activate controller
+	ui -> controller : saveScript()
+  deactivate ui
+    create code
+	controller -> code : new(name, type, content, exec)
+	activate uicontrol
+	controller -> uicontrol : getUIController()
+	activate work
+	uicontrol -> work : getActiveWorkbook()
+    deactivate uicontrol
+	work -> work : addScript()
+  deactivate work
+	activate ui
+	us <-- ui : display scripts
+	deactivate ui
+  @enduml

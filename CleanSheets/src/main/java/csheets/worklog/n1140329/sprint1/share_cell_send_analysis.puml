@@ -1,0 +1,42 @@
+@startuml doc-files/share_cell_send_analysis.png
+
+actor User 
+participant "<<analysis>>\nShareCellUI" as ShareCellUI
+participant "<<analysis>>\nShareCellController" as ShareCellController
+participant "<<analysis>>\nVolt.UdpClient" as Volt.UdpClient
+participant "<<analysis>>\nVolt.UdpServer" as Volt.UdpServer
+
+User->ShareCellUI: activates "Send Cells" option
+ShareCellUI->ShareCellController: new ()
+
+activate ShareCellController
+ShareCellController->Volt.UdpClient: new ()
+ShareCellController->Volt.UdpServer: new ()
+deactivate ShareCellController
+
+ShareCellUI->ShareCellController: List<String> lst = getOtherInstances()
+loop
+activate ShareCellController
+ShareCellController->Volt.UdpClient: send(":broadcast")
+note right of ShareCellController: manager.after(1).every(5).fire(broadcast)
+ShareCellController->Volt.UdpServer: expect(":ip|:port")
+deactivate ShareCellController
+end
+
+ShareCellUI->User: Shows other available instances
+note left of ShareCellUI: in a sidebar window
+User->ShareCellUI: Selects instance
+note right of ShareCellUI: String target = instance.ip+":"instance.port
+User->ShareCellUI: Send Cell
+
+activate ShareCellUI
+ShareCellUI->ShareCellUI: List<Cell> cells = getSelectedCells()
+ShareCellUI->ShareCellController: sendCells(target, cells)
+activate ShareCellController
+deactivate ShareCellUI
+note right of ShareCellController: String msg = "";\nfor(Cell cell : cells){\n  msg+=cell.address+"|"+cell.value+"|";\n}
+ShareCellController->Volt.UdpClient: send(":address|:value", target, msg)
+deactivate ShareCellController
+ShareCellUI->User: Cell has been shared
+
+@enduml

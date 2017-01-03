@@ -1,0 +1,25 @@
+@startuml doc-files/LANG06_3_Analysis_2.png
+User -> System: Starts the process. Create a Form.
+System -> User: Calls Form name
+User -> System: Inserts the form name
+System -> User: Checks to see if there is the name.
+
+alt for(Form form:listForms)
+	alt if(form.name.equals("name"))
+		System -> User: If there requests new name.
+		User -> System: Enter new name
+	end
+end
+
+System -> User: Calls permissions (Read / Write)
+User -> System: Choose permission
+
+alt if(permission.equals("write" && button==update)
+	System -> User: Assigns values to the corresponding variables
+end
+
+System -> User: Prompts you to choose the window mode (Modal / Modeless)
+User -> System: Insert the window mode
+User -> System: Close window.
+System -> User: Returns the button name that closes the window
+@enduml

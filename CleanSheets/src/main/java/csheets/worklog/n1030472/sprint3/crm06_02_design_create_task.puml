@@ -1,0 +1,13 @@
+@startuml doc-files/crm06_02_design_create_task.png
+
+User -> TaskFrame : create task
+TaskFrame -> TaskController: new()
+TaskController -> ContactRepository: Contact().all()
+TaskFrame -> TaskManager : create()
+TaskManager --> User : asks data (Contact,TaskName,Descriprion,priority,percentage)
+User -> TaskManager : inserts data
+TaskManager -> TaskController : createTask(Contact,TaskName,Descriprion,priority,percentage)
+TaskController -> TaskRepository : add(task)
+TaskFrame -> TaskFrame: update()
+TaskFrame -> TaskPanelSingle: new(addTaskPanel(panel))
+@enduml

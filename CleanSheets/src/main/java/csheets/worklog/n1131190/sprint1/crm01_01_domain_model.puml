@@ -1,0 +1,13 @@
+@startuml doc-files/crm01_01_domain_model.png
+object Contact {
+}
+object Agenda {
+}
+object Event {
+}
+
+
+Contact            "1" ..> "1"     Agenda    : has
+Event             "*" ..> "1"     Agenda        : has
+
+@enduml

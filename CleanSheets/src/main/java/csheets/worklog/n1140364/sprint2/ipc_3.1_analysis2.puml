@@ -1,0 +1,33 @@
+@startuml doc-files/ipc_03.1_analysis2.png
+
+actor User
+participant "<<analysis>>\nSearchInstanceWorkbookUI" as UI
+participant "<<analysis>>\nSearchInstanceWorkbookController" as Control
+participant "<<analysis>>\nVolt.TCPServer" as TCPServer
+participant "<<analusis>>\nSearchWorkbook" as Search
+
+Control -> TCPServer: port
+TCPServer -> TCPServer: expect(":reply", Action)
+note right of UI: String destination = instance.ip + ":" + instance.port
+UI -> TCPServer: send(":reply",destination, port)
+UI <- TCPServer: update
+User <-- UI: name of workbook?
+User -> UI: introduces
+UI -> Control: setNameOfWorkbookToSearch(name)
+activate Control
+Control -> Search: setWorkbookToSearch(name)
+deactivate Control
+Control -> TCPServer: port
+TCPServer -> TCPServer: expect(":rsearch", Action)
+note right of UI: equal to the first case
+UI -> TCPServer: send(":search",destination, port)
+UI <- TCPServer: update
+UI -> Control: searchWorkbook()
+Control -> Search: findWorkbook()
+Control -> TCPServer: port
+TCPServer -> TCPServer: expect(":check", Action)
+note right of UI: equal to the first case
+UI -> TCPServer: send(":check",destination, port)
+UI <- TCPServer: update
+User <- UI: summary
+@enduml

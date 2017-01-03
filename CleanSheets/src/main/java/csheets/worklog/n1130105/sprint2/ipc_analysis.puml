@@ -1,0 +1,14 @@
+@startuml doc-files/ipc_analysis.png
+
+actor User
+participant "System" as System
+
+User -> System:enter name of directory and search files
+System -> User :show list of results
+User -> System: Open workbok
+
+
+
+
+@enduml
+

@@ -1,0 +1,17 @@
+@startuml doc-files/crm01_01_design_remove_event.png
+User -> RemoveEventUI : remove event
+RemoveEventUI -> RemoveEventController : removeEvent(Event : selectedEvent) : void
+RemoveEventController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> RemoveEventController : RepositoryFactory
+RemoveEventController -> RepositoryFactory : eventsRepository()
+RepositoryFactory -> EventsRepository : create()
+RepositoryFactory --> RemoveEventController : EventsRepository
+RemoveEventController -> EventsRepository : removeEvent(Event : event) : void
+EventsRepository --> RemoveEventController : void
+RemoveEventController --> RemoveEventUI : void
+@enduml

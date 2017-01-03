@@ -1,0 +1,14 @@
+@startuml doc-files/forms_editor_analysis.png
+
+actor User
+
+User->System: Starts the process.
+System->User: Opens the window with options add or remove a line.
+System->User: Presents the option to add remove a line.
+User->System: Chooses an option.
+System->User: ask the name of the label and the textbox description 
+User->System: Answer.
+System->User: Adds a new line.
+User->System: If the chosen option is to remove.
+System->User: Removes one line in the window.
+@enduml

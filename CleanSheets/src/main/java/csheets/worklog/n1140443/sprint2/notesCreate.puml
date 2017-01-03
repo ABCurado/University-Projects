@@ -1,0 +1,20 @@
+@startuml doc-files/notesCreate.png
+
+User->NotesUI : starts create note process.
+NotesUI->NotesController:create()
+NotesUI->NotesController:showContacts()
+NotesController->Persistence:repositoryFactory()
+Persistence->AppSettings:instance()
+Persistence->AppSettings:getRepositoryFactory()
+AppSettings->RepositoryFactory:create()
+AppSettings->Persistence:RepositoryFactory
+Persistence->NotesController:RepositoryFactory
+NotesController->NotesUI:contactsList
+NotesUI->User:Systems shows contacts list
+User->NotesUI:The User selects a contact.
+User->NotesUI:The User writes and creates the note.
+NotesUI->NotesController:createNote(String noteText,Contact contact)
+NotesController->NoteFactory:createNote(String noteText,Contact contact)
+NotesController->NoteRepository:add(Note note)
+
+@enduml

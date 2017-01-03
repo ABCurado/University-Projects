@@ -1,0 +1,44 @@
+@startuml doc-files/design_IPC_4_3_Export.png
+title Export from a database
+actor Actor
+
+  participant "ExportImportDatabaseAction" as Action
+  participant "frame : ExportImportDatabaseFrame" as Frame
+  participant "controller : ExportImportDatabaseController" as Controller
+
+  note right of Actor
+        Extention loading and integration with main UI can be found on Example Extention diagrams
+  end note
+
+  Actor-> UIFrame : select a range of cells
+  Actor -> Action : starts use case
+  create Frame
+  Action -> Frame : new(UIController,EXPORT)
+  create Controller
+  Frame -> Controller : new(UIController)
+  Frame --> Actor : ask For Database Connection
+  Frame --> Actor : ask Table Name
+  Frame -> Controller : saveSelectedCells(String Driver,String connection,String tableName)
+  Controller -> UIController : getFocusOwner()
+  Controller -> focusOwner : cells[][] = getSelectedCells()
+  Controller -> Controller : isValid = validate(cells)
+  alt isValid = false
+     loop cell : delfaultCells
+        Controller -> Controller :cells[][] = cell.getContent()
+     end
+  end
+  Controller -> Controller : columnNames[] = getHeader(cells)
+  Controller -> DatabaseConnector : getInstance()
+  Controller -> DatabaseConnector : setConnection(String Driver,String connection)
+  Controller -> DatabaseConnector : doesTableExist(String tableName)
+  alt table already exits
+  Controller -> DatabaseConnector : dropTable(String tableName)
+  end
+  Controller -> DatabaseConnector : createTable(String tableName,String[] headers)
+  Controller -> DatabaseConnector : saveData(String tableName,String[][] cells)
+  loop
+    DatabaseConnector -> DatabaseConnector : Insert Column in database
+  end
+  Controller --> Frame : Sucess
+  Frame --> Actor: Sucess
+@enduml

@@ -1,0 +1,25 @@
+@startuml doc-files/ipc_03.2_tcp.png
+
+participant "SearchInstanceWorkbookController" as Control
+participant "TcpService" as tcp
+
+Control->tcp: server(pattern)
+
+tcp->tcp: expect(permission_request)
+tcp->tcp: expect(permission_response)
+alt permission response is TRUE
+	tcp->tcp: searchWorkbookOnTarget(target, pattern)
+	tcp->tcp: send(target, pattern)
+end
+tcp->tcp: expect(search_request, pattern)
+alt newRequest received
+	note right of tcp: On search request notifies observer UI to add it...
+	tcp->tcp: notifyChanges(newRequest)
+end
+tcp->tcp: expect(search_response, content)
+alt newSearchResponse received
+	note right of tcp: On search response notifies observer UI to add it...
+	tcp->tcp: notifyChanges(newResponse)
+end
+
+@enduml

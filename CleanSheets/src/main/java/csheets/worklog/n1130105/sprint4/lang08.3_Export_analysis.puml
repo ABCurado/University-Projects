@@ -1,0 +1,15 @@
+@startuml doc-files/lang08.3_Export_analysis.png
+
+actor User
+participant "<<analysis>>\nSystem" as System
+
+
+User -> System: inserts values on worksheet
+User -> System: change the names of default tags if he wants
+User <-- System: validates and modify the names of the tags
+User -> System: selects the option export XML
+User -> System: enter the name and path of the xml file
+User <-- System: validates and informs success of operation
+
+
+@enduml

@@ -1,0 +1,17 @@
+@startuml doc-files/crm06_01_design_remove_reminder.png
+User -> RemoveReminderUI : remove event
+RemoveReminderUI -> RemoveReminderController : removeReminder(Reminder : selectedReminder) : void
+RemoveReminderController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> RemoveReminderController : RepositoryFactory
+RemoveReminderController -> RepositoryFactory : reminderRepository()
+RepositoryFactory -> ReminderRepository : create()
+RepositoryFactory --> RemoveReminderController : ReminderRepository
+RemoveReminderController -> ReminderRepository : removeReminder(Reminder : reminder) : void
+ReminderRepository --> RemoveReminderController : void
+RemoveReminderController --> RemoveReminderUI : void
+@enduml

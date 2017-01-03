@@ -1,0 +1,21 @@
+  @startuml doc-files/email_configuration_extension_uc_realization.png
+  actor User
+  participant "<<analysis>>\nConfigureEmailUI" as UI
+  participant "<<analysis>>\nConfigureEmailCtrl" as ctrl
+  participant "<<analysis>>\nSpreadsheet" as sheet
+  participant "<<analysis>>\nCell" as cell
+  User -> UI : configureMail()
+  activate UI
+  UI -> ctrl : configureMail(email, password, server)
+
+  User-> UI : sendTestEmail()
+  UI -> ctrl : sendTestEmail()
+
+  activate ctrl
+  'Repeats the steps bellow for destination, subject and body
+  ctrl -> sheet : getCell()
+  ctrl -> cell : getContent()
+  deactivate ctrl
+  UI -> UI : displayEmail()
+  deactivate UI
+  @enduml

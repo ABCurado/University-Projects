@@ -1,0 +1,31 @@
+@startuml doc-files/crm01_01_domain_model.png
+
+object Contact << abstract >> {
+}
+object Event {
+}
+object CompanyContact {
+	String name
+}
+object PersonContact {
+	String firstName
+	String lasttName
+	String profession
+}
+object Note {
+}
+object Calendar {
+}
+object Reminder {
+}
+
+PersonContact	-|>	Contact
+CompanyContact	-|>	Contact
+PersonContact	-o	CompanyContact
+Calendar		-o	Contact
+Note			-o	Contact
+Note			-*	Note
+Reminder		-o	Contact
+Calendar "1"	..> "*"	Event : has
+
+@enduml

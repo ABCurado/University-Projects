@@ -1,0 +1,4 @@
+@startuml doc-files/Lang03.2-analyse.png
+User -> System : The user select a list of cells and insert the value.
+System -> User : The system apply a style to the cells wich are greate than the value.
+@enduml

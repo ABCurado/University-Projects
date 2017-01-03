@@ -1,0 +1,25 @@
+@startuml doc-files/ipc_02.1_design.png
+
+actor User
+participant "CommentsPanel" as UIComments
+participant "CommentPanel" as UIComment
+participant "CommentEditUI" as UICommentEdit
+participant "CommentController" as Control
+participant "UIController" as UIControl
+
+User->UIComments: Starts operation
+create UIComment
+UIComments->UIComment: new CommentPanel(comment, uiController)
+create UICommentEdit
+UIComment->UICommentEdit: new CommentEditUI(uiController, comment, this)
+create Control
+UICommentEdit->Control:new CommentController(uiController)
+Control->UIControl:CommentController(UIController uiController)
+UICommentEdit->Control:changeFont(comment)
+UICommentEdit->Control:changeBackground(comment)
+UICommentEdit->Control:changeBorder(comment)
+UICommentEdit->Control:apply(comment)
+UICommentEdit->UIComment:applyStyle(comment)
+
+
+@enduml

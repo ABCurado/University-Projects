@@ -1,0 +1,21 @@
+  @startuml doc-files/ipc_3.1_extension_image4.png
+  actor User
+  participant WorkbookSearchAction as EA
+  participant WorkbookSearchUI as Option
+  participant JOptionPane as JOption
+  participant "controller : DistributedWorkbookSearchController" as Control
+  participant "this.uiController : UIController" as UIC
+
+  User -> EA : actionPerformed(ActionEvent event)
+  create Option
+  EA -> Option : new()
+  EA -> Option : run()
+  create Control
+  Option -> Control : new()
+  alt !port >= 0 && !timer >= 0
+	Option -> UIC : addSelectionListener(this)
+	Option -> JOption : result=showMessageDialog(...)
+	Option -> Option : dispose()
+  else
+  end
+  @enduml

@@ -1,0 +1,33 @@
+  @startuml doc-files/search_extension_sd.png
+  actor User
+  participant SearchPanel as SP
+  participant "this.searchController : SearchController" as SC
+  participant "this.uiController : UIController" as UIC
+  participant "workBookSearch : WorkBookSearch" as wbs
+
+  activate SP
+  User -> SP : jSearchTextField.setText(String pattern)
+  User -> SP : jSearchButton.actionPerformed(ActionEvent evt)
+  SP -> SP : performSearch()
+  activate UIC
+  SP -> UIC : wb=getActiveWorkbook()
+  deactivate UIC
+  activate SC
+  SP -> SC : res=searchWorkBook(Workbook wb, String pattern)
+  activate wbs
+  SC -> wbs : new(Workbook wb)
+  SC -> wbs : getMatches(String pattern)
+  deactivate SC
+  wbs -> wbs : compile(pattern)
+  note right of wbs
+        Throws PatternSyntaxException on invalid input...
+  end note
+  loop for Spreadsheet ss : wb.getSpreadsheets()
+  	wbs -> wbs : addAll(getMatches(String pattern, Spreadsheet ss)
+  end
+  deactivate wbs
+  loop for SearchResultDTO r : res
+  	SP -> SP : resultsModel.addElement(r)
+  end
+  deactivate SP
+  @enduml

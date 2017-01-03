@@ -1,0 +1,33 @@
+@startuml doc-files/core02_01_design2.png
+    participant "uic: UIController" as uic
+    participant "uiExtension : UIExtensionComments" as UIExt
+    participant "CommentPanel : JPanel" as cp
+    participant "CommentController" as ctrl
+    participant "event: SelectionEvent" as event
+    participant "cell: Cell" as cell
+    participant "activeCell: CommentableCell" as activeCell
+
+    create cp
+    UIExt -> cp :  new(uic) 
+    
+    create ctrl
+    cp -> ctrl : new(uic) 
+    cp -> uic : addSelectionListener(this)
+
+    note right of uic
+        The user selects a cell...
+    end note
+
+    uic -> cp : selectionChanged(SelectionEvent event)
+    cp -> event : cell=getCell()
+    cp -> cell : activeCell=getExtension(CommentsExtension.NAME)
+
+    cp -> ctrl : cellSelected(cell);
+    ctrl -> activeCell : txt = cell.getUserComment()
+    ctrl -> cp : setCommentText(txt)
+
+    note right of cp
+        ... the CommentPanel displays the text of the current cell.
+    end note
+
+@enduml

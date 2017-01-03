@@ -1,0 +1,14 @@
+  @startuml doc-files/simple_extension_image1.png
+  class ExampleAction {
+   }
+  class ExampleMenu
+  class ExtensionExample {
+    -String NAME;
+  }
+  class UIExtensionExample
+  class JMenuItem
+  ExtensionExample -> UIExtensionExample : getUIExtension(UIController)
+  UIExtensionExample -> ExampleMenu : getMenu()
+  ExampleMenu -> JMenuItem : 'items'
+  JMenuItem o-> ExampleAction : action
+  @enduml

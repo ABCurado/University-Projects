@@ -1,0 +1,12 @@
+@startuml doc-files/analysis_IPC_4_3_Import.png
+actor Actor
+User->System : Selects a range of cells(default will be from A1 to Z25)
+User->System : Asks to import from a database
+System->User : Ask database connection
+System->User : Ask database table name
+User->System : Select connection and name
+System->Database : Verifies if database exists
+System->Database : Tries to import
+Database ->System : Return data
+System-->User : Sucess
+@enduml

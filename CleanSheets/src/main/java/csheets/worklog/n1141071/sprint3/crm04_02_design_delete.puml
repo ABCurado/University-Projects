@@ -1,0 +1,25 @@
+@startuml doc-files/crm04_02_design_delete.png
+actor Actor
+
+  participant "UI : ListUI" as UI 
+  participant "Controller : ListController" as controller
+  participant "List" as list
+  participant "VersionControl" as version
+  participant "ListPersistence" as persistence
+
+  note right of Actor
+    Main UC diagram can be found in crm04_02_design
+  end note 
+  note right of Actor
+    This is the Delete List diagram
+  end note
+  Actor -> UI : Select List
+  UI -> controller : getListData(List)
+  UI -> Actor : Show List Versions and List Data
+  Actor -> UI : Delete List
+  UI -> controller : deleteList(List)
+  controller -> list : delete()
+  list -> version : delete()
+  controller -> persistence : saveList(List)
+  UI -> Actor : Show success message
+@enduml

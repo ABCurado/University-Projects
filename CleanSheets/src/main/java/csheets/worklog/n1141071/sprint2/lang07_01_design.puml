@@ -1,0 +1,48 @@
+@startuml doc-files/lang07_01_design1.png
+actor Actor
+
+  participant "UI : ScriptUI" as UI 
+  participant "Controller : ScriptController" as controller
+  participant "Script : <<Interface>>" as script
+  participant "Script : BeanShell" as beanshell
+
+  note right of Actor
+        Extention loading and integration with main UI can be found on Example Extention diagrams
+  end note 
+
+  create UI
+  Actor -> UI : starts use case
+  create controller
+  UI -> controller : create
+  Actor -> UI : selects beanshell option
+  UI -> controller : createExampleScript()
+  UI -> Actor : Show example script
+  Actor -> UI : Edit the script code
+  UI -> controller : executeCode(String codeType, String scriptCode)
+  controller -> script : run(String code)
+  alt codeType == BeanShell
+    create beanshell
+    script -> beanshell : create
+    script -> beanshell : run(String code)
+    beanshell -> beanshell : separateInstructions(String scriptCode)
+    loop instructions
+      alt validateInstruction(String instuction)
+          note right of beanshell
+              continue
+          end note
+      else else
+        note right of beanshell
+            Has error and show error
+        end note
+      end
+    end
+    beanshell -> beanshell : executeScript()
+    beanshell -> controller : return script result
+  else else
+    note right of controller
+        See other scripts diagrams
+    end note
+  end
+  controller -> UI : return result string
+  UI -> Actor : Show script result
+@enduml

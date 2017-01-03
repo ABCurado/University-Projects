@@ -1,0 +1,56 @@
+@startuml doc-files/core07.3_analysis.png
+  actor User
+  participant "<<Analysis>>\nUI" as SP
+  participant "<<Analysis>>\nController" as SC
+  participant "<<Analysis>>\nuiController" as UIC
+  participant "<<Analysis>>\nworkBookSearch" as wbs
+
+  activate SP
+  User -> SP : String pattern, List<Type> valueTypes, boolean comments
+  SP -> SP : performSearch()
+  activate UIC
+  SP -> UIC : List<Workbook> wb = workbooks()
+  deactivate UIC
+
+  activate SC
+  loop for each Workbook in wb
+  SP -> SC : res=searchWorkBook(Workbook wb,\nString pattern, List<Type> valueTypes, boolean formulas, boolean comments)
+  activate wbs
+  SC -> wbs : new(Workbook wb)
+  SC -> wbs : getMatches(String pattern,\nList<Type> valueTypes, boolean formulas, boolean comments)
+  end loop
+  deactivate SC
+
+  wbs -> wbs : compile(pattern)
+  loop for each Spreadsheet in the workbook
+  	wbs -> wbs : addAll(\ngetMatches(String pattern, List<Type> valueTypes, boolean formulas,\nboolean comments, Spreadsheet ss))
+  end
+  deactivate wbs
+  loop for each Search Result
+  	SP -> SP : resultsModel.addElement(r)
+  end
+
+  loop for each Search result
+  User <- SP : shows each result
+
+	alt if confirms/next search and replace
+	 User -> SP : confirms
+	 note right of SP : create a new jpanel and do the next
+	 activate SC
+     SP -> SC : getSpreadSheetObject(spreadTitle)
+	 SP <-- SC : spreadsheet object
+	 SP -> SC : replace(result, newstring, spread)
+	activate wbs
+	 SC -> wbs : replaceMatchContent(result, newstring, spread)
+	 User <- SP : shows next result
+	deactivate wbs
+	 deactivate SC
+
+    else selects/confirm replace all
+		User -> SP : replace all
+		note right of SP : same as above but dont create a new jpanel
+	end
+
+  end
+  deactivate SP
+@enduml

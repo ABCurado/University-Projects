@@ -1,0 +1,21 @@
+  @startuml doc-files/ipc03.2_extension_load_sd.png
+  participant "uic : UIController" as UIC
+  participant ExtensionManager as ExtM
+  participant "extension : NetworkWorkbookSearchExtension" as EExample
+  participant "uiExtension : UIExtensionNetworkWorkbookSearch" as UIExt
+  participant "NetworkWorkbookSearchPanel : JPanel" as cp
+  UIC -> ExtM : extensions=getExtensions();
+  loop for Extension ext : extensions
+  	UIC -> EExample : uiExtension=getUIExtension(this);
+  	activate EExample
+  	create UIExt
+  	EExample -> UIExt : new(extension, uic)
+  	deactivate EExample
+  	UIExt -> UIExt : getSideBar();
+  	activate UIExt
+  	create cp
+  	UIExt -> cp :  new (uic)
+  	deactivate UIExt
+  	UIC -> UIC : uiExtensions.add(uiExtension);
+  end
+  @enduml

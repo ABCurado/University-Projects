@@ -1,0 +1,58 @@
+@startuml doc-files/lang08.3_Export_design.png
+
+actor User
+participant "UI" as UI
+participant "UIController" as UIController
+participant "ExportXMLController" as ExportXMLController
+participant "ExportXML" as ExportXML
+participant "<interface>\nSpreadsheet" as Spreadsheet
+participant "FileWriter" as FileWriter
+participant "JFileChooser" as JFileChooser
+participant "StringBuilder" as StringBuilder
+participant "Writer" as Writer
+participant "OutputStreamWriter" as OutputStreamWriter
+participant "<interface>\nCell" as Cell
+participant "Writer" as Writer
+
+
+User -> UI: selects option export to xml and selects the cells to view in xml file
+UI -> UIController: ExportXMLController(UIController uiController)
+UIController -> ExportXMLController: exportSpreadsheet(JFileChooser fileChooser, tagSpreadSheet, tagRow, tagColumn,spreadsheet)
+ExportXMLController -> FileWriter: file = new FileWriter()
+ExportXMLController -> ExportXML: result = exportSpreadsheet(tagSpreadSheet, tagRow, tagColumn, uiController);
+FileWriter -> JFileChooser: getSelectedFile()
+ExportXML <-- JFileChooser: give a Selected File
+ExportXML -> StringBuilder: stringBuilder = new StringBuilder()
+ExportXML -> Spreadsheet: getTitle()
+ExportXML <-- Spreadsheet: Title
+ExportXML -> StringBuilder:  append(tagSpreadSheet)
+StringBuilder -> StringBuilder: append(tagSpreadSheet)
+ExportXML -> Spreadsheet: getRowCount()
+ExportXML -> Spreadsheet: getColumnCount()
+ExportXML -> Value: value = getCell(k, j)
+Value -> Cell: getCell(k, j)
+Cell -> Cell: getValue()
+ExportXML <-- Cell: lenght()
+ExportXML -> ExportXML: list = add(tagColumn, k, value, tagColumn)
+ExportXML -> StringBuilder: append(tagRow,j);
+StringBuilder -> StringBuilder: append(tagRow,j);
+ExportXML -> StringBuilder: append(closedtagvalue);
+StringBuilder -> StringBuilder: append(closedtagvalue);
+ExportXML -> StringBuilder: append(closedtagRow);
+StringBuilder -> StringBuilder: append(closedtagRow);
+ExportXML -> StringBuilder: append(closedtagSpreadSheet);
+StringBuilder -> StringBuilder: append(closedtagSpreadSheet);
+ExportXML -> StringBuilder: append(closedtagWorkbook);
+StringBuilder -> StringBuilder: append(closedtagWorkbook);
+ExportXML <-- StringBuilder: toString()
+ExportXMLController <-- ExportXML: toString()
+ExportXMLController -> FileWriter: file = write(toString())
+FileWriter -> Writer: write(toString())
+ExportXML -> OutputStreamWriter: close()
+OutputStreamWriter -> Writer: close()
+ExportXML <-- Writer: returns file
+UIController <-- ExportXML: file
+User <-- UIController: file saved with success
+
+
+@enduml

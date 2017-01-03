@@ -1,0 +1,11 @@
+@startuml doc-files/lang01.1_Instructions_block_sd_analysis.png
+
+actor User
+participant "<<analysis>>\nSystem" as System
+
+
+User -> System: inserts a formula to calculate or select certain cells to calculate what the user wants
+User <- System: shows the results in the respective cells
+
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml doc-files/initial_design.png
+
+participant "User" as User
+participant "RangedSortDialog" as UI
+participant "SortController" as Controller
+
+User->UI : Starts the process of sorting a range of selected cells.
+UI->Controller: getSelectedColumns()
+UI->User: Prompts for information (column and order)
+User->UI: Inserts column and order.
+UI->Controller: sortRangeOfCells(selectedCells, column, order)
+note left of Controller: The selected cells come from the current selected cells in the active spreadsheet.
+Controller->SortService: sortRangeOfCells(cells, column, order)
+UI->User: Applies the sort and presents them to the user.
+
+@enduml

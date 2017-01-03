@@ -1,0 +1,30 @@
+@startuml doc-files/ipc_02.1_design.png
+
+actor User
+participant "FindWorkbookAction" as UI
+participant "FindWorkbookController" as Control
+participant "FindWorkbookResult" as res
+participant "UIController" as UIControl
+participant "CleanSheets" as Clean
+
+
+
+User->UI: Starts operation
+create Control
+UI->Control: New ()
+
+activate Control
+deactivate Control
+UI->Control: List<File> lst =findWorkbook(path);
+
+UI->User: Shows list of files
+UI->res: fillList(lst)
+User->res: Selects a file
+res->UIControl: getCleanSheets()
+res->Clean:cleansheets.load(file)
+
+
+
+
+
+@enduml

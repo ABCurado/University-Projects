@@ -1,0 +1,21 @@
+  @startuml doc-files/core07.3_extension_design_2.png
+  actor User
+  participant SearchReplaceAction as EA
+  participant SearchReplaceUI as ui
+  participant JOptionPane as JOption
+  participant "controller : SearchController" as Control
+  participant "this.uiController : UIController" as UIC
+
+  User -> EA : actionPerformed(ActionEvent event)
+  create ui
+  EA -> ui : new()
+  EA -> ui : run()
+  create Control
+  ui -> Control : new()
+  alt !port >= 0 && !timer >= 0
+	ui -> UIC : addSelectionListener(this)
+	ui -> JOption : result=showMessageDialog(...)
+	ui -> ui : dispose()
+  else
+  end
+  @enduml

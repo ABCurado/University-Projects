@@ -1,0 +1,34 @@
+@startuml doc-files/lang07.2_manager_delete.png
+  participant User as us
+  participant ScriptManagerUI as ui
+  participant MacroBeanShellController as controller
+  participant Code as code
+  participant UIController as uicontrol
+  participant Workbook as work
+
+  activate ui
+	us -> ui : selects delete script
+	create controller
+	ui -> controller : new()
+  deactivate ui
+	us <-- ui : asks confirmation
+    us -> ui : confirms
+  activate ui
+  activate controller
+	ui -> controller : deleteScript()
+  deactivate ui
+	controller -> uicontrol : getUIController()
+  activate uicontrol
+	uicontrol -> work : getActiveWorkbook()
+  deactivate uicontrol
+  activate work
+	work-> work: getScript(name)
+    controller <-- work : script
+	controller -> work : remove(script)
+  deactivate controller
+	work -> work : remove(script)
+  deactivate work
+	activate ui
+	us <-- ui : display scripts
+	deactivate ui
+  @enduml

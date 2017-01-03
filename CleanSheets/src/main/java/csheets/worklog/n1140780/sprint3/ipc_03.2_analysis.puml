@@ -1,0 +1,52 @@
+@startuml doc-files/ipc_03.1_analysis_server_side.png
+
+actor User
+participant "<<analysis>>\nSearchInstanceWorkbookUI" as UI
+participant "<<analysis>>\nSearchInstanceWorkbookController" as Control
+participant "<<analysis>>\nVolt.UdpClient" as UdpClient
+participant "<<analysis>>\nVolt.UdpServer" as UdpServer
+participant "<<analysis>>\nVolt.TCPClient" as TCPClient
+participant "<<analysis>>\nVolt.TCPServer" as TCPServer
+
+User->UI: search(String pattern)
+UI->Control: new()
+
+activate Control
+create UdpClient
+Control->UdpClient: new()
+create UdpServer
+Control->UdpServer: new()
+deactivate Control
+UI->Control: List<String> lst = getOtherInstances()
+loop
+activate Control
+Control->UdpClient: send(":broadcast")
+note right of Control: manager.after(1).every(5).fire(broadcast)
+Control->UdpServer: expect(":ip|:port")
+deactivate Control
+end
+
+loop for Instance inst : lst
+Control -> TCPClient : send(":request", target, msg)
+Control -> TCPServer : expect(":reply", Action)
+deactivate Control
+deactivate TCPServer
+deactivate TCPClient
+end
+
+note right of TCPServer: On the client side...
+TCPServer -> TCPServer: send(":reply", destination, port)
+
+note right of TCPServer: On the server side again after ":reply" received...
+TCPServer -> TCPServer: send(":search", destination, port)
+TCPServer -> TCPServer: expect(":rsearch", Action)
+
+note right of TCPServer: On the client side...
+TCPServer -> TCPServer: send(":rsearch", results)
+
+note left of TCPServer: On the server side...
+TCPServer -> UI: update
+deactivate TCPServer
+UI -> User : display results
+
+@enduml

@@ -1,0 +1,47 @@
+@startuml doc-files/ipc01_01_design.png
+
+actor User 
+participant "ShareCellUI" as UI
+participant "ShareCellController" as Controller
+participant "Volt.UdpClient" as UdpClient
+participant "Volt.UdpServer" as UdpServer
+participant "<interface>\nCell" as Cell
+
+User->UI: starts operation
+UI->Controller: new ()
+
+activate Controller
+Controller->UdpClient: new ()
+Controller->UdpServer: new ()
+deactivate Controller
+
+UI->Controller: List<String> lst = getOtherInstances()
+loop
+activate Controller
+Controller->UdpClient: send(":broadcast")
+note right of Controller: manager.after(1).every(5).fire(broadcast)
+Controller->UdpServer: expect(":ip|:port")
+deactivate Controller
+end
+
+UI->User: Shows other available instances
+note left of UI: in a sidebar window
+User->UI: Selects instance
+note right of UI: String target = instance.ip+":"instance.port
+User->UI: Send Cell
+
+activate UI
+UI->UI: List<Cell> cells = getSelectedCells()
+UI->Controller: sendCells(target, cells)
+activate Controller
+loop cells
+Controller->Cell: getAddress()
+Controller->Cell: getValue()
+Controller->Controller:msg=prepareMessage(Address ad,Value val)
+end
+deactivate UI
+Controller->UdpClient: send(":address|:value", target, msg)
+deactivate Controller
+UI->User: Cell has been shared
+
+@enduml

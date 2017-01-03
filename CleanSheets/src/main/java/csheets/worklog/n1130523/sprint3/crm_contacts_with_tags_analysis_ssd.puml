@@ -1,0 +1,26 @@
+@startuml doc-files/crm_contacts_with_tags_analysis_ssd.png
+
+alt add
+User -> System: selects button "Associated tags to contacts"
+User <-- System: shows all contacts
+User -> System: selects a contact to add tag
+User -> System: insert tag name
+User <-- System: confirms?
+User -> System: informs success of operation
+else edit
+User -> System: selects button "Edit contact of Specific tag"
+User <-- System: asks for the tag
+User -> System: The user write a specific tag
+User -> System: insert tag name
+User <-- System: shows a list with all contacts with the specific tag
+User -> System: The user edits contact if he wants
+User <-- System: confirms?
+User -> System: informs success of operation
+else delete tag
+User -> System: selects button "Delete tag of specific contact"
+User -> System: The user write a specific tag
+User <-- System: shows a list with all contacts with the specific tag
+User -> System: selects a contact and the tag that he wants eliminate and press button to delete the tag.
+User <-- System: validates and imforms success of operation.
+end
+@enduml

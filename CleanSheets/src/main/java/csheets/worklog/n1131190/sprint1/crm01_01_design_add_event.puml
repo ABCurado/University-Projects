@@ -1,0 +1,23 @@
+@startuml doc-files/crm01_01_design_add_event.png
+User -> CreateEventUI : create Event
+CreateEventUI --> User : asks necessary data(dueDate, description)
+User -> CreateEventUI : inserts data
+CreateEventUI -> CreateEventController : createEvent(contact, dueDate, description) : Event
+CreateEventController -> Persistence : repositoryFactory = repositories()
+Persistence -> AppSettings : instance()
+Persistence -> AppSettings : getRepositoryFactory()
+create RepositoryFactory
+AppSettings -> RepositoryFactory : create()
+AppSettings --> Persistence : RepositoryFactory
+Persistence --> CreateEventController : RepositoryFactory
+CreateEventController -> RepositoryFactory : EventsRepository()
+create EventsRepository
+RepositoryFactory -> EventsRepository : create()
+RepositoryFactory --> CreateEventController : EventsRepository
+CreateEventController -> EventsFactory : create(dueDate, description) : Event
+EventsFactory --> CreateEventController : Event
+CreateEventController -> EventsRepository : save(Event : Event)
+EventsRepository --> CreateEventController : Event
+CreateEventController --> CreateEventUI : Event
+CreateEventUI --> User : display Event information
+@enduml

@@ -1,0 +1,104 @@
+@startuml doc-files/ipc01_classDiagram.png
+ 
+class SharePanel {
+    -UIController uiController;
+    -ShareCellsController controller
+    -DefaultListModel instanceListModel	
+    -DefaultListModel receiveListModel
+    -List<Map<String, String>> receivedElements
+    -String host
+    -Cell[][] cells
+    +updateInstanceList(List<String> addresses)
+    +update(Observable o, Object object)
+    +receiveListValueChanged(ListSelectionEvent evt)
+    +updateInstanceList(List<String> addresses)
+    +instancesListValueChanged(ListSelectionEvent evt)
+    }
+
+class UIExtensionShare {
+
+    }
+
+class ShareCellsController{
+    -UdpService udpService
+    -TcpService tcpService
+    +startUdpService(int port, int seconds)
+    +startUdpService(SharePanel panel, int port, int seconds)
+    +startTcpService(int port)
+    +startTcpService(SharePanel panel, int port)
+    +updateCells(UIController ui, Map<String, String> cells)
+    +sendCells(String target, Cell[][] cells)
+    +restartServices(int port, int seconds)
+    }
+
+class UdpService {
+    +server(int localPort, int targetPort)
+    +client(int seconds)
+    +stop()
+    }
+class TcpService {
+    +server(int port)
+    +client(String target, String message)
+    +stop()
+    }
+
+class TcpClient {
+    -TcpServer client;
+    -int port;
+    +send(String headers, String target, String message)
+    }
+
+class TcpServer {
+    -ServerSocket server
+    -Map<String, Action> routes
+    +server()
+    +bootServer(int port)
+    +shutdown()
+    +serve(int port)
+    +stream(int port)
+    +hostname()
+    +expect(String route, Action action)
+    +send(String headers, String target, String message)
+    +protocol(Socket socket, BufferedReader input, PrintWriter output)
+    +protocol(String target, String message)
+    +getHeaders(BufferedReader input)
+    +reply(Socket socket, Object response)
+    }
+class UdpServer {
+    +close()
+    +server()
+    +getClient()
+    +getClientPort()
+    +bootServer(int port)
+    +getActionFromRequest(String request, String message)
+    +getPacketHeaders(String packet)
+    +serve(int port)
+    +stream(int port)
+    +client()
+    +send(String route, String target, String message)
+    +routes()
+    +expect(String route, Action action)
+    +protocol(String route, String target, int parts, String message)
+    +shutdown()
+    +signature()
+    +same(Object from)
+    }
+
+class UdpClient {
+    -UdpServer client;
+    -int port;
+    +send(String route, String target, String message)
+    +toString()
+    }
+
+  
+UIExtensionShare <-- SharePanel
+ShareCellsController <-- SharePanel
+TcpService <-- ShareCellsController
+UdpService <-- ShareCellsController
+TcpServer <-- TcpService
+TcpClient <-- TcpService
+UdpServer <-- UdpService 
+UdpClient<-- UdpService
+ 
+@enduml

@@ -1,0 +1,24 @@
+@startuml doc-files/lang_03.3_create_filter_analysis.png
+
+actor User
+participant "<<analysis>>\nTablesFiltersUI" as UI
+participant "<<analysis>>\nTablesFiltersController" as Control
+participant "<<analysis>>\nTable" as table
+participant "<<analysis>>\nExpression" as expr
+
+User->UI: applyFilter(table,expression)
+activate Control
+UI->Control: applyFilter(table,expression)
+Control->table: applyFilter(expression)
+activate table
+loop forEach row : rows()
+	loop forEach cell : cell()
+		table->expr: boolean res = evaluate()
+		alt res = FALSE
+			table->table: hideRow(row)
+			break
+		end
+	end
+end
+
+@enduml

@@ -1,0 +1,45 @@
+@startuml doc-files/core08.1_Export_pdf_sd_design_1.png
+
+actor User
+participant "UI" as UI
+participant "UIController" as UIController
+participant "ExportPDFController" as ExportPDFController
+
+participant "ExportPDF" as ExportPDF
+participant "<interface>\nSpreadsheet" as Spreadsheet
+participant "PDFWriter" as PDFWriter
+participant "JFileChooser" as JFileChooser
+participant "Value" as Value
+participant "<interface>\nCell" as Cell
+participant "Workbook" as Workbook
+
+
+
+
+User -> UI: selects option export to pdf
+UI -> UIController: ExportPDFController(UIController uiController)
+UIController -> ExportXMLController: exportWorkbook(JFileChooser fileChoose
+ExportXMLController -> File: file = fileChooser.getSelectedFile();
+ExportPDF <-- JFileChooser: give a Selected File
+ExportPDFController -> UIController: getActiveWorkbook()
+ExportPDFController <-- UIController: returns active workbook
+ExportPDFController -> EncoderStrategy: write(file,workbook)
+ExportPDF -> ExportPDF:writeWorkbook(workbook,file)
+alt showList = true
+
+	PdfCell -> PdfCell : cellSections=new PdfCell(new Paragraph(listOfSections, f)
+	PdfPTable -> PdfPTable: titleSections = new PdfPTable(1);
+	PdfCell -> PdfPTable : titleSections.add(cellSections)
+  end
+PdfWriter -> PdfWriter:getInstance(new Document(PageSize.A4), new FileOutputStream(file))
+loop for every spreadsheets in workbook
+Workbook -> Spreadsheet:spreadsheet = workbook.getSpreadsheet(index)
+loop for every cells in spreadsheet
+Spreadsheet -> Cell:cells = spreadsheet.getCell(row, columm).
+Cell -> Value:cells.getValue.toString()
+PdfCell -> PdfCell : cell=new PdfCell(new Paragraph(cells, f)
+PdfPTable -> PdfPTable: table = new PdfPTable(1);
+PdfCell -> PdfPTable : table.add(cell)
+end
+end
+@enduml

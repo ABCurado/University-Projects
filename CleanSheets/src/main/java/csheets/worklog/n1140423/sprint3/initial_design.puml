@@ -1,0 +1,19 @@
+@startuml doc-files/initial_design.png
+
+participant "User" as User
+participant "RangedSortDialog" as UI
+participant "SortController" as Controller
+
+User->UI : Starts the process of sorting a range of selected cells.
+UI->Controller: getSelectedColumns()
+UI->Controller: getSortTypes()
+UI->User: Prompts for information (column, type, and order)
+User->UI: Inserts column, type, and order.
+UI->Controller: sortRangeOfCells(column, type, order)
+Controller->Controller: getSelectedCells()
+Controller->Controller: getSortStrategy(type)
+Controller->SortService: sortRangeOfCells(cells, column, strategy, order)
+Controller->UI: Applies all the sort changes.
+UI->User: Presents the changes to the user.
+
+@enduml

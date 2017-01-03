@@ -1,0 +1,16 @@
+@startuml doc-files/crm04_3_design.png
+User->FindPanel : inserts some information
+note over User, FindPanel: begin date, end date, expression, content
+FindPanel->FindController : searchNotes(beginDate, endDate, expression, optionContent) : Iterable<Note>
+FindController->NoteRepository : search(beginDate, endDate, expression, optionContent) : Iterable<Note>
+NoteRepository-->FindController : List<Note>
+FindController-->FindPanel : List<Note>
+FindPanel->FindController : searchLists(beginDate, endDate, expression, optionContent) : Iterable<List>
+FindController->ListRepository : search(beginDate, endDate, expression, optionContent) : Iterable<List>
+ListRepository-->FindController : List<List>
+FindController-->FindPanel : List<List>
+FindPanel-->User : Show the results
+User->FindPanel : inserts new informations or export
+note over User, FindPanel: same options as in the beginning, export or double-click to view details of a list element
+FindPanel->FindController : export(listResults)
+@enduml

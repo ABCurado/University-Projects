@@ -1,0 +1,52 @@
+  @startuml doc-files/ipc_03.2_class_diagram_updated.png
+
+class UIController {
+	-extensions : uiExtension[]
+	--
+	+UIController(Cleansheet app)
+	+getExtensions() : uiExtension[]
+}
+
+class ExtensionManager {
+	-instance : ExtensionManager
+	-extensionMap : SortedMap<String,Extension>
+	--
+	-ExtensionManager()
+	+load(String ClassName) : SearchExtension
+	+load(Extension _class)
+}
+
+class Extension{
+}
+
+class NetworkWorkbookSearchExtension{
+	-NAME : string
+	--
+	+super(String name)
+	+getUIExtension(UIController controller) : UIExtension
+}
+
+class UIExtension{
+}
+
+class UIExtensionNetworkWorkbookSearch{
+	+UISearch(UIController controller);
+	+getSideBar() : SearchPanel
+}
+
+class NetworkWorkbookSearchPanel{
+	+NetworkWorkbookSearchPanel(UIController uiController, NetworkWorkbookSearchController controller)
+}
+
+class NetworkWorkbookSearchController{
+	+newLocalSearch(UIController uiController, String search)
+}
+
+Extension <|-- NetworkWorkbookSearchExtension
+UIExtension <|-- UIExtensionNetworkWorkbookSearch
+UIController --> ExtensionManager : getExtensions();
+ExtensionManager --> NetworkWorkbookSearchExtension : load(Extension extension);
+NetworkWorkbookSearchExtension --> UIExtensionNetworkWorkbookSearch : new(UIController controller);
+UIExtensionNetworkWorkbookSearch --> NetworkWorkbookSearchPanel : new(UIController controller);
+NetworkWorkbookSearchPanel --> NetworkWorkbookSearchController : new(UIController);
+  @enduml

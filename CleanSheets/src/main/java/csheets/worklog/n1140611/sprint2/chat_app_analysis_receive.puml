@@ -1,0 +1,26 @@
+@startuml doc-files/chat_app_analysis_receive.png
+
+actor User
+participant "<<analysis>>\nChatAppUI" as ChatAppUI
+participant "<<analysis>>\nChatAppController" as ChatAppController
+participant "<<analysis>>\nUdpService" as UdpService
+participant "<<analysis>>\nTcpService" as TcpService
+participant "<<analysis>>\nVolt.UdpClient" as UdpClient
+participant "<<analysis>>\nVolt.UdpServer" as UdpServer
+participant "<<analysis>>\nVolt.TcpServer" as TcpServer
+
+User->ChatAppUI: open chat option
+ChatAppUI->ChatAppController: new()
+
+activate ChatAppController
+ChatAppController->UdpService: new()
+ChatAppController->UdpService: signalizeIsOnline()
+UdpService->UdpClient:client(int seconds)
+UdpService->UdpServer:server(int localPort, int targetPort)
+ChatAppController->UdpService: getInstancesOnNetwork()
+ChatAppController->TcpService: new()
+ChatAppController->TcpService: receiveMessage()
+TcpService->TcpServer:server(int port)
+deactivate ChatAppController
+
+@enduml

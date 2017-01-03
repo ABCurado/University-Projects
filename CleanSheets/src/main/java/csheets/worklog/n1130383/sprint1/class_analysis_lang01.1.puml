@@ -1,0 +1,43 @@
+ @startuml doc-files/class_analysis_lang01.1.png
+class Formula {
+	+Formula(Cell cell, Expression expression)
+}
+interface Expression {
+	+Value evaluate()
+	+Object accept(ExpressionVisitor visitor)
+}
+interface Reference {
+}
+interface Operator {
+}
+interface AssignmentOperator {
+}
+abstract class Operation {
+}
+class UnaryOperation {
+}
+class BinaryOperation {
+}
+class AssignmentOperation {
+}
+class FunctionCall {
+}
+class Literal {
+}
+Expression <|-- Formula
+Expression <|-- Reference
+Expression <|-- Operation
+Expression <|-- FunctionCall
+Expression <|-- Literal
+Operation <|-- BinaryOperation
+Operation <|-- UnaryOperation
+Operation <|-- AssignmentOperation
+Operator <|-- AssignmentOperator
+Formula --> Reference : getReferences()
+Reference --> Cell : getCells();
+Cell --> Formula : getFormula
+BinaryOperation --> Expression : leftOperand
+BinaryOperation --> Expression : rightOperand
+UnaryOperation --> Expression : operand
+AssignmentOperation --> Expression : operand
+  @enduml

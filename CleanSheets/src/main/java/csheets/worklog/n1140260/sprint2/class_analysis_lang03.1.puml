@@ -1,0 +1,6 @@
+@startuml doc-files/class_analysis_lang03.1.png
+User -> System: The user selects "Conditional Formatting" option
+System -> User: The system asks the user wich formatting options he want if formula turn out to be true or false
+User -> System: The user selects the conditional formatting for both options
+System -> User: The system analyzes the formula and decides which formatting should he aplly
+@enduml

@@ -1,0 +1,13 @@
+@startuml doc-files/core08.1_Export_pdf_sd_analysis.png
+
+actor User
+participant "<<analysis>>\nSystem" as System
+
+
+User -> System: inserts values in worksheet cells
+User -> System: selects the option export PDF
+User -> System: enter the name and path of the PDF file
+User <-- System: validates and informs success of operation
+
+
+@enduml

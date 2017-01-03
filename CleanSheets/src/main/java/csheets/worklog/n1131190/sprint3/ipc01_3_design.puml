@@ -1,0 +1,37 @@
+@startuml doc-files/ipc01_3_design.png
+
+actor User
+participant "SharePanel" as UI
+participant "ShareCellsController" as Controller
+participant "UdpClient" as UdpClient
+participant "UdpServer" as UdpServer
+participant "TcpClient" as TcpClient
+participant "TcpServer" as TcpServer
+participant "Cell" as Cell
+
+UI->Controller: new ()
+note over Controller, UdpServer: same broadcast process as IPC01.1
+UI->User: Shows other available instances\nto connect to
+User->UI: Selects instance
+note over Controller, UdpServer: same broadcast process as IPC01.1
+
+UdpServer->UI: update
+
+loop : while connection != false
+
+    note right of UI: SharePanel is listening to the active spreadsheet's cells
+    alt if the user edits a cell
+        Cell->UI: valueChanged(cell) / contentChanged(cell)
+        UI->Controller: sendCell(cell)
+        Controller->TcpClient: send("cell", "address", data)
+        note left of TcpClient: data = Column;Formula;Line;Type;Value;FontName;FontStyle;FontSize;HAlignment;VAlignment;fgColor;bgColor
+    end
+
+    TcpServer->UI: update
+    UI->UI: updateCell()
+end
+
+User->UI: close connection
+UI->Controller: closeConnection()
+UI->User: Connection closed
+@enduml

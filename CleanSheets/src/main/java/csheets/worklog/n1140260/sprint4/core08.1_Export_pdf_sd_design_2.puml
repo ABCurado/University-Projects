@@ -1,0 +1,36 @@
+@startuml doc-files/core08.1_Export_pdf_sd_design_2.png
+
+actor User
+participant "UI" as UI
+participant "UIController" as UIController
+participant "ExportPDFController" as ExportPDFController
+
+participant "ExportPDF" as ExportPDF
+participant "<interface>\nSpreadsheet" as Spreadsheet
+participant "PDFWriter" as PDFWriter
+participant "JFileChooser" as JFileChooser
+participant "Value" as Value
+participant "<interface>\nCell" as Cell
+participant "Workbook" as Workbook
+
+
+
+
+User -> UI: selects option export to pdf
+UI -> UIController: ExportPDFController(UIController uiController)
+UIController -> ExportXMLController: exportSpreadSheet(JFileChooser fileChooser,spreadsheet)
+ExportXMLController -> File: file = fileChooser.getSelectedFile();
+ExportPDF <-- JFileChooser: give a Selected File
+ExportPDFController -> UIController: getActiveWorkbook().getSpreadsheet(this.jComboBoxSpreedSheet.getSelectedIndex()))
+ExportPDFController <-- UIController: returns spreadsheet
+ExportPDFController -> EncoderStrategy: write(file,spreadSheet)
+ExportPDF -> ExportPDF:writeSpreadsheet(spreadSheet, file)
+PdfWriter -> PdfWriter:getInstance(new Document(PageSize.A4), new FileOutputStream(file))
+loop for every cells in spreadsheet
+Spreadsheet -> Cell:cells = spreadsheet.getCell(row, columm).
+Cell -> Value:cells.getValue.toString()
+PdfCell -> PdfCell : cell=new PdfCell(new Paragraph(cells, f)
+PdfPTable -> PdfPTable: table = new PdfPTable(1);
+PdfCell -> PdfPTable : table.add(cell)
+end
+@enduml

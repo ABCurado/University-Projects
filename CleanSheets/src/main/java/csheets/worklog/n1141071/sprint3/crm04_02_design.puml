@@ -1,0 +1,50 @@
+@startuml doc-files/crm04_02_design.png
+actor Actor
+
+  participant "UI : ListUI" as UI 
+  participant "Controller : ListController" as controller
+  participant "List" as list
+  participant "ListPersistence" as persistence
+
+  note right of Actor
+        Extention loading and integration with main UI can be found on Example Extention diagrams
+  end note 
+
+  create UI
+  Actor -> UI : Starts use case
+  create controller
+  UI -> controller : create
+  Actor -> UI : Select the contact
+  UI -> controller : fetchContactLists(Contact)
+  controller -> persistence : getListsByContacts(Contact)
+  UI -> Actor : Show contact existent lists
+  alt Create list
+    note right of Actor
+        See create list diagram
+    end note
+  else Edit list
+    note right of Actor
+        See edit list diagram
+    end note
+  else Delete list
+    note right of Actor
+        See delete list diagram
+    end note
+  end
+  Actor -> UI : Select list
+  UI -> controller : getListVersions(List)
+  controller -> persistence : getListVersions(List)
+  UI -> Actor : Show List Versions
+  Actor -> UI : Select versions
+  UI -> controller : getListData(List)
+  controller -> list : getListData()
+  UI -> Actor : Show List Data
+  loop
+    Actor -> UI : Select/Deselect checkbox
+  end loop
+  Actor -> UI : Apply changes
+  UI -> controller : saveChanges(List)
+  controller -> list : changeState(text,state)
+  controller -> persistence : saveList(List)
+  UI -> Actor : Show success
+@enduml

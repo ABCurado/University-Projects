@@ -1,0 +1,25 @@
+@startuml doc-files/lang_03.3_create_table_analysis.png
+
+actor User
+participant "<<analysis>>\nTablesFiltersUI" as UI
+participant "<<analysis>>\nTablesFiltersController" as Control
+participant "<analysis>>\nUIController" as UIC
+participant "<<analysis>>\nSpreadsheetWithTables" as ss
+participant "<<analysis>>\nTable" as table
+
+User->UI: newTable()
+UI->Control: newTable()
+
+activate Control
+Control->UIC: Cell[][] cells = getSelectedCells()
+
+Control->UIC: getActiveSpreadsheet()
+
+Control->ss: Table table = createNewTable(cells)
+
+create table
+ss->table: new(cells)
+
+deactivate Control
+
+@enduml

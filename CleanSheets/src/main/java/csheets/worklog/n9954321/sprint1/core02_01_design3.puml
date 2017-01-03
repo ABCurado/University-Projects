@@ -1,0 +1,49 @@
+@startuml doc-files/core02_01_design3.png
+    participant "uic: UIController" as uic
+    participant "uiExtension : UIExtensionComments" as UIExt
+    participant "Cell" as cell
+    participant "CommentPanel : JPanel" as cp
+    participant "CommentController" as ctrl
+    participant "commentField: JTextArea" as commentField
+    participant "applyAction: ApplyAction" as applyAction
+
+    create cp
+    UIExt -> cp :  new(uic) 
+
+    cp -> uic : addSelectionListener(this)
+    
+    create commentField
+    cp -> commentField: new()
+
+    create ctrl
+    cp -> ctrl : new(uic)
+
+    create applyAction
+    cp -> applyAction : new()
+
+    note right of applyAction
+        ApplyAction is a innerclass 
+        of CommentPanel.
+        As such, it can access the 
+        members of CommentPanel,
+        for instance, the
+        current cell.
+    end note
+
+    cp -> commentField : addFocusListener(applyAction)
+
+    == meanwhile a cell is selected...the user enters text in "commentField" and the textbox loses the focus ==
+
+
+    commentField -> applyAction : focusLost(FocusEvent e)
+    activate applyAction
+    applyAction -> commentField : txt=getText()
+    applyAction -> ctrl : setComment(cell, txt)
+    deactivate applyAction
+
+    activate ctrl
+    ctrl -> cell : setUserComment(txt)
+    ctrl -> uic : setWorkbookModified(...)
+    deactivate ctrl
+
+@enduml

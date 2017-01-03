@@ -1,0 +1,6 @@
+  @startuml doc-files/ipc02.3_analysis.png
+  AWSExtension -> AWSUI : getUIExtension(UIController)
+  AWSUI -> AWSPanel : getFrame():JMenu
+  AWSPanel-> AWSController
+  AWSController->WorkbookPreview: new(Workbook)
+  @enduml

@@ -1,0 +1,102 @@
+ @startuml doc-files/lang02.3_class_diagram.png
+
+class UIController {
+	-extensions : uiExtension[]
+	--
+	+UIController(Cleansheet app)
+	+getExtensions() : uiExtension[]
+}
+
+class ExtensionManager {
+	-instance : ExtensionManager
+	-extensionMap : SortedMap<String,Extension>
+	--
+	-ExtensionManager()
+	+load(String ClassName) : Extension.NAME
+	+load(Extension _class)
+}
+
+class Extension{
+}
+
+class WorkbookGlobalVariableExtension{
+	+NAME : string
+	-VERSION : string
+	--
+	+super(String name)
+	+getUIExtension(UIController controller) : UIExtension
+}
+
+class UIExtension{
+}
+
+class WorkbookGlobalVariableUI{
+	+WorkbookGlobalVariableUI(UIController uicontroller);
+	+getSideBar() : JComponent
+}
+
+class JPanel{
+}
+
+class WorkbookGlobalVariablePanel{
+	-thecontroller : WGVController
+	-uiController : UIController
+	-variables_list : DefaultListModel
+	-values_list : DefaultListModel
+	-variables : ArrayList<VariableArray>
+	-values : ArrayList<String>
+	-index_values : ArrayList<Integer>
+	-newValue : String
+	--
+	+WGVPanel(UIController uicontroller);
+	-addListener();
+	-buildVariableList();
+	-jVariableListMouseClicked(MouseEvent e);
+	-buildValueList();
+	-jValueListMouseClicked(MouseEvent e);
+	-updatesCellContent();
+	-refreshValueList();
+	-interactEditDialogPanel();
+	-interactAddDialogPanel();
+	-workbookLoaded(SpreadsheetAppEvent event);
+}
+
+
+class WorkbookGlobalVariableController{
+	+WGVController(UIController uicontroller);
+	+parseValue(String newValue) : Value
+	+getCurrentVariables() : List<VariableArray>
+}
+
+class WorkbookGlobalVariableAddDialog{
+	 name : String
+	 value : String
+	 position : String
+	--
+	-retrieveValues();
+	+getName() : String
+	+getValue() : String
+	+getPosition() : String
+}
+
+class WorkbookGlobalVariableEditDialog{
+	 value : String
+	--
+	-retrieveValues();
+	+getValue() : String
+}
+
+
+JPanel <|-- WorkbookGlobalVariablePanel
+Extension <|-- WorkbookGlobalVariableExtension
+UIExtension <|-- WorkbookGlobalVariableUI
+
+UIController --> ExtensionManager : getExtensions();
+ExtensionManager --> WorkbookGlobalVariableExtension : load(Extension extension);
+WorkbookGlobalVariableExtension --> WorkbookGlobalVariableUI : new(UIController controller);
+WorkbookGlobalVariableUI --> WorkbookGlobalVariablePanel : new(UIController controller);
+WorkbookGlobalVariablePanel --> WorkbookGlobalVariableController : new(UIController uicontroller);
+WorkbookGlobalVariablePanel --> WorkbookGlobalVariableEditDialog : new();
+WorkbookGlobalVariablePanel --> WorkbookGlobalVariableAddDialog : new();
+
+  @enduml

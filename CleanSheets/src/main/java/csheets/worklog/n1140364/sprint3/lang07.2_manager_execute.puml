@@ -1,0 +1,38 @@
+  @startuml doc-files/lang07.2_manager_execute.png
+  participant User as us
+  participant ScriptManagerUI as ui
+  participant MacroBeanShellController as controller
+  participant UIController as uicontrol
+  participant Workbook as work
+  participant TaskManager as taskm
+  participant Task as task
+  participant Script as script
+
+  activate ui
+	us -> ui : selects execute script
+	create controller
+	ui -> controller : new()
+	ui -> controller : executeScript()
+  activate controller
+  deactivate ui
+    controller -> uicontrol : getUIController()
+  deactivate controller
+   activate uicontrol
+    uicontrol -> work : getScript(name)
+   activate work
+	deactivate uicontrol
+   deactivate work
+    controller <-- work : code
+   activate controller
+   create script
+   controller -> script : create(type)
+   note right of controller: if script is syncronhous
+   controller -> script : run(content)
+   note right of controller: else if script is asyncronhous
+   create taskm
+   controller -> taskm : new()
+   create task
+   controller -> task : new()
+   task -> task : fire()
+   task -> script : run(content)
+  @enduml

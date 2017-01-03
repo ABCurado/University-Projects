@@ -1,0 +1,18 @@
+@startuml doc-files/core03.3_classDiagram.png
+class csheets.core.Cell
+class csheets.core.Spreadsheet
+class csheets.ext.sort.SortController
+class csheets.ext.sort.ui.AutomaticSortAction
+class csheets.ext.sort.SortService
+class csheets.ui.ctrl.UIController
+
+interface csheets.ui.ctrl.SelectionListener
+csheets.ext.sort.ui.AutomaticSortAction ..> csheets.core.Cell
+csheets.ext.sort.ui.AutomaticSortAction ..> csheets.core.Spreadsheet
+csheets.ext.sort.ui.AutomaticSortAction ..> csheets.ext.sort.SortController
+csheets.ext.sort.ui.AutomaticSortAction --|> csheets.ui.ctrl.BaseAction
+csheets.ext.sort.ui.AutomaticSortAction ..> csheets.ui.ctrl.SelectionEvent
+csheets.ext.sort.ui.AutomaticSortAction ..> csheets.ui.ctrl.UIController
+csheets.ext.sort.ui.AutomaticSortAction --|> csheets.ui.ctrl.SelectionListener
+csheets.ext.sort.SortController->csheets.ext.sort.SortService
+@enduml

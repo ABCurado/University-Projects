@@ -1,0 +1,36 @@
+@startuml doc-files/automatic_cell_update_image_analysis.png
+
+actor User 
+participant "<<analysis>>\nUI" as UI
+participant "<<analysis>>\nController" as Controller
+participant "<<analysis>>\nUdpClient" as UdpClient
+participant "<<analysis>>\nUdpServer" as UdpServer
+participant "<<analysis>>\nTcpClient" as TcpClient
+participant "<<analysis>>\nTcpServer" as TcpServer
+participant "<<analysis>>\nCell" as Cell
+
+User->UI: activates operation
+UI->Controller: new ()
+
+note over Controller, UdpServer: same broadcast process as IPC01.1\nthe user selects the instance he wants to connect to
+
+UdpServer->UI: update
+
+loop : while connection != false
+    
+    note right of UI: UI is listening to the active spreadsheet's cells
+    alt if the user edits a cell
+        Cell->UI: valueChanged(cell) / contentChanged(cell)
+        UI->Controller: sendCell(cell)
+        Controller->TcpClient: send("cell", "address", data)
+        note left of TcpClient: data = Column;Line;Type;Value;FontName;FontStyle;FontSize;HAlignment;VAlignment;fgColor;bgColor
+    end
+    
+    TcpServer->UI: update
+    UI->UI: updateCell()
+end
+
+User->UI: close connetion
+UI->Controller: closeConnection()
+UI->User: Connection closed
+@enduml

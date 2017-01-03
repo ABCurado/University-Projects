@@ -1,0 +1,20 @@
+@startuml doc-files/notesEdit.png
+
+User->NotesUI : starts edit note process.
+NotesUI->NotesController:create()
+NotesUI->NotesController:showContacts()
+NotesController->Persistence:repositoryFactory()
+Persistence->AppSettings:instance()
+Persistence->AppSettings:getRepositoryFactory()
+AppSettings->RepositoryFactory:create()
+AppSettings->Persistence:RepositoryFactory
+Persistence->NotesController:RepositoryFactory
+NotesController->NotesUI:contactsList
+NotesUI->User:Systems shows contacts list
+User->NotesUI:The User selects a contact and a note.
+User->NotesUI:The User edits the note.
+
+NotesUI->NotesController:EditNote(String noteText,Note note)
+NotesController->NoteFactory:EditNote(String noteText,Note note)
+NotesController->NoteRepository:save(Note note)
+@enduml

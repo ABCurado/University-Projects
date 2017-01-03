@@ -1,0 +1,41 @@
+@startuml doc-files/lang_03.3_create_filter_sd.png
+
+actor User
+participant "NewFilterFrame" as UI
+participant "Table" as table
+participant "Expression" as expr
+participant "Filter" as filter
+participant "ExcelExpressionCompiler" as compiler
+
+activate UI
+User->UI: addNewFilter(expression)
+UI->UI: table = getSelectedTable()
+
+activate table
+UI->table: addFilter(expression,tempCell)
+deactivate UI
+create filter
+table->filter: new(expression)
+loop forEach row : cells()
+	table->table: expression = replaceRelativeReferences()
+	create compiler
+	table->compiler: new()
+	activate compiler
+	table->compiler: expr = compile(tempCell,expression)
+	create expr
+	compiler->expr: new()
+	deactivate compiler
+	note right of compiler: The compiler returns an\nexpression ready for evaluation
+	activate expr
+	table->expr: res = evaluate()
+	deactivate expr
+	alt res = FALSE
+		activate filter
+		table->filter: addRow(row)
+		deactivate filter
+		note right of filter: If a row is affected by the filter,\nadd it to the filters list of affected row
+	end
+end
+table->table: add(newFilter)
+deactivate table
+@enduml

@@ -1,0 +1,23 @@
+  @startuml doc-files/sort_extension_4.png
+title: How MenuBar adds sortExtensionMenu to JMenu
+  participant MenuBar as MB
+  participant "extensionsMenu : JMenu" as extensionsMenu
+  participant UIController as UIC
+  participant "uiExtension : sortUI" as sortUI
+  participant "extensionMenu : sortMenu" as sortMenu
+  MB -> MB : extensionsMenu = addMenu("Extensions", KeyEvent.VK_X);
+  activate MB
+    create extensionsMenu
+    MB -> extensionsMenu : new
+  deactivate MB
+  MB -> UIC : extensions=getExtensions();
+
+    MB -> sortUI : extensionMenu=extension.getMenu();
+    activate sortUI
+  	create sortMenu
+  	sortUI -> sortMenu : new
+    deactivate sortUI
+    MB -> sortMenu : icon = getIcon();
+    MB -> extensionsMenu : add(extensionMenu);
+
+  @enduml

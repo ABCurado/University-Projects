@@ -1,0 +1,14 @@
+@startuml doc-files/crm01_01_design_class_diagram.png
+object Contact<<AggregateRoot>> {
+}
+object Agenda <<Value Object>> {
+
+}
+object Event <<AggregateRoot>>{
+}
+
+
+Contact "1" *-up- "1" Agenda
+Event"*" ..> "1"Agenda
+
+@endum

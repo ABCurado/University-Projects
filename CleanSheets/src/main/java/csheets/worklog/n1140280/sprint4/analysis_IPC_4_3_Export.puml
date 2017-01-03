@@ -1,0 +1,10 @@
+@startuml doc-files/analysis_IPC_4_3_Export.png
+actor Actor
+User->System : Selects a range of cells(default will be from A1 to Z25)
+User->System : Asks to export to a database
+System->User : Ask database connection
+System->User : Ask database table name
+User->System : Select connection and name
+System->Database : Saves data
+System-->User : Sucess
+@enduml

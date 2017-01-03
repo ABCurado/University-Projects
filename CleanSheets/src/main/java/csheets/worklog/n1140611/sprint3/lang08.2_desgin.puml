@@ -1,0 +1,36 @@
+@startuml doc-files/lang08.2_design.png
+
+actor User
+participant "ImportXMLUI" as ImportXMLUI
+participant "ImportXMLController" as ImportXMLController
+participant "UIController" as UIController
+participant "Workbook" as Workbook
+participant "SpreedSheet" as SpreedSheet
+participant "Cell" as Cell
+participant "File" as File
+
+User->ImportXMLUI:select import
+
+alt selected workbook
+	ImportXMLUI->ImportXMLController:importWorkbook()
+	ImportXMLController->UIController:getActiveWorkbook()
+	ImportXMLController->File:getFileData()
+	ImportXMLController->Workbook:getSpreedSheets()
+	ImportXMLController->SpreedSheet:getCells()
+	ImportXMLController->Cell:setContent()
+else select SpreedSheet
+
+	ImportXMLUI->ImportXMLController:importSpreedSheet()
+	ImportXMLController->File:getFileData()
+	ImportXMLController->UIController:getActiveSpreedSheet()
+	ImportXMLController->SpreedSheet:getCells()
+	ImportXMLController->Cell:setContent()
+else select SelectedSpreedSheet
+	ImportXMLUI->ImportXMLController:importSelectedSpreedSheet()
+	ImportXMLController->File:getFileData()
+		ImportXMLController->UIController:getActiveSpreedSheet()
+	ImportXMLController->SpreedSheet:getCells()
+	ImportXMLController->Cell:setContent()
+end
+ImportXMLUI->User:import succesfully
+@enduml

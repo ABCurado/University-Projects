@@ -1,0 +1,48 @@
+@startuml doc-files/ipc05.2_udp_design.png
+
+participant "User" as User
+participant "UIController" as UIController
+participant "ChatUI" as ChatUI
+participant "ChatAppController" as Controller
+participant "UdpService" as UdpService
+participant "Volt.UdpClient" as UdpClient
+participant "Volt.UdpServer" as UdpServer
+
+UIController->ChatUI: runExtension()
+ChatUI->Controller: new ()
+activate Controller
+Controller->UdpService: new ()
+UdpService->UdpServer: new ()
+UdpService->UdpClient: new ()
+
+loop
+note right of UdpService: manager.after(1).every(5).fire(broadcast)
+UdpService->UdpClient: send(":broadcast")
+UdpServer-->UdpService: expect(":ip|:port")
+UdpService-->Controller: notifiesChanges()
+Controller-->ChatUI: notifiesChanges()
+ChatUI->ChatUI: Shows other available instances
+note right of ChatUI: in chat window
+end
+deactivate Controller
+
+
+User->ChatUI: closes the chat window
+
+activate ChatUI
+ChatUI->Controller: changeToOffline()
+activate Controller
+deactivate ChatUI
+
+
+Controller->UdpService: sendOffline()
+UdpService->UdpClient: send(":chat-state")
+opt : if offline instance
+Controller->UdpService: stop()
+end
+UdpServer-->UdpService: expect(":chat-state")
+UdpService-->Controller: notifiesChanges()
+Controller-->ChatUI: notifiesChanges()
+deactivate Controller
+
+@enduml

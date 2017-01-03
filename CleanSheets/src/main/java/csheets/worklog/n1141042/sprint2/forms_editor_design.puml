@@ -1,0 +1,28 @@
+@startuml doc-files/forms_editor_design.png
+
+actor User
+participant "<<analysis>>\nFormEditorUI" as FormEditorUI
+
+
+
+User->FormEditorUI: form().
+FormEditorUI->FormFrame: new()
+loop
+alt add
+FormFrame->AskContent: new()
+AskContent->FormFrame: showConfirmDialog()
+FormFrame->SingleLine: addSingleLine(new SingleLine( name,content))
+SingleLine->FormFrame: addSingleLine(SingleLine panel)
+FormFrame->FormFrame:  refreshUI()
+end
+alt remove
+FormFrame->SingleLine: remove()
+SingleLine->FormFrame: showConfirmDialog()
+FormFrame->SingleLine: answer()
+SingleLine->FormFrame: removeSingleLine()
+FormFrame->FormFrame: refresh()
+end
+
+end
+
+@enduml

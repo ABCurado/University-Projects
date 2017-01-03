@@ -1,0 +1,46 @@
+ @startuml doc-files/application_start_image2.png
+participant CleanSheets as CS
+participant "app : CleanSheets" as aCS
+participant "Frame.Creator" as FC
+participant "Frame" as F
+participant "uiController : UIController" as UIC
+participant "chooser : FileChooser" as FChooser
+participant "actionManager : ActionManager" as aM
+participant "mb : MenuBar" as MB
+
+
+[-> CS: main
+
+activate CS 
+
+create aCS
+CS -> aCS : app = new
+...
+CS -> FC : new(app)
+CS -> FC : createAndWait
+activate FC
+FC -> FC : run
+activate FC
+create F
+FC -> F : new(app)
+activate F
+create UIC
+F -> UIC : uiController = new(app)
+create FChooser
+F -> FChooser : chooser = new(this, app.getUserProperties)
+create aM
+F -> aM : actionManager = (app, uiController, chooser);
+|||
+note right of F
+  Here we have more
+  initializations...
+end note
+create MB
+F -> MB : mb = new(app, actionManager, uiController)
+F -> F : setJMenuBar(mb)
+deactivate F
+deactivate FC
+deactivate FC
+
+
+ @enduml

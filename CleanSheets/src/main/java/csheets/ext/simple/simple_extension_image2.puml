@@ -1,0 +1,20 @@
+  @startuml doc-files/simple_extension_image2.png
+  participant ExtensionManager as ExtM
+  participant Class
+  participant "aClass:Class" as aClass
+  participant "extension : ExtensionExample" as EExample
+  ExtM -> Class : aClass = forName("csheets.ext.simple.ExtensionExample");
+  activate Class
+  create aClass
+  Class -> aClass : new
+  deactivate Class
+  ExtM -> aClass : extension = (Extension)newInstance();
+  activate aClass
+  create EExample
+  aClass -> EExample : new
+  deactivate aClass
+  ExtM -> EExample : name = getName();
+  activate EExample
+  deactivate EExample
+  ExtM -> ExtM : extensionMap.put(name, extension)
+  @enduml

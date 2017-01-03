@@ -1,0 +1,35 @@
+@startuml doc-files/crm04_02_design_edit.png
+actor Actor
+
+  participant "UI : ListUI" as UI 
+  participant "Controller : ListController" as controller
+  participant "List" as list
+  participant "NewList : List" as newlist
+  participant "VersionControl" as version
+  participant "ListPersistence" as persistence
+
+  note right of Actor
+    Main UC diagram can be found in crm04_02_design
+  end note 
+  note right of Actor
+    This is the Edit List diagram
+  end note
+  Actor -> UI : Select List
+  UI -> controller : getListData(List)
+  UI -> Actor : Show List Versions and List Data
+  Actor -> UI : Select version
+  UI -> controller : getListVersionData(List,Version)
+  UI -> Actor : Show version data
+  loop
+    Actor -> UI : Edit Version data
+  end loop
+  Actor -> UI : Apply new data
+  UI -> controller : editList(List,title,text)
+  controller -> list : createNewVersion(title,text)
+  create newlist
+  list -> newlist : create(title,text,contact,versionControl)
+  newlist -> version : addVersion()
+  list -> controller : return newlist
+  controller -> persistence : saveList(newList)
+  UI -> Actor : Show new version
+@enduml

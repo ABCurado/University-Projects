@@ -1,0 +1,42 @@
+  @startuml doc-files/ipc02.3_sequence_diagram.png
+
+  actor user
+
+  participant AWSExtension as ex
+  participant AWSUI as ui
+  participant AWSPanel as panel
+  participant  AWSController as cont
+  participant  WorkbookPreview as p
+	participant UIController as uicont
+
+ex-> ui : new(UIController uiController);
+ui -> panel : new(UIController uiController);
+user -> panel : enables feature.
+loop while(!exit)
+user -> panel : open a new window.
+user ->panel : insert search pattern.
+user ->panel : begins search.
+panel -> panel : performSearch();
+panel -> cont : search(File dir, String pattern);
+panel <-- cont : list : List<File>
+user <--panel : show list.
+loop while (!stopButton)
+group one-click-mouse
+user->panel : one-click on workbook from list.
+panel -> panel : setUpPreview();
+panel -> cont : setUpWorkbookPreview(Workbook wb, String[][] previewContent, String[] previewTitles);
+cont -> p : new(Workbook workbook);
+cont -> p : getPreview();
+cont <-- p : preview : Cell[][]
+panel <-- cont:
+user <-- panel : show preview.
+end
+group two-click-mouse
+user->panel : two-click on workbook from list.
+panel -> uicont : load(File file);
+panel <--uicont :
+user <- panel : sets up workspace.
+end
+end loop
+
+  @enduml

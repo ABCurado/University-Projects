@@ -1,0 +1,34 @@
+@startuml doc-files/ipc_03.2_sequence_diagram.png
+
+actor User
+participant "NetworkWorkbookSearchPanel" as UI
+participant "NetworkWorkbookSearchController" as Control
+participant "LocalWorkbookSearch" as local
+
+User->UI: startSearch(String pattern)
+
+UI->Control: restartUdpService(NetworkWorkbookSearchPanel ui, int seconds)
+note right of Control: restartUdpService() will update Observable list of adresses...
+
+UI->Control: restartTcpService(NetworkWorkbookSearchPanel ui, String pattern)
+note right of Control: restartTcpService() will update Observable files...
+
+hnote over UI : on Observable update
+alt Object instanceof WorkBookDTO
+	note right of UI: Display new result
+end
+alt Object instanceof List
+	note right of UI: This is a new address gotten by UdpService
+	UI->UI: instances.add(address)
+end
+alt Object instanceof String[]
+	note right of UI: This is a search request (search[1]=pattern, search[2]=target)
+	UI->Control: results = newLocalSearch(pattern)
+	create local
+	Control->local: new (uiController, pattern)
+	Control->local: results = getResults()
+	UI->ObjectSerialization: serialized = toString(result)
+	UI->Control: sendSearchResult(target, serializedResult)
+end
+
+@enduml

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="lapr4.CleanSheetsPU" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>csheets.domain.CompanyContact</class>
+		<class>csheets.domain.Contact</class>
+		<class>csheets.domain.ContactCalendar</class>
+		<class>csheets.domain.Event</class>
+		<class>csheets.domain.Note</class>
+		<class>csheets.domain.Reminder</class>
+		<class>csheets.domain.Task</class>
+		<class>csheets.domain.VersionControl</class>
+		<class>csheets.domain.ChatUser</class>
+		<class>csheets.domain.List</class>
+		<class>csheets.domain.Address</class>
+		<class>csheets.ext.email.InformationEmailSent</class>
+		<class>csheets.ext.chat.domain.Message</class>
+		<class>csheets.ext.chat.domain.Room</class>
+		<class>csheets.ext.chat.domain.User</class>
+		<class>csheets.domain.PersonContact</class>
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:./db/csheets;MV_STORE=FALSE"/>
+			<property name="javax.persistence.jdbc.user" value=""/>
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+			<property name="javax.persistence.jdbc.password" value=""/>
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+		</properties>
+	</persistence-unit>
+</persistence>

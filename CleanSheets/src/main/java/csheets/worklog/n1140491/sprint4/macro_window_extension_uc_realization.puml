@@ -1,0 +1,20 @@
+@startuml doc-files/macro_window_extension_uc_realization.png
+  actor User
+  participant "<<analysis>>\nMacroUI" as UI
+  participant "<<analysis>>\nMacroCtrl" as ctrl
+  participant "<<analysis>>\nMacro" as macro
+  User -> UI : open window
+  User -> UI : types code
+  activate UI
+  UI -> ctrl : execute(code)
+  ctrl -> macro : create
+
+  macro -> macro : validate()
+  ctrl -> macro : execute()
+
+  UI -> ctrl : save()
+  ctrl -> "<<analysis>>\nuiController": saveMacro(macro)
+  UI -> User : shows Result
+
+  deactivate UI
+  @enduml

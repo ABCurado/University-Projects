@@ -1,0 +1,97 @@
+ @startuml doc-files/sort_class_diagram.png
+class MenuBar {
+	+MenuBar(Cleansheet app, ActionManager actionManager, UIController uiController)
+}
+
+class JMenuBar {
+}
+
+class UIController {
+	-extensions : uiExtension[]
+	--
+	+UIController(Cleansheet app)
+	+getExtensions() : uiExtension[]
+}
+
+class ExtensionManager {
+	-instance : ExtensionManager
+	-extensionMap : SortedMap<String,Extension>
+	--
+	-ExtensionManager()
+	+load(String ClassName) : SortExtension
+	+load(Extension _class)
+}
+
+class Extension{
+}
+
+class SortExtension{
+	-NAME : string
+	+super(String name)
+	+getUIExtension(UIController controller) : UIExtension
+}
+
+class UIExtension{
+}
+
+class UISort{
+	+UISort(UIController controller);
+	+getMenu() : JMenu
+}
+
+class JMenu{
+}
+
+class SortMenu{
+	+super(String name);
+	+SortMenu(UIController controller)
+}
+
+class BaseAction{
+}
+
+class SortAction{
+	-uiController : UIController
+	*-sortController : SortController*
+	+SortAction(UIController controller)
+	+getName() : String
+	+defineProperties()
+	+actionPerformed(ActionEvent event)
+}
+
+class SortJDialog{
+	-uiController : UIController
+	-sortController : SortController
+	-order : int
+	+SortJDialog(UIController controller)
+}
+
+
+class SortController{
+	-column : ArrayList<Value>
+	*+order(List<String> column, int order)*
+	+SortController(UIController controller);
+	+setIndex(int index);
+	+order(int order);
+}
+
+
+
+
+JMenuBar <|-- MenuBar
+Extension <|-- SortExtension
+UIExtension <|-- UISort
+JMenu <|-- SortMenu
+BaseAction <|-- SortAction
+
+MenuBar --> UIController : getExtensions();
+UIController --> ExtensionManager : getExtensions();
+ExtensionManager --> SortExtension : load(Extension extension);
+SortExtension --> UISort : new(UIController controller);
+UISort --> SortMenu : new(UIController controller);
+SortMenu --> SortAction : new(UIController controller);
+SortAction --> SortJDialog : new(UIController);
+SortJDialog --> SortController : new(UIController);
+
+
+  @enduml

@@ -1,0 +1,32 @@
+@startuml doc-files/lang_03.3_create_table_sd.png
+
+actor User
+participant "TablesFiltersUI" as UI
+participant "TablesFiltersController" as Control
+participant "UIController" as UIC
+participant "SpreadsheetWithTables" as ss
+participant "Table" as table
+
+activate UI
+User->UI: createNewTable(String name)
+UI->Control: createNewTable(observer, name, activeSheet)
+
+activate Control
+activate UIC
+Control->UIC: Cell[][] cells = getSelectedCells()
+deactivate UIC
+activate ss
+Control->ss: createNewTable(observer, cells, name)
+deactivate Control
+create table
+ss->table: newTable = new(sheet,cells,name)
+activate table
+ss->table: addObserver(observer)
+deactivate table
+ss->ss: add(newTable)
+deactivate ss
+UI->UI: fireSpreadsheetSelectionChanged()
+
+deactivate Control
+
+@enduml

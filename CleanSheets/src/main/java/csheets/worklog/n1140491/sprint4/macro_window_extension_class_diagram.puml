@@ -1,0 +1,15 @@
+@startuml doc-files/macro_window_extension_class_diagram.png
+
+class csheets.core.formula.Expression
+class csheets.core.formula.compiler.MacroExpressionComplier
+class csheets.ext.macro_beanshell.BeanShell
+class csheets.ext.macro_beanshell.Macro
+class csheets.ui.ctrl.UIController
+interface csheets.ext.macro_beanshell.Script
+csheets.ext.macro_beanshell.BeanShell ..> csheets.ui.ctrl.UIController
+csheets.ext.macro_beanshell.BeanShell --|> csheets.ext.macro_beanshell.Script
+csheets.ext.macro_beanshell.Macro ..> csheets.core.formula.Expression
+csheets.ext.macro_beanshell.Macro ..> csheets.core.formula.compiler.MacroExpressionComplier
+csheets.ext.macro_beanshell.Macro ..> csheets.ui.ctrl.UIController
+csheets.ext.macro_beanshell.Macro --|> csheets.ext.macro_beanshell.Script
+@enduml

@@ -1,0 +1,33 @@
+@startuml doc-files/core01_01_design2.png
+actor Actor
+  participant "ExtensionManagerAction" as ExtensionManagerAction
+  participant "uiController : UIController" as UIController
+  participant "uiExtention : UIExtention" as UIExtention
+  participant "<<extends UIExtention>> \n uiExtentionSpecific : UIExtentionSpecific " as UIExtentionSpecific
+  participant "extention : Extention" as Extention
+
+ 
+    ExtensionManagerAction -> UIController : changeExtensionState(String extention,boolean action)
+    UIController -> UIController : UIExt = getExtention(String extention)
+    UIController -> UIExtention : state = isEnabled()
+    UIExtention -> Extention : state = isEnabled() 
+    alt action == state
+    note right of UIController
+        Do nothing
+    end note 
+    else else
+       alt action == true
+       UIController -> UIExtentionSpecific : enable()
+       UIExtentionSpecific -> UIExtentionSpecific : enable feature specifc features
+       UIExtentionSpecific -> UIExtention : super.enable()
+       UIExtention -> UIExtention : enable mainframe components
+       UIExtention -> Extention : super.enable()
+       else else   
+       UIController -> UIExtentionSpecific : disable()
+       UIExtentionSpecific -> UIExtentionSpecific : disable feature specifc features
+       UIExtentionSpecific -> UIExtention : super.disable()
+       UIExtention -> UIExtention : enable mainframe components
+       UIExtention -> Extention : super.disable()
+     end 
+    end
+@enduml

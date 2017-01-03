@@ -1,0 +1,14 @@
+  @startuml doc-files/lang07.2_extension_image1.png
+  class MacroBeanShellAction {
+   }
+  class BeanShellMenu
+  class MacroBeanShellExtension {
+    -String NAME;
+  }
+  class UIExtensionMacroBeanShell
+  class JMenuItem
+  MacroBeanShellExtension -> UIExtensionMacroBeanShell : getUIExtension(UIController)
+  UIExtensionMacroBeanShell -> BeanShellMenu : getMenu()
+  BeanShellMenu -> JMenuItem : 'items'
+  JMenuItem o-> MacroBeanShellAction : action
+  @enduml

@@ -1,0 +1,31 @@
+@startuml doc-files/design_CRM_5_3.png
+actor Actor
+
+  participant "AgendaAction" as AgendaAction
+  participant "frame : AgendaFrame" as AgendaFrame
+  participant "controller : AgendaController" as AgendaController
+
+  note right of Actor
+        Extention loading and integration with main UI can be found on Example Extention diagrams
+  end note
+
+  Actor -> AgendaAction : starts use case
+  create AgendaFrame
+  AgendaAction -> AgendaFrame : new(UIController)
+  create AgendaController
+  AgendaFrame -> AgendaController : new(UIController)
+  AgendaFrame -> AgendaController : getContacts()
+  AgendaFrame -> AgendaController : getCurrentDay()
+  loop
+  Actor -> AgendaFrame : Select Contact
+  AgendaFrame -> AgendaController : getEvents(Contact,Date)
+  AgendaController -> persistence : getEvents(Contact,Date)
+  AgendaController --> AgendaFrame : show events
+  loop
+  Actor -> AgendaFrame : Select Date
+  AgendaFrame -> AgendaController : getEvents(Contact,Date)
+  AgendaController -> persistence : getEvents(Contact,Date)
+  AgendaController --> AgendaFrame : show events
+  end
+  end
+@enduml

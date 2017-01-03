@@ -1,0 +1,65 @@
+@startuml doc-files/lang07.2_class_manager.png
+
+class ScriptManagerUI {
+	-UIController uiController
+	-MacroBeanShellController controller
+	-DefaultListModel list
+	+displayScripts()
+	+run()
+	+message()
+}
+
+class UIExtensionMacroBeanShell{
+}
+
+class MacroBeanShellController {
+	-UIController uiController
+	-BeanShell beanshell
+	+executeCode(scriptType, code)
+	+createScript(scriptType)
+	+saveScript(name, code)
+	+getSavesScripts()
+	+editScript(new_code, script)
+	+getScriptContent(script)
+	+deleteScript(script)
+	+executeScript(script)
+}
+
+class CreateScriptUI {
+	-MacroBeanShellController controller
+	-ScriptManagerUI ui
+	+run()
+}
+
+class EditScriptUI {
+	-MacroBeanShellController controller
+	-String script
+	+getScriptContent()
+	+run()
+}
+
+class BeanShell {
+	-JConsole console
+	-UIController uiController
+	-Interpreter interpreter
+	+getExample()
+	+run()
+	+createErrorMessage(error)
+	+separateInstructions(code)
+	+getInterpreter()
+}
+
+class Macro{
+}
+
+UIExtensionMacroBeanShell <-- ScriptManagerUI
+MacroBeanShellController <-- ScriptManagerUI
+CreateScriptUI <-- ScriptManagerUI
+EditScriptUI <-- ScriptManagerUI
+MacroBeanShellController <-- CreateScriptUI
+MacroBeanShellController <-- EditScriptUI
+BeanShell <-- MacroBeanShellController
+Macro <-- MacroBeanShellController
+
+
+@enduml

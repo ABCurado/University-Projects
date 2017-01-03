@@ -1,0 +1,13 @@
+@startuml doc-files/ipc_file_sharing_analysis_ssd.png
+
+UserServer -> System: Selects option FileShare and UploadDirectory
+UserServer <-- System: asks for the directory to share and the port to the socket
+UserServer -> System: defines the directory and the port
+UserServer <-- System: informs success of operation
+UserClient -> System: Selects option FileShare and DownloadDirectory
+UserClient <-- System: asks for the download destination directory and the ip of the server machine
+UserClient -> System: inserts the ip of the server machine and put a port to the socket.
+UserClient <-- System: Files have been placed in the selected folder.
+
+
+@enduml

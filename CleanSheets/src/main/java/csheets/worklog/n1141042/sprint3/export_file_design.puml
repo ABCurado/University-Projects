@@ -1,0 +1,17 @@
+@startuml doc-files/export_file_design_image.png
+
+actor User
+participant "<<analysis>>\nExportFileUI" as ExportFileUI
+participant "<<analysis>>\nExportFileController" as ExportFileController
+
+User->ExportFileUI: Export File
+ExportFileUI->ExportFileController: export(filepath, cells, separator)
+ExportFileController->TxtEncoder: create
+ExportFileController->TxtEncoder: content = getContent(cells, separator)
+ExportFileController->FileHandler: create
+ExportFileController->FileHandler: createFile(filepath)
+ExportFileController->FileHandler: append(filepath, content)
+
+ExportFileUI->User: Exported successfully
+
+@enduml

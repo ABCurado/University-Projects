@@ -1,0 +1,37 @@
+@startuml doc-files/ip07.1_main_sequence.png
+
+actor User
+participant "<<analysis>>\nGameUI" as GameUI
+participant "<<analysis>>\nGameController" as GameController
+participant "<<analysis>>\nVolt.UdpClient" as Volt.UdpClient
+participant "<<analysis>>\nVolt.UdpServer" as Volt.UdpServer
+participant "TcpService" as Tcp
+
+User->GameUI: starts operation
+GameUI->GameController: new ()
+
+activate GameController
+GameController->Volt.UdpClient: new ()
+GameController->Volt.UdpServer: new ()
+deactivate GameController
+
+GameUI->GameController: List<String> lst = getOtherInstances()
+loop
+activate GameController
+GameController->Volt.UdpClient: send(":broadcast")
+note right of GameController: manager.after(1).every(5).fire(broadcast)
+GameController->Volt.UdpServer: expect(":ip|:port")
+deactivate GameController
+end
+
+GameUI->User: Shows other available instances
+note left of GameUI: in a sidebar window
+User->GameUI: Selects instance
+note right of GameUI: String target = instance.ip+":"instance.port
+
+User->GameUI: Selects available game
+
+GameUI->GameController: instance + game
+GameController->Tcp: create the connection with (instance+selected game)
+
+@enduml

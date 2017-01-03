@@ -1,0 +1,13 @@
+@startuml doc-files/analysis.png
+
+actor User
+
+User->System: The user open the option to send email.
+User->System: Fill the destination, subject, body.
+User->System: press send option.
+System->User: Send email.
+
+System->User: After the option send email, the system updates the list of emails.
+User->System: Chooses an email with double click.
+System->User: Show content of the selected email (new window).
+@enduml

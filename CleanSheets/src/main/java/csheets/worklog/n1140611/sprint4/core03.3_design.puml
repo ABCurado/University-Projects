@@ -1,0 +1,42 @@
+@startuml doc-files/core03.3_design.png
+
+actor User
+participant "UserInterface" as UI
+participant "AutomaticSortAction" as AutomaticSortAction
+participant "UIController" as UIController
+participant "<interface>FocusOwner" as FocusOwner
+participant "SortController" as Controller
+participant "SortService" as SortService
+
+User->AutomaticSortAction:user selects a range of cells \nand choose automatic sort
+activate AutomaticSortAction
+create Controller
+AutomaticSortAction->Controller:new()
+create SortService
+activate Controller
+Controller->SortService:create()
+deactivate Controller
+AutomaticSortAction->UIController: addSelectionListener(this)
+AutomaticSortAction->UIController: focusOwer
+activate UIController
+UIController->FocusOwner:getSelectedCells()
+UIController->FocusOwner:getSelectedColumns()
+UIController->FocusOwner:getSelectedRows()
+note right of AutomaticSortAction 
+ A loop are made to set
+ background color of cells
+end note
+UIController->FocusOwner:getActiveSpreadsheet()
+UIController->FocusOwner:repaint()
+deactivate UIController
+deactivate AutomaticSortAction
+
+User->UI: user select one column with a visual mark
+UI->AutomaticSortAction:selectionChanged()
+activate AutomaticSortAction
+AutomaticSortAction->Controller:sortRangeOfCells(Cell[][] cells, int column, boolean order)
+activate Controller
+Controller->SortService:sortRangeOfCells(Cell[][] cells, int column, boolean order)
+deactivate Controller
+deactivate AutomaticSortAction
+@enduml

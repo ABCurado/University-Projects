@@ -1,0 +1,21 @@
+@startuml doc-files/import_file_desing_image.png
+
+actor User
+participant "<<analysis>>\nImportTextFileUI" as ImportTextFileUI
+participant "<<analysis>>\nImportTextFileController" as ImportTextFileController
+
+User->ImportTextFileUI: chooses file and his options
+ImportTextFileUI->ImportTextFileController: new ()
+
+activate ImportTextFileController
+ImportTextFileUI->ImportTextFileController: parse(filepath, character, boolean header, cells)
+ImportTextFileController->TxtParser: create
+ImportTextFileController->TxtParser: content = ImportTextFileStrategy()
+TxtParser->ImportTextFileStrategy: create
+TxtParser->ImportTextFileStrategy: parse()
+ImportTextFileController->ImportTextFileController: transferToCells(content)
+ImportTextFileController->ImportTextFileUI: cells
+deactivate ImportTextFileController
+
+
+@enduml

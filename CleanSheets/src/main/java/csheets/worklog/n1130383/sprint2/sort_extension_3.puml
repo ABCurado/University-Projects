@@ -1,0 +1,16 @@
+	  @startuml doc-files/sort_extension_3.png
+title: How the UIController retrieves the UIExtension associated with the Extension
+  participant UIController as UIC
+  participant ExtensionManager as ExtM
+  participant "extension : sortExtension" as SortExtension
+  participant "uiExtension : sortUI" as SortUI
+  UIC -> ExtM : extensions=getExtensions();
+
+  	UIC -> SortExtension : uiExtension=getUIExtension(this);
+  	activate SortExtension
+  	create SortUI
+  	SortExtension -> SortUI : new
+  	deactivate SortExtension
+  	UIC -> UIC : uiExtensions.add(uiExtension);
+
+  @enduml
