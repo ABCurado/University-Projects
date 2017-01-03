@@ -1,0 +1,17 @@
+
+int toInt(char input[]) {
+        int c = 0, output = 0;
+        while (input[c] != 0) {
+                output = output * 10 + input[c] - '0';
+                c++;
+        }
+        return output;
+}
+
+void potencia_por_referencia(int * x, int y) {
+	printf("Recebida a base %d, e expoente %d\n", *x, y);
+	int exp;
+	for (exp = y; exp > 1; exp--) {
+		*x *= *x;
+	}
+}

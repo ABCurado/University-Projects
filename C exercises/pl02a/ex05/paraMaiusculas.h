@@ -1,0 +1,2 @@
+
+void paraMaiusculas(char* string) ;

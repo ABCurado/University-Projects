@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include "potencia.h"
+
+int main() {
+
+	char str[4];
+	int base = 0, y = 0;
+	int * x;
+	x = &base;
+
+	printf("Digite uma base seguida do expoente (separados por espaço):\n");
+	fgets(str, sizeof(str), stdin);
+	base = str[0];
+	y = str[1];
+	potencia_por_referencia(x, y);
+	printf("Resultado :%d\n", x);
+	return 0;
+
+}
+
+

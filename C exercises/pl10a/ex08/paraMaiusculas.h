@@ -1,0 +1,3 @@
+
+char* paraMaiusculas(char* string);
+

@@ -1,0 +1,1 @@
+void sal(void);

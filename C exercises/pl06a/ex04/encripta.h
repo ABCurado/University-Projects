@@ -1,0 +1,1 @@
+int encripta(void);
