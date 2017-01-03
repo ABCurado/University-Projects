@@ -1,4 +1,0 @@
-Some long string
-to read from
-this file called
-file.txt

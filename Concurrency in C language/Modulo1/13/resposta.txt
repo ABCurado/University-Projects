@@ -1,1 +1,0 @@
-O comando SISTCOMP será executado 6 vezes como podemos ver na arvore de processos 

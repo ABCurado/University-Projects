@@ -1,6 +1,0 @@
-Eu sou o processo com o PID 5826
-Eu sou o processo com o PID 5833
-Eu sou o processo com o PID 5841
-Eu sou o processo com o PID 5866
-Eu sou o processo com o PID 5874
-Eu sou o processo com o PID 5882

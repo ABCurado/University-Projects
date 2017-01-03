@@ -1,1 +1,0 @@
-O comando execvp é mais apropriado pois nao seram passados parametros

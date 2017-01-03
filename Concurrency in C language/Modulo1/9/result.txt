@@ -1,2 +1,0 @@
-b) O resultado não aparece ordenado, pois os processos estão a
-correr em simultaneo, neste exemplo não é possivel.
