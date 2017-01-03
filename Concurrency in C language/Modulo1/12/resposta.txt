@@ -1,0 +1,1 @@
+Sera executado ums vez caso seja bem sucedido pois apos um exec o processo retorna com o valor do exec
