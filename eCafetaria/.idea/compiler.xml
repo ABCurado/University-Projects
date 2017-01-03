@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="backoffice.consoleapp" />
+        <module name="consoleapp" />
+        <module name="consoleapp.common" />
+        <module name="core" />
+        <module name="ecafeteria.backoffice.consoleapp" />
+        <module name="ecafeteria.bootstrapapp" />
+        <module name="ecafeteria.consoleapp" />
+        <module name="ecafeteria.core" />
+        <module name="ecafeteria.utente.consoleapp" />
+        <module name="framework" />
+        <module name="utente.consoleapp" />
+        <module name="util" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="backoffice.consoleapp" target="1.8" />
+      <module name="consoleapp.common" target="1.8" />
+      <module name="core" target="1.8" />
+      <module name="eapli-2016-ecafeteria" target="1.8" />
+      <module name="ecafeteria" target="1.8" />
+      <module name="ecafeteria.backoffice.consoleapp" target="1.8" />
+      <module name="ecafeteria.bootstrapapp" target="1.8" />
+      <module name="ecafeteria.consoleapp" target="1.8" />
+      <module name="ecafeteria.core" target="1.8" />
+      <module name="ecafeteria.persistence.impl.jpa" target="1.8" />
+      <module name="ecafeteria.utente.consoleapp" target="1.8" />
+      <module name="framework" target="1.8" />
+      <module name="utente.consoleapp" target="1.8" />
+      <module name="util" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

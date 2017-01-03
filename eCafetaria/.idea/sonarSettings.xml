@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="projectSettings">
+    <option name="alternativeWorkingDirPath" value="" />
+    <option name="localAnalysisScripName" value="&lt;NO LOCAL ANALYSIS&gt;" />
+    <option name="resources">
+      <list>
+        <Resource>
+          <option name="creationDate" value="1459469731000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5404" />
+          <option name="key" value="eapli.cafeteria:consoleapp.common" />
+          <option name="longName" value="consoleapp.common" />
+          <option name="name" value="consoleapp.common" />
+          <option name="qualifier" value="BRC" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="0.0.1-SNAPSHOT" />
+        </Resource>
+        <Resource>
+          <option name="creationDate" value="1459460020000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5042" />
+          <option name="key" value="eapli:ecafeteria" />
+          <option name="longName" value="ecafeteria" />
+          <option name="name" value="ecafeteria" />
+          <option name="qualifier" value="TRK" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="1.0-SNAPSHOT" />
+        </Resource>
+        <Resource>
+          <option name="creationDate" value="1459469731000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5230" />
+          <option name="key" value="eapli:ecafeteria.backoffice.consoleapp" />
+          <option name="longName" value="ecafeteria.backoffice.consoleapp" />
+          <option name="name" value="ecafeteria.backoffice.consoleapp" />
+          <option name="qualifier" value="BRC" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="1.0-SNAPSHOT" />
+        </Resource>
+        <Resource>
+          <option name="creationDate" value="1459469731000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5223" />
+          <option name="key" value="eapli:ecafeteria.bootstrapapp" />
+          <option name="longName" value="ecafeteria.bootstrapapp" />
+          <option name="name" value="ecafeteria.bootstrapapp" />
+          <option name="qualifier" value="BRC" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="0.0.1-SNAPSHOT" />
+        </Resource>
+        <Resource>
+          <option name="creationDate" value="1459469731000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5258" />
+          <option name="key" value="eapli:ecafeteria.core" />
+          <option name="longName" value="ecafeteria.core" />
+          <option name="name" value="ecafeteria.core" />
+          <option name="qualifier" value="BRC" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="1.0-SNAPSHOT" />
+        </Resource>
+        <Resource>
+          <option name="creationDate" value="1459469731000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5249" />
+          <option name="key" value="eapli:ecafeteria.utente.consoleapp" />
+          <option name="longName" value="ecafeteria.utente.consoleapp" />
+          <option name="name" value="ecafeteria.utente.consoleapp" />
+          <option name="qualifier" value="BRC" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="1.0-SNAPSHOT" />
+        </Resource>
+        <Resource>
+          <option name="creationDate" value="1459469731000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5310" />
+          <option name="key" value="eapli:framework" />
+          <option name="longName" value="framework" />
+          <option name="name" value="framework" />
+          <option name="qualifier" value="BRC" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="1.0-SNAPSHOT" />
+        </Resource>
+        <Resource>
+          <option name="creationDate" value="1459469731000" />
+          <option name="date" value="1459590036000" />
+          <option name="description" value="" />
+          <option name="id" value="5389" />
+          <option name="key" value="eapli:util" />
+          <option name="longName" value="util" />
+          <option name="name" value="util" />
+          <option name="qualifier" value="BRC" />
+          <option name="scope" value="PRJ" />
+          <option name="version" value="1.0-SNAPSHOT" />
+        </Resource>
+      </list>
+    </option>
+    <option name="serverName" value="QADEI" />
+    <option name="useAlternativeWorkingDir" value="false" />
+    <option name="workingDirSelection" value="&lt;PROJECT&gt;" />
+  </component>
+</project>

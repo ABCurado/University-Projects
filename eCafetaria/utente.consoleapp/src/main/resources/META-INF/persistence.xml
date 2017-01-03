@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence">
+	<persistence-unit name="eapli.eCafeteriaPU">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>eapli.ecafeteria.domain.cafeteria.OrganicUnit</class>
+		<class>eapli.ecafeteria.domain.mealbooking.CafeteriaUser</class>
+		<class>eapli.ecafeteria.domain.mealbooking.SignupRequest</class>
+		<class>eapli.ecafeteria.domain.meals.DishType</class>
+		<class>eapli.ecafeteria.domain.mealbooking.Account</class>
+		<class>eapli.ecafeteria.domain.meals.Dish.Dish</class>
+		<class>eapli.ecafeteria.domain.authz.SystemUser</class>
+		<class>eapli.ecafeteria.domain.meals.Meal</class>
+		<class>eapli.ecafeteria.domain.meals.MealType</class>
+		<class>eapli.ecafeteria.domain.cafeteria.CashRegister.CashRegister</class>
+		<class>eapli.ecafeteria.domain.cafeteria.CashRegister.Shift</class>
+		<class>eapli.ecafeteria.domain.meals.Reserve</class>
+		<class>eapli.ecafeteria.domain.meals.AssignedRating</class>
+		<class>eapli.ecafeteria.domain.meals.Menu</class>
+		<class>eapli.ecafeteria.domain.cafeteria.Kitchen.ExecutionControl</class>
+		<class>eapli.ecafeteria.domain.cafeteria.Cafeteria</class>
+		<class>eapli.ecafeteria.domain.cafeteria.Kitchen.KitchenAlert</class>
+		<class>eapli.ecafeteria.domain.meals.LastMinuteSale</class>
+		<shared-cache-mode>NONE</shared-cache-mode>
+		<properties>
+			<!-- Servidor -->
+			<!--<property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://eapli2dg.ddns.net:9092/~/eapli/eapli"/>-->
+
+			<!-- Local -->
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:../db/ecafeteria;MV_STORE=FALSE"/>
+			<property name="javax.persistence.jdbc.user" value=""/>
+			<property name="javax.persistence.jdbc.password" value=""/>
+
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+			<property name="javax.persistence.schema-generation.database.action" value="create"/>
+			<!--<property name="eclipselink.logging.level" value="FINE"/>-->
+		</properties>
+	</persistence-unit>
+</persistence>
