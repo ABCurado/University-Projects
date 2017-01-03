@@ -1,0 +1,2 @@
+Sim é possivel, como verificamos na imagem exemplo
+Por a gestão de processos é feita pelo Sistema Operativo e não é possivel prever a ordem de execução nesta função

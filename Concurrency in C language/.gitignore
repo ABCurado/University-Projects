@@ -1,0 +1,21 @@
+# Folders #
+###########
+/.project
+
+
+# Compiled source #
+###################
+*.o
+main
+ex
+escritor
+leitor
+reader
+writer
+
+
+# Other Used Files #
+####################
+*.pdf
+.fuse_*
+
